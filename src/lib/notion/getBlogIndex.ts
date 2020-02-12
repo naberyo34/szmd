@@ -11,6 +11,7 @@ export default async function getBlogIndex(previews = true) {
   const useCache = process.env.USE_CACHE === 'true'
   const cacheFile = `${BLOG_INDEX_CACHE}${previews ? '_previews' : ''}`
 
+  // キャッシュを持っている場合はキャッシュからpostsTableをつくる
   if (useCache) {
     try {
       postsTable = JSON.parse(await readFile(cacheFile, 'utf8'))
@@ -19,6 +20,7 @@ export default async function getBlogIndex(previews = true) {
     }
   }
 
+  // キャッシュを持っていない場合は新規に取得する
   if (!postsTable) {
     try {
       const data = await rpc('loadPageChunk', {
