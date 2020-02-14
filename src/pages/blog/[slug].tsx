@@ -85,6 +85,8 @@ const RenderPost = ({ post, redirect }) => {
 
         <hr />
 
+        <p>{`foo = ${post.foo}`}</p>
+
         {(!post.content || post.content.length === 0) && (
           <p>This post has no content</p>
         )}
