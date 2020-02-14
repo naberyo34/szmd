@@ -23,6 +23,9 @@ export default async function getBlogIndex(previews = true) {
   // キャッシュを持っていない場合は新規に取得する
   if (!postsTable) {
     try {
+      /* このdataはObjectで返ってくる. data.recordMap.block.collection_viewがテーブルの実体となる
+      ex: テーブルが2つある場合はcollection_view内に2つのオブジェクトが格納される */
+
       const data = await rpc('loadPageChunk', {
         pageId: BLOG_INDEX_ID,
         limit: 999, // TODO: figure out Notion's way of handling pagination
@@ -32,13 +35,27 @@ export default async function getBlogIndex(previews = true) {
       })
 
       // Parse table with posts
+      /* blockはNotionの要素を指す ワークスペース、コレクションビューなどが全てblock
+      一番上のコレクションビュー(テーブル)が読み込まれるのはここでfindしているから */
       const tableBlock = values(data.recordMap.block).find(
-        (block: any) => block.value.type === 'collection_view'
+        // 試しにハードコーディングしてみた ※環境変数で持たせたほうがいい
+        (block: any) =>
+          block.value.id === '17e7d2d9-5696-4e3f-b56b-65353bf76690'
       )
+
+      const illustTableBlock = values(data.recordMap.block).find(
+        // 試しにハードコーディングしてみた ※環境変数で持たせたほうがいい
+        (block: any) =>
+          block.value.id === '22349c3e-6e31-4073-b6c9-08763fe1c4eb'
+      )
+
+      console.log('posts', tableBlock)
+      console.log('illust', illustTableBlock)
 
       postsTable = await getTableData(tableBlock, true)
     } catch (err) {
       console.warn(
+        // テーブルを取得できなかった場合は勝手にUntitledのテーブルが新規作成される
         `Failed to load Notion posts, attempting to auto create table`
       )
       try {

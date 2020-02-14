@@ -3,6 +3,7 @@ import Slugger from 'github-slugger'
 import queryCollection from './queryCollection'
 import { normalizeSlug } from '../blog-helpers'
 
+// getBlogIndexで取得してきたdata.recordMap.block.collection_view を綺麗な配列オブジェクトに整形する
 export default async function loadTable(collectionBlock: any, isPosts = false) {
   const slugger = new Slugger()
 
@@ -56,6 +57,7 @@ export default async function loadTable(collectionBlock: any, isPosts = false) {
             // start_time: 07:00
             // time_zone: Europe/Berlin, America/Los_Angeles
 
+            // 日付の整形処理と思われる
             if (!type[1].start_date) {
               break
             }
@@ -100,5 +102,7 @@ export default async function loadTable(collectionBlock: any, isPosts = false) {
       table.push(row)
     }
   }
+  // この時点でめちゃくちゃわかりやすい形に整形されている
+  console.log('table', table)
   return table
 }
