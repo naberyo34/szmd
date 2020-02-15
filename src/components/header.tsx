@@ -8,6 +8,7 @@ const navItems: { label: string; page?: string; link?: string }[] = [
   { label: 'Home', page: '/' },
   { label: 'Blog', page: '/blog' },
   { label: 'Contact', page: '/contact' },
+  { label: 'Illust', page: '/illust' },
   { label: 'Source Code', link: 'https://github.com/ijjk/notion-blog' },
 ]
 
