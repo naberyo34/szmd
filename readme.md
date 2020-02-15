@@ -2,6 +2,7 @@
 
 - `yarn dev`で development server 起動
 - now のアカウント名を変えたりした都合でドメイン周りがクソややこしいことになったので注意 (多分もう大丈夫)
+- 独自ドメインに載せました https://szmd.jp/
 
 # Notion Blog
 
