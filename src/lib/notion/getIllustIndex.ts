@@ -6,7 +6,7 @@ import { getPostPreview } from './getPostPreview'
 import { readFile, writeFile } from '../fs-helpers'
 import { BLOG_INDEX_ID, BLOG_INDEX_CACHE } from './server-constants'
 
-export default async function getBlogIndex(previews = true) {
+export default async function getIllustIndex(previews = true) {
   let postsTable: any = null
   const useCache = process.env.USE_CACHE === 'true'
   const cacheFile = `${BLOG_INDEX_CACHE}${previews ? '_previews' : ''}`
@@ -35,17 +35,15 @@ export default async function getBlogIndex(previews = true) {
       })
 
       // Parse table with posts
-      /* blockはNotionの要素を指す ワークスペース、コレクションビューなどが全てblock
-      一番上のコレクションビュー(テーブル)が読み込まれるのはここでfindしているから */
-      const tableBlock = values(data.recordMap.block).find(
+      const illustTableBlock = values(data.recordMap.block).find(
         // 試しにハードコーディングしてみた ※環境変数で持たせたほうがいい
         (block: any) =>
-          block.value.id === '17e7d2d9-5696-4e3f-b56b-65353bf76690'
+          block.value.id === '22349c3e-6e31-4073-b6c9-08763fe1c4eb'
       )
 
-      console.log('posts', tableBlock)
+      console.log('illust', illustTableBlock)
 
-      postsTable = await getTableData(tableBlock, true)
+      postsTable = await getTableData(illustTableBlock, true)
     } catch (err) {
       console.warn(
         // テーブルを取得できなかった場合は勝手にUntitledのテーブルが新規作成される
