@@ -90,7 +90,6 @@ const Footer = styled.footer`
   padding-bottom: 10px;
   color: ${color.bg};
   text-align: center;
-  border-bottom: 10px solid ${color.bg};
 `
 
 // 諸々の事情でLinkに直接スタイルを当てることができない
