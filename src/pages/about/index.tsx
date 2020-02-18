@@ -16,7 +16,7 @@ const color = {
 const AnimateBg = styled.div`
   @keyframes shrink {
     0% {
-      height: 100vw;
+      height: 200vh;
     }
 
     100% {
