@@ -20,12 +20,14 @@ export default ({ Component, pageProps }) => (
   <>
     <Head>
       <title>SZMD</title>
+      <meta name="description" content="SZMD | tama portfolio page" />
+      <meta property="og:url" content="https://szmd.jp" />
+      <meta property="og:title" content="SZMD" />
       <meta
-        name="description"
-        content="An example Next.js site using Notion for the blog"
+        property="og:description"
+        content="tama / Ryo Watanabe のポートフォリオ"
       />
-      <meta name="og:title" content="My Notion Blog" />
-      <meta name="twitter:site" content="@_ijjk" />
+      <meta name="twitter:site" content="@momochitama" />
       <meta name="twitter:card" content="summary_large_image" />
       <link
         href="https://fonts.googleapis.com/css?family=Raleway:700i,900i&amp;display=swap"
