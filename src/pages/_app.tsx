@@ -14,6 +14,10 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1;
     color: ${color.text};
   }
+
+  p {
+    line-height: 1.5;
+  }
 `
 
 export default ({ Component, pageProps }) => (
