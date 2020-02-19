@@ -16,8 +16,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: ${color.bg};
+  height: ${window.innerHeight};
 `
 
 const Content = styled.section`

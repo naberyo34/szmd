@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Raleway', sans-serif;
     line-height: 1;
     color: ${color.text};
+    background: ${color.bg};
   }
 
   p {
