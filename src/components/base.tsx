@@ -1,10 +1,4 @@
 import Link from 'next/link'
-// import Header from '../components/header'
-// import ExtLink from '../components/ext-link'
-// import Features from '../components/features'
-// import GitHub from '../components/svgs/github'
-// import sharedStyles from '../styles/shared.module.css'
-
 import styled, { css } from 'styled-components'
 
 const width = {
@@ -41,6 +35,7 @@ const AnimateBg = styled.div`
       height: 200px;
     }
   }
+  padding: 20px;
   min-width: ${width.iphone5};
   animation: shrink 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 `
@@ -75,7 +70,7 @@ const Content = styled.section`
 `
 
 const Heading = styled.h2`
-  margin-top: -0.5em;
+  margin: -0.5em 0 0 8px;
   font-size: 20rem;
   font-weight: 900;
   letter-spacing: -0.15em;
@@ -83,7 +78,7 @@ const Heading = styled.h2`
     font-size: 24vw;
   `}
   ${mq.min`
-    font-size: 10rem;
+    font-size: 8rem;
   `}
 `
 
@@ -109,6 +104,47 @@ const MenuItem = styled.li`
   }
 `
 
+const HeaderWrapper = styled.div`
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: ${width.iphone5};
+  visibility: hidden;
+  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
+`
+
+const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+  width: 1000px;
+  color: ${color.content};
+`
+
+const HeaderIcon = styled.h1`
+  display: inline-block;
+  font-size: 2.4rem;
+  font-weight: 900;
+  letter-spacing: -0.15em;
+  transition: 0.2s;
+  &:hover {
+    color: #333;
+  }
+`
+
+const HeaderMenu = styled.nav`
+  font-size: 1.2rem;
+`
+
 const Footer = styled.footer`
   min-width: ${width.iphone5};
   padding-top: 200px;
@@ -130,47 +166,26 @@ const LinkText = styled.a`
   text-decoration: none;
 `
 
-const Author = styled.section`
-  margin: 200px auto 0 auto;
-  padding: 0 20px 40px 20px;
-  background: ${color.window};
-  border-radius: 20px;
-  text-align: center;
-`
-
-const AuthorIcon = styled.img`
-  position: relative;
-  top: -100px;
-`
-
-const AuthorName = styled.h3`
-  margin-top: -100px;
-  font-size: 4.8rem;
-`
-
-const AuthorDescription = styled.p`
-  margin-top: 40px;
-  font-size: 1.6rem;
-  ${mq.sp`
-    text-align: left;
-  `}
-`
-
-export default () => (
+const Base = props => (
   <>
-    <AnimateBg />
+    <AnimateBg>
+      <HeaderWrapper>
+        <Header>
+          <HeaderIcon>
+            <Link href="/">
+              <LinkText href="/">SZMD</LinkText>
+            </Link>
+          </HeaderIcon>
+          <HeaderMenu>
+            <p>MENU</p>
+          </HeaderMenu>
+        </Header>
+      </HeaderWrapper>
+    </AnimateBg>
     <Wrapper>
       <Content>
-        <Heading>ABOUT</Heading>
-        <Author>
-          <AuthorIcon src="/about_icon.png" alt="tamaのアイコン" width="200" />
-          <AuthorName>tama</AuthorName>
-          <AuthorDescription>
-            平日は駆け出しエンジニア、週末は趣味でイラストやデザインをやっています。
-            <br />
-            音楽とカレーが好きです。
-          </AuthorDescription>
-        </Author>
+        {props.heading ? <Heading>{props.heading}</Heading> : <></>}
+        {props.children}
       </Content>
     </Wrapper>
     <Footer>
@@ -202,3 +217,5 @@ export default () => (
     </Footer>
   </>
 )
+
+export default Base

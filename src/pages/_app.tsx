@@ -10,13 +10,15 @@ const color = {
 const GlobalStyle = createGlobalStyle`
   html {
     font-size: 62.5%;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', 'Noto Sans JP', sans-serif;
+    font-style: italic;
     line-height: 1;
     color: ${color.text};
     background: ${color.bg};
   }
 
   p {
+    font-style: normal;
     line-height: 1.5;
   }
 `
@@ -36,7 +38,7 @@ export default ({ Component, pageProps }) => (
       <meta name="twitter:site" content="@momochitama" />
       <meta name="twitter:card" content="summary_large_image" />
       <link
-        href="https://fonts.googleapis.com/css?family=Raleway:700i,900i&amp;display=swap"
+        href="https://fonts.googleapis.com/css?family=Noto+Sans+JP|Raleway:700i,900i&display=swap"
         rel="stylesheet"
       />
     </Head>

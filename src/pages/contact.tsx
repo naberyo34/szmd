@@ -9,6 +9,9 @@ import Twitter from '../components/svgs/twitter'
 import Envelope from '../components/svgs/envelope'
 import LinkedIn from '../components/svgs/linkedin'
 
+import styled, { css } from 'styled-components'
+import Base from '../components/base'
+
 const contacts = [
   {
     Comp: Twitter,
@@ -33,8 +36,7 @@ const contacts = [
 ]
 
 export default () => (
-  <>
-    <Header titlePre="Contact" />
+  <Base heading="CONTACT">
     <div className={sharedStyles.layout}>
       <div className={contactStyles.avatar}>
         <img src="/avatar.png" alt="avatar with letters JJ" height={60} />
@@ -57,5 +59,5 @@ export default () => (
         })}
       </div>
     </div>
-  </>
+  </Base>
 )

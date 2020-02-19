@@ -1,13 +1,13 @@
-import Link from 'next/link'
-import Header from '../../components/header'
+import blogStyles from '../styles/blog.module.css'
+import sharedStyles from '../styles/shared.module.css'
 
-import blogStyles from '../../styles/blog.module.css'
-import sharedStyles from '../../styles/shared.module.css'
+import { getBlogLink, getDateStr, postIsReady } from '../lib/blog-helpers'
+import { textBlock } from '../lib/notion/renderers'
+import getNotionUsers from '../lib/notion/getNotionUsers'
+import getIllustIndex from '../lib/notion/getIllustIndex'
 
-import { getBlogLink, getDateStr, postIsReady } from '../../lib/blog-helpers'
-import { textBlock } from '../../lib/notion/renderers'
-import getNotionUsers from '../../lib/notion/getNotionUsers'
-import getIllustIndex from '../../lib/notion/getIllustIndex'
+import styled, { css } from 'styled-components'
+import Base from '../components/base'
 
 export async function unstable_getStaticProps() {
   const postsTable = await getIllustIndex()
@@ -46,10 +46,8 @@ export async function unstable_getStaticProps() {
 
 export default ({ posts = [] }) => {
   return (
-    <>
-      <Header titlePre="Illust" />
+    <Base heading="WORKS">
       <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
-        <h1>Illust</h1>
         {posts.length === 0 && (
           <p className={blogStyles.noPosts}>There are no posts yet</p>
         )}
@@ -68,6 +66,6 @@ export default ({ posts = [] }) => {
           })}
         </div>
       </div>
-    </>
+    </Base>
   )
 }
