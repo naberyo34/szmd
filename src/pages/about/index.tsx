@@ -5,7 +5,25 @@ import Link from 'next/link'
 // import GitHub from '../components/svgs/github'
 // import sharedStyles from '../styles/shared.module.css'
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+
+const width = {
+  iphone5: '320px',
+  ipad: '768px',
+}
+
+const mq = {
+  sp: (...args) => css`
+    @media (max-width: ${width.ipad}) {
+      ${css(...args)};
+    }
+  `,
+  min: (...args) => css`
+    @media (max-width: ${width.iphone5}) {
+      ${css(...args)};
+    }
+  `,
+}
 
 const color = {
   content: '#fff',
@@ -23,7 +41,7 @@ const AnimateBg = styled.div`
       height: 200px;
     }
   }
-  width: 100vw;
+  min-width: ${width.iphone5};
   animation: shrink 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 `
 
@@ -31,6 +49,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: ${width.iphone5};
   background: ${color.content};
 `
 
@@ -46,8 +65,13 @@ const Content = styled.section`
     }
   }
   width: 1000px;
+  padding: 0 8px;
   visibility: hidden;
   animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
+  ${mq.sp`
+    width: 100vw;
+    min-width: ${width.iphone5};
+  `}
 `
 
 const Heading = styled.h2`
@@ -55,6 +79,12 @@ const Heading = styled.h2`
   font-size: 20rem;
   font-weight: 900;
   letter-spacing: -0.15em;
+  ${mq.sp`
+    font-size: 24vw;
+  `}
+  ${mq.min`
+    font-size: 10rem;
+  `}
 `
 
 const Nav = styled.nav`
@@ -80,11 +110,12 @@ const MenuItem = styled.li`
 `
 
 const Footer = styled.footer`
+  min-width: ${width.iphone5};
   padding-top: 200px;
   padding-bottom: 10px;
   color: ${color.bg};
   background: ${color.content};
-  border-bottom: 10px solid ${color.bg};
+  border-bottom: 8px solid ${color.bg};
   text-align: center;
 `
 
@@ -101,8 +132,7 @@ const LinkText = styled.a`
 
 const Author = styled.section`
   margin: 200px auto 0 auto;
-  padding-bottom: 40px;
-  width: 800px;
+  padding: 0 20px 40px 20px;
   background: ${color.window};
   border-radius: 20px;
   text-align: center;
@@ -121,6 +151,9 @@ const AuthorName = styled.h3`
 const AuthorDescription = styled.p`
   margin-top: 40px;
   font-size: 1.6rem;
+  ${mq.sp`
+    text-align: left;
+  `}
 `
 
 export default () => (
@@ -143,11 +176,6 @@ export default () => (
     <Footer>
       <Nav>
         <Menu>
-          <MenuItem>
-            <Link href="/">
-              <LinkText href="/">TOP</LinkText>
-            </Link>
-          </MenuItem>
           <MenuItem>
             <Link href="/about">
               <LinkText href="/about">ABOUT</LinkText>
