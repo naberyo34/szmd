@@ -8,7 +8,6 @@ import Link from 'next/link'
 import styled from 'styled-components'
 
 const color = {
-  text: '#333',
   content: '#fff',
   window: '#fafafa',
   bg: '#f6d365',
