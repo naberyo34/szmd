@@ -7,16 +7,11 @@ import Link from 'next/link'
 
 import styled from 'styled-components'
 
-const color = {
-  text: '#333',
-  bg: '#f6d365',
-}
-
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: ${window.innerHeight};
+  height: 100vh;
 `
 
 const Content = styled.section`

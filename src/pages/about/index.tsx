@@ -9,6 +9,7 @@ import styled from 'styled-components'
 
 const color = {
   text: '#333',
+  content: '#fff',
   window: '#fafafa',
   bg: '#f6d365',
 }
@@ -23,12 +24,7 @@ const AnimateBg = styled.div`
       height: 200px;
     }
   }
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100vw;
-  background: ${color.bg};
   animation: shrink 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 `
 
@@ -36,6 +32,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background: ${color.content};
 `
 
 const Content = styled.section`
@@ -55,7 +52,7 @@ const Content = styled.section`
 `
 
 const Heading = styled.h2`
-  margin-top: 0.5em;
+  margin-top: -0.5em;
   font-size: 20rem;
   font-weight: 900;
   letter-spacing: -0.15em;
@@ -67,8 +64,6 @@ const Nav = styled.nav`
 `
 
 const Menu = styled.ul`
-  position: fixed;
-  bottom: 20px;
   display: flex;
 `
 
@@ -86,10 +81,17 @@ const MenuItem = styled.li`
 `
 
 const Footer = styled.footer`
-  margin-top: 100px;
+  padding-top: 200px;
   padding-bottom: 10px;
   color: ${color.bg};
+  background: ${color.content};
+  border-bottom: 10px solid ${color.bg};
   text-align: center;
+`
+
+const Copyright = styled.small`
+  display: inline-block;
+  margin-top: 10px;
 `
 
 // 諸々の事情でLinkに直接スタイルを当てることができない
@@ -140,7 +142,36 @@ export default () => (
       </Content>
     </Wrapper>
     <Footer>
-      <small>Copyright (C) SZMD All rights reserved.</small>
+      <Nav>
+        <Menu>
+          <MenuItem>
+            <Link href="/">
+              <LinkText href="/">TOP</LinkText>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="/about">
+              <LinkText href="/about">ABOUT</LinkText>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="/blog">
+              <LinkText href="/blog">BLOG</LinkText>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="/works">
+              <LinkText href="/works">WORKS</LinkText>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="/contact">
+              <LinkText href="/contact">CONTACT</LinkText>
+            </Link>
+          </MenuItem>
+        </Menu>
+      </Nav>
+      <Copyright>Copyright (C) SZMD All rights reserved.</Copyright>
     </Footer>
   </>
 )
