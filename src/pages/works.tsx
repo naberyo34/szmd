@@ -1,7 +1,6 @@
 import { postIsReady } from '../lib/blog-helpers'
 import getNotionUsers from '../lib/notion/getNotionUsers'
 import getWorksIndex from '../lib/notion/getWorksIndex'
-
 import styled, { css } from 'styled-components'
 import Base from '../components/base'
 
