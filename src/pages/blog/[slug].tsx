@@ -1,15 +1,16 @@
 import React from 'react'
 import Head from 'next/head'
-import Header from '../../components/header'
 import Heading from '../../components/heading'
 import components from '../../components/dynamic'
 import ReactJSXParser from '@zeit/react-jsx-parser'
-import blogStyles from '../../styles/blog.module.css'
 import { textBlock } from '../../lib/notion/renderers'
 import getPageData from '../../lib/notion/getPageData'
 import getBlogIndex from '../../lib/notion/getBlogIndex'
 import getNotionUsers from '../../lib/notion/getNotionUsers'
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers'
+
+import styled, { css } from 'styled-components'
+import Base from '../../components/base'
 
 // Get the data for each blog post
 export async function unstable_getStaticProps({ params: { slug } }) {
@@ -72,19 +73,12 @@ const RenderPost = ({ post, redirect }) => {
   }
 
   return (
-    <>
-      <Header titlePre={post.Page} />
-      <div className={blogStyles.post}>
+    <Base>
+      <div>
         <h1>{post.Page || ''}</h1>
-        {post.Authors.length > 0 && (
-          <div className="authors">By: {post.Authors.join(' ')}</div>
-        )}
         {post.Date && (
           <div className="posted">Posted: {getDateStr(post.Date)}</div>
         )}
-
-        <hr />
-
         {(!post.content || post.content.length === 0) && (
           <p>This post has no content</p>
         )}
@@ -253,7 +247,7 @@ const RenderPost = ({ post, redirect }) => {
           return toRender
         })}
       </div>
-    </>
+    </Base>
   )
 }
 

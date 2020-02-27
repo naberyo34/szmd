@@ -1,67 +1,137 @@
 import Link from 'next/link'
-import Header from '../components/header'
-import ExtLink from '../components/ext-link'
-import Features from '../components/features'
-import GitHub from '../components/svgs/github'
-import sharedStyles from '../styles/shared.module.css'
+import styled, { css } from 'styled-components'
+
+const width = {
+  iphone5: '320px',
+  ipad: '768px',
+}
+
+const mq = {
+  sp: (...args) => css`
+    @media (max-width: ${width.ipad}) {
+      ${css(...args)};
+    }
+  `,
+  min: (...args) => css`
+    @media (max-width: ${width.iphone5}) {
+      ${css(...args)};
+    }
+  `,
+}
+
+const Wrapper = styled.div`
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: ${width.iphone5};
+  height: calc(100vh - 40px);
+  visibility: hidden;
+  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+`
+
+const Content = styled.section`
+  text-align: center;
+`
+
+const Title = styled.h1`
+  position: relative;
+  left: -0.05em;
+  font-size: 20rem;
+  font-weight: 900;
+  letter-spacing: -0.15em;
+  ${mq.sp`
+    font-size: 32vw;
+  `}
+  ${mq.min`
+    font-size: 10rem;
+  `}
+`
+const Address = styled.h2`
+  position: relative;
+  top: -1em;
+  font-size: 2.4rem;
+  font-weight: 700;
+  ${mq.sp`
+    font-size: 4vw;
+  `}
+  ${mq.min`
+    font-size: 1.25rem;
+  `}
+`
+
+const Footer = styled.footer`
+  min-width: ${width.iphone5};
+  height: 40px;
+`
+
+const Nav = styled.nav`
+  display: flex;
+  justify-content: center;
+`
+
+const Menu = styled.ul`
+  display: flex;
+`
+
+const MenuItem = styled.li`
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-left: 20px;
+  transition: 0.2s;
+  &:hover {
+    opacity: 0.4;
+  }
+  &:first-child {
+    margin-left: 0;
+  }
+`
+
+// 諸々の事情でLinkに直接スタイルを当てることができない
+const LinkText = styled.a`
+  color: inherit;
+  text-decoration: none;
+`
 
 export default () => (
   <>
-    <Header titlePre="Home" />
-    <div className={sharedStyles.layout}>
-      <img
-        src="/zeit-and-notion.png"
-        height="85"
-        width="250"
-        alt="ZEIT + Notion"
-      />
-      <h1>My Notion Blog</h1>
-      <h2>
-        Blazing Fast Notion Blog with Next.js'{' '}
-        <ExtLink
-          href="https://github.com/zeit/next.js/issues/9524"
-          className="dotted"
-          style={{ color: 'inherit' }}
-        >
-          SSG
-        </ExtLink>
-      </h2>
-
-      <Features />
-
-      <div className="explanation">
-        <p>
-          This is a statically generated{' '}
-          <ExtLink href="https://nextjs.org">Next.js</ExtLink> site with a{' '}
-          <ExtLink href="https://notion.so">Notion</ExtLink> powered blog that
-          is deployed with <ExtLink href="https://zeit.co">ZEIT</ExtLink>. It
-          leverages some upcoming features in Next.js like{' '}
-          <ExtLink href="https://github.com/zeit/next.js/issues/9524">
-            SSG support
-          </ExtLink>{' '}
-          and{' '}
-          <ExtLink href="https://github.com/zeit/next.js/issues/8626">
-            built-in CSS support
-          </ExtLink>{' '}
-          which allow us to achieve all of the benefits listed above including
-          blazing fast speeds, great local editing experience, and always being
-          available!
-        </p>
-
-        <p>
-          Get started by creating a new page in Notion and clicking the deploy
-          button below. After you supply your token and the blog index id (the
-          page's id in Notion) we will automatically create the table for you!
-          See{' '}
-          <ExtLink href="https://github.com/ijjk/notion-blog#getting-blog-index-and-token">
-            here in the readme
-          </ExtLink>{' '}
-          for finding the new page's id. To get your token from Notion, login
-          and look for a cookie under www.notion.so with the name `token_v2`.
-          After finding your token and your blog's page id you should be good to
-          go!
-        </p>
-      </div>
-    </div>
+    <Wrapper>
+      <Content>
+        <div>
+          <Title>SZMD</Title>
+          <Address>szmd.jp</Address>
+        </div>
+      </Content>
+    </Wrapper>
+    <Footer>
+      <Nav>
+        <Menu>
+          <MenuItem>
+            <Link href="/about">
+              <LinkText href="/about">ABOUT</LinkText>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="/works">
+              <LinkText href="/works">WORKS</LinkText>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="/blog">
+              <LinkText href="/blog">BLOG</LinkText>
+            </Link>
+          </MenuItem>
+        </Menu>
+      </Nav>
+    </Footer>
   </>
 )

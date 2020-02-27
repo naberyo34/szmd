@@ -6,7 +6,7 @@ import { getPostPreview } from './getPostPreview'
 import { readFile, writeFile } from '../fs-helpers'
 import { BLOG_INDEX_ID, BLOG_INDEX_CACHE } from './server-constants'
 
-export default async function getProgramIndex(previews = true) {
+export default async function getWorksIndex(previews = true) {
   let postsTable: any = null
   const useCache = process.env.USE_CACHE === 'true'
   const cacheFile = `${BLOG_INDEX_CACHE}${previews ? '_previews' : ''}`
@@ -35,15 +35,13 @@ export default async function getProgramIndex(previews = true) {
       })
 
       // Parse table with posts
-      const illustTableBlock = values(data.recordMap.block).find(
+      const WorksTableBlock = values(data.recordMap.block).find(
         // 試しにハードコーディングしてみた ※環境変数で持たせたほうがいい
         (block: any) =>
-          block.value.id === 'f5972800-ba74-445f-8d62-0b05d1c50ece'
+          block.value.id === '22349c3e-6e31-4073-b6c9-08763fe1c4eb'
       )
 
-      console.log('illust', illustTableBlock)
-
-      postsTable = await getTableData(illustTableBlock, true)
+      postsTable = await getTableData(WorksTableBlock, true)
     } catch (err) {
       console.warn(
         // テーブルを取得できなかった場合は勝手にUntitledのテーブルが新規作成される

@@ -3,7 +3,7 @@ import Slugger from 'github-slugger'
 import queryCollection from './queryCollection'
 import { normalizeSlug } from '../blog-helpers'
 
-// getIllustIndexで取得してきたdata.recordMap.block.collection_view を綺麗な配列オブジェクトに整形する
+// getWorksIndexで取得してきたdata.recordMap.block.collection_view を綺麗な配列オブジェクトに整形する
 export default async function loadTable(collectionBlock: any, isPosts = false) {
   const slugger = new Slugger()
 
@@ -102,7 +102,6 @@ export default async function loadTable(collectionBlock: any, isPosts = false) {
       table.push(row)
     }
   }
-  // この時点でめちゃくちゃわかりやすい形に整形されている
-  console.log('table', table)
+
   return table
 }

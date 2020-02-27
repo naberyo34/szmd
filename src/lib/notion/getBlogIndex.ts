@@ -43,8 +43,6 @@ export default async function getBlogIndex(previews = true) {
           block.value.id === '17e7d2d9-5696-4e3f-b56b-65353bf76690'
       )
 
-      console.log('posts', tableBlock)
-
       postsTable = await getTableData(tableBlock, true)
     } catch (err) {
       console.warn(

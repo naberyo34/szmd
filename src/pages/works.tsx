@@ -1,14 +1,12 @@
-import Link from 'next/link'
-
-import { getBlogLink, getDateStr, postIsReady } from '../../lib/blog-helpers'
-import getNotionUsers from '../../lib/notion/getNotionUsers'
-import getBlogIndex from '../../lib/notion/getBlogIndex'
+import { postIsReady } from '../lib/blog-helpers'
+import getNotionUsers from '../lib/notion/getNotionUsers'
+import getWorksIndex from '../lib/notion/getWorksIndex'
 
 import styled, { css } from 'styled-components'
-import Base from '../../components/base'
+import Base from '../components/base'
 
 export async function unstable_getStaticProps() {
-  const postsTable = await getBlogIndex()
+  const postsTable = await getWorksIndex()
 
   const authorsToGet: Set<string> = new Set()
   const posts: any[] = Object.keys(postsTable)
@@ -42,20 +40,17 @@ export async function unstable_getStaticProps() {
 
 export default ({ posts = [] }) => {
   return (
-    <Base heading="BLOG">
+    <Base heading="WORKS">
       {posts.length === 0 && <p>There are no posts yet</p>}
       {posts.map(post => {
         return (
-          <div key={post.Slug}>
-            <h3>
-              <Link href="/blog/[slug]" as={getBlogLink(post.Slug)}>
-                <a>{post.Page}</a>
-              </Link>
-            </h3>
-            {post.Date && (
-              <div className="posted">Posted: {getDateStr(post.Date)}</div>
-            )}
-          </div>
+          // コンテンツの中身が空だとapiがnullになって画像が表示されないらしい
+          <img
+            key={post.id}
+            src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
+            alt={post.Page}
+            width="100"
+          />
         )
       })}
     </Base>
