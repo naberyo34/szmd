@@ -48,7 +48,6 @@ export default ({ posts = [] }) => {
         return (
           // コンテンツの中身が空だとapiがnullになって画像が表示されないらしい
           <img
-            className="WorksThumb"
             key={post.id}
             src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
             alt={post.Page}
