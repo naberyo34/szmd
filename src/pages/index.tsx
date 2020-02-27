@@ -1,10 +1,4 @@
 import Link from 'next/link'
-// import Header from '../components/header'
-// import ExtLink from '../components/ext-link'
-// import Features from '../components/features'
-// import GitHub from '../components/svgs/github'
-// import sharedStyles from '../styles/shared.module.css'
-
 import styled, { css } from 'styled-components'
 
 const width = {
@@ -127,18 +121,13 @@ export default () => (
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link href="/blog">
-              <LinkText href="/blog">BLOG</LinkText>
-            </Link>
-          </MenuItem>
-          <MenuItem>
             <Link href="/works">
               <LinkText href="/works">WORKS</LinkText>
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link href="/contact">
-              <LinkText href="/contact">CONTACT</LinkText>
+            <Link href="/blog">
+              <LinkText href="/blog">BLOG</LinkText>
             </Link>
           </MenuItem>
         </Menu>

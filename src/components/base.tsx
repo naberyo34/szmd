@@ -60,7 +60,7 @@ const Content = styled.section`
     }
   }
   width: 1000px;
-  padding: 0 8px;
+  padding: 0 16px;
   visibility: hidden;
   animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
   ${mq.sp`
@@ -197,18 +197,13 @@ const Base = props => (
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link href="/blog">
-              <LinkText href="/blog">BLOG</LinkText>
-            </Link>
-          </MenuItem>
-          <MenuItem>
             <Link href="/works">
               <LinkText href="/works">WORKS</LinkText>
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link href="/contact">
-              <LinkText href="/contact">CONTACT</LinkText>
+            <Link href="/blog">
+              <LinkText href="/blog">BLOG</LinkText>
             </Link>
           </MenuItem>
         </Menu>

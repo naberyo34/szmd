@@ -26,10 +26,10 @@ const GlobalStyle = createGlobalStyle`
 export default ({ Component, pageProps }) => (
   <>
     <Head>
-      <title>SZMD</title>
+      <title>SZMD | tama portfolio page</title>
       <meta name="description" content="SZMD | tama portfolio page" />
       <meta property="og:url" content="https://szmd.jp" />
-      <meta property="og:title" content="SZMD" />
+      <meta property="og:title" content="SZMD | tama portfolio page" />
       <meta
         property="og:description"
         content="tama / Ryo Watanabe のポートフォリオ"

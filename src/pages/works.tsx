@@ -1,16 +1,12 @@
-import blogStyles from '../styles/blog.module.css'
-import sharedStyles from '../styles/shared.module.css'
-
-import { getBlogLink, getDateStr, postIsReady } from '../lib/blog-helpers'
-import { textBlock } from '../lib/notion/renderers'
+import { postIsReady } from '../lib/blog-helpers'
 import getNotionUsers from '../lib/notion/getNotionUsers'
-import getIllustIndex from '../lib/notion/getIllustIndex'
+import getWorksIndex from '../lib/notion/getWorksIndex'
 
 import styled, { css } from 'styled-components'
 import Base from '../components/base'
 
 export async function unstable_getStaticProps() {
-  const postsTable = await getIllustIndex()
+  const postsTable = await getWorksIndex()
 
   const authorsToGet: Set<string> = new Set()
   const posts: any[] = Object.keys(postsTable)
@@ -47,25 +43,19 @@ export async function unstable_getStaticProps() {
 export default ({ posts = [] }) => {
   return (
     <Base heading="WORKS">
-      <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
-        {posts.length === 0 && (
-          <p className={blogStyles.noPosts}>There are no posts yet</p>
-        )}
-        <div className="illustList">
-          {posts.map(post => {
-            return (
-              // コンテンツの中身が空だとapiがnullになって画像が表示されないらしい
-              <img
-                className="illustThumb"
-                key={post.id}
-                src={`/api/asset?assetUrl=${post.Illust}&blockId=${post.id}`}
-                alt="An image from Notion"
-                width="100"
-              />
-            )
-          })}
-        </div>
-      </div>
+      {posts.length === 0 && <p>There are no posts yet</p>}
+      {posts.map(post => {
+        return (
+          // コンテンツの中身が空だとapiがnullになって画像が表示されないらしい
+          <img
+            className="WorksThumb"
+            key={post.id}
+            src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
+            alt={post.Page}
+            width="100"
+          />
+        )
+      })}
     </Base>
   )
 }

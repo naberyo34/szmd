@@ -1,10 +1,6 @@
 import Link from 'next/link'
 
-import blogStyles from '../../styles/blog.module.css'
-import sharedStyles from '../../styles/shared.module.css'
-
 import { getBlogLink, getDateStr, postIsReady } from '../../lib/blog-helpers'
-import { textBlock } from '../../lib/notion/renderers'
 import getNotionUsers from '../../lib/notion/getNotionUsers'
 import getBlogIndex from '../../lib/notion/getBlogIndex'
 
@@ -36,8 +32,6 @@ export async function unstable_getStaticProps() {
     post.Authors = post.Authors.map(id => users[id].full_name)
   })
 
-  posts.reverse() // 新しい記事を上に表示するため、postsを逆順にする
-
   return {
     props: {
       posts,
@@ -49,35 +43,21 @@ export async function unstable_getStaticProps() {
 export default ({ posts = [] }) => {
   return (
     <Base heading="BLOG">
-      <div className={`${sharedStyles.layout} ${blogStyles.blogIndex}`}>
-        {posts.length === 0 && (
-          <p className={blogStyles.noPosts}>There are no posts yet</p>
-        )}
-        {posts.map(post => {
-          return (
-            <div className={blogStyles.postPreview} key={post.Slug}>
-              <h3>
-                <Link href="/blog/[slug]" as={getBlogLink(post.Slug)}>
-                  <a>{post.Page}</a>
-                </Link>
-              </h3>
-              {post.Authors.length > 0 && (
-                <div className="authors">By: {post.Authors.join(' ')}</div>
-              )}
-              {post.Date && (
-                <div className="posted">Posted: {getDateStr(post.Date)}</div>
-              )}
-              <p>
-                {(!post.preview || post.preview.length === 0) &&
-                  'No preview available'}
-                {(post.preview || []).map((block, idx) =>
-                  textBlock(block, true, `${post.Slug}${idx}`)
-                )}
-              </p>
-            </div>
-          )
-        })}
-      </div>
+      {posts.length === 0 && <p>There are no posts yet</p>}
+      {posts.map(post => {
+        return (
+          <div key={post.Slug}>
+            <h3>
+              <Link href="/blog/[slug]" as={getBlogLink(post.Slug)}>
+                <a>{post.Page}</a>
+              </Link>
+            </h3>
+            {post.Date && (
+              <div className="posted">Posted: {getDateStr(post.Date)}</div>
+            )}
+          </div>
+        )
+      })}
     </Base>
   )
 }

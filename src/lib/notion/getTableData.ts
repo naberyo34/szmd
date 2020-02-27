@@ -102,7 +102,6 @@ export default async function loadTable(collectionBlock: any, isPosts = false) {
       table.push(row)
     }
   }
-  // この時点でめちゃくちゃわかりやすい形に整形されている
-  console.log('table', table)
+
   return table
 }
