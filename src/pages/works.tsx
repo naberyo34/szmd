@@ -30,8 +30,6 @@ export async function unstable_getStaticProps() {
     post.Authors = post.Authors.map(id => users[id].full_name)
   })
 
-  posts.reverse() // 新しい記事を上に表示するため、postsを逆順にする
-
   return {
     props: {
       posts,
