@@ -30,6 +30,9 @@ export default ({ Component, pageProps }) => (
       <meta name="description" content="SZMD | tama portfolio page" />
       <meta property="og:url" content="https://szmd.jp" />
       <meta property="og:title" content="SZMD | tama portfolio page" />
+      <meta property="og:site_name" content="SZMD" />
+      <meta property="og:locale" content="ja_JP" />
+      <meta property="og:type" content="website" />
       <meta
         property="og:description"
         content="tama / Ryo Watanabe のポートフォリオ"
@@ -37,6 +40,7 @@ export default ({ Component, pageProps }) => (
       <meta property="og:image" content="/og-image.png" />
       <meta name="twitter:site" content="@momochitama" />
       <meta name="twitter:card" content="summary_large_image" />
+      <link rel="canonical" href="https://szmd.jp" />
       <link
         href="https://fonts.googleapis.com/css?family=Noto+Sans+JP|Raleway:700i,900i&display=swap"
         rel="stylesheet"
