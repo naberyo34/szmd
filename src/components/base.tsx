@@ -177,7 +177,7 @@ const Base = props => (
             </Link>
           </HeaderIcon>
           <HeaderMenu>
-            <p>MENU</p>
+            <span>MENU</span>
           </HeaderMenu>
         </Header>
       </HeaderWrapper>
