@@ -56,6 +56,7 @@ const HeaderMenu = styled.span`
   font-size: 1.2rem;
   font-family: 'Raleway', sans-serif;
   font-style: italic;
+  line-height: 2.4rem;
 `
 
 // 諸々の事情でLinkに直接スタイルを当てることができない
