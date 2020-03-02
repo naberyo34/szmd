@@ -10,7 +10,7 @@ import getNotionUsers from '../../lib/notion/getNotionUsers'
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers'
 
 import styled from 'styled-components'
-import Base from '../../components/base'
+import ArticleBase from '../../components/articleBase'
 
 // Get the data for each blog post
 export async function unstable_getStaticProps({ params: { slug } }) {
@@ -113,7 +113,7 @@ const RenderPost = ({ post, redirect }) => {
   }
 
   return (
-    <Base>
+    <ArticleBase>
       <Article>
         {post.Date && <Date>{getDateStr(post.Date)}</Date>}
         <h1>{post.Page || ''}</h1>
@@ -285,7 +285,7 @@ const RenderPost = ({ post, redirect }) => {
           return toRender
         })}
       </Article>
-    </Base>
+    </ArticleBase>
   )
 }
 
