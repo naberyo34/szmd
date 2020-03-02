@@ -49,26 +49,38 @@ export async function unstable_getStaticPaths() {
 
 const listTypes = new Set(['bulleted_list', 'numbered_list'])
 
-const Title = styled.h1`
-  font-size: 4rem;
-  font-weight: bold;
+const color = {
+  text: '#333',
+  bg: '#f6d365',
+}
+
+const Date = styled.span`
+  font-size: 1.6rem;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
+  color: ${color.bg};
 `
 
 const Article = styled.article`
   padding-top: 1.6rem;
 
+  h1,
+  h2,
+  h3 {
+    margin-top: 1em;
+    font-weight: bold;
+  }
+
   h1 {
     font-size: 3.6rem;
-    font-weight: bold;
   }
 
   h2 {
     font-size: 3.2rem;
-    font-weight: bold;
   }
 
   h3 {
-    font-size: 2.4rem;
+    font-size: 2.8rem;
   }
 
   p {
@@ -103,8 +115,8 @@ const RenderPost = ({ post, redirect }) => {
   return (
     <Base>
       <Article>
-        <Title>{post.Page || ''}</Title>
-        {post.Date && <span>{getDateStr(post.Date)}</span>}
+        {post.Date && <Date>{getDateStr(post.Date)}</Date>}
+        <h1>{post.Page || ''}</h1>
         {(!post.content || post.content.length === 0) && (
           <p>コンテンツがありません</p>
         )}
