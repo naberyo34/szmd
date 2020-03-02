@@ -2,12 +2,9 @@ export const getBlogLink = (slug: string) => {
   return `/blog/${slug}`
 }
 
+// 日付の整形 ja-JPで日本式の日付表記が取れる
 export const getDateStr = date => {
-  return new Date(date).toLocaleString('en-US', {
-    month: 'long',
-    day: '2-digit',
-    year: 'numeric',
-  })
+  return new Date(date).toLocaleDateString('ja-JP')
 }
 
 export const postIsReady = (post: any) => {

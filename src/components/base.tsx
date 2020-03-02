@@ -1,5 +1,7 @@
-import Link from 'next/link'
 import styled, { css } from 'styled-components'
+
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 const width = {
   iphone5: '320px',
@@ -35,7 +37,6 @@ const AnimateBg = styled.div`
       height: 200px;
     }
   }
-  padding: 20px;
   min-width: ${width.iphone5};
   animation: shrink 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 `
@@ -84,113 +85,10 @@ const Heading = styled.h2`
   `}
 `
 
-const Nav = styled.nav`
-  display: flex;
-  justify-content: center;
-`
-
-const Menu = styled.ul`
-  display: flex;
-`
-
-const MenuItem = styled.li`
-  font-size: 1.6rem;
-  font-family: 'Raleway', sans-serif;
-  font-style: italic;
-  font-weight: 700;
-  margin-left: 20px;
-  transition: 0.2s;
-  &:hover {
-    opacity: 0.4;
-  }
-  &:first-child {
-    margin-left: 0;
-  }
-`
-
-const HeaderWrapper = styled.div`
-  @keyframes fade {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: ${width.iphone5};
-  visibility: hidden;
-  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
-`
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  width: 1000px;
-  color: ${color.content};
-`
-
-const HeaderIcon = styled.h1`
-  display: inline-block;
-  font-size: 2.4rem;
-  font-family: 'Raleway', sans-serif;
-  font-style: italic;
-  font-weight: 900;
-  letter-spacing: -0.15em;
-  transition: 0.2s;
-  &:hover {
-    color: #333;
-  }
-`
-
-const HeaderMenu = styled.nav`
-  font-size: 1.2rem;
-  font-family: 'Raleway', sans-serif;
-  font-style: italic;
-`
-
-const Footer = styled.footer`
-  min-width: ${width.iphone5};
-  padding-top: 200px;
-  padding-bottom: 10px;
-  color: ${color.bg};
-  background: ${color.content};
-  border-bottom: 8px solid ${color.bg};
-  text-align: center;
-`
-
-const Copyright = styled.small`
-  display: inline-block;
-  margin-top: 10px;
-  font-family: 'Raleway', sans-serif;
-  font-style: italic;
-`
-
-// 諸々の事情でLinkに直接スタイルを当てることができない
-const LinkText = styled.a`
-  color: inherit;
-  text-decoration: none;
-`
-
 const Base = props => (
   <>
     <AnimateBg>
-      <HeaderWrapper>
-        <Header>
-          <HeaderIcon>
-            <Link href="/">
-              <LinkText href="/">SZMD</LinkText>
-            </Link>
-          </HeaderIcon>
-          <HeaderMenu>
-            <span>MENU</span>
-          </HeaderMenu>
-        </Header>
-      </HeaderWrapper>
+      <Header />
     </AnimateBg>
     <Wrapper>
       <Content>
@@ -198,28 +96,7 @@ const Base = props => (
         {props.children}
       </Content>
     </Wrapper>
-    <Footer>
-      <Nav>
-        <Menu>
-          <MenuItem>
-            <Link href="/about">
-              <LinkText href="/about">ABOUT</LinkText>
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href="/works">
-              <LinkText href="/works">WORKS</LinkText>
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href="/blog">
-              <LinkText href="/blog">BLOG</LinkText>
-            </Link>
-          </MenuItem>
-        </Menu>
-      </Nav>
-      <Copyright>Copyright (C) SZMD All rights reserved.</Copyright>
-    </Footer>
+    <Footer />
   </>
 )
 
