@@ -72,6 +72,8 @@ const Content = styled.section`
 const Heading = styled.h2`
   margin: -0.5em 0 0 8px;
   font-size: 20rem;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;
   ${mq.sp`
@@ -93,6 +95,8 @@ const Menu = styled.ul`
 
 const MenuItem = styled.li`
   font-size: 1.6rem;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
   font-weight: 700;
   margin-left: 20px;
   transition: 0.2s;
@@ -133,6 +137,8 @@ const Header = styled.header`
 const HeaderIcon = styled.h1`
   display: inline-block;
   font-size: 2.4rem;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;
   transition: 0.2s;
@@ -143,6 +149,8 @@ const HeaderIcon = styled.h1`
 
 const HeaderMenu = styled.nav`
   font-size: 1.2rem;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
 `
 
 const Footer = styled.footer`
@@ -158,6 +166,8 @@ const Footer = styled.footer`
 const Copyright = styled.small`
   display: inline-block;
   margin-top: 10px;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
 `
 
 // 諸々の事情でLinkに直接スタイルを当てることができない
@@ -177,7 +187,7 @@ const Base = props => (
             </Link>
           </HeaderIcon>
           <HeaderMenu>
-            <p>MENU</p>
+            <span>MENU</span>
           </HeaderMenu>
         </Header>
       </HeaderWrapper>

@@ -39,6 +39,8 @@ const AuthorIcon = styled.img`
 const AuthorName = styled.h3`
   margin-top: -100px;
   font-size: 4.8rem;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
 `
 
 const AuthorDescription = styled.p`

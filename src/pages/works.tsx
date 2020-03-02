@@ -40,7 +40,7 @@ export async function unstable_getStaticProps() {
 export default ({ posts = [] }) => {
   return (
     <Base heading="WORKS">
-      {posts.length === 0 && <p>There are no posts yet</p>}
+      {posts.length === 0 && <p>投稿がありません</p>}
       {posts.map(post => {
         return (
           // コンテンツの中身が空だとapiがnullになって画像が表示されないらしい

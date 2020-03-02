@@ -10,15 +10,13 @@ const color = {
 const GlobalStyle = createGlobalStyle`
   html {
     font-size: 62.5%;
-    font-family: 'Raleway', 'Noto Sans JP', sans-serif;
-    font-style: italic;
+    font-family: "ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN","游ゴシック",YuGothic,"メイリオ",Meiryo,sans-serif;
     line-height: 1;
     color: ${color.text};
     background: ${color.bg};
   }
 
   p {
-    font-style: normal;
     line-height: 1.5;
   }
 `
@@ -37,12 +35,12 @@ export default ({ Component, pageProps }) => (
         property="og:description"
         content="tama / Ryo Watanabe のポートフォリオ"
       />
-      <meta property="og:image" content="/og-image.png" />
+      <meta property="og:image" content="https://szmd.jp/og.png" />
       <meta name="twitter:site" content="@momochitama" />
       <meta name="twitter:card" content="summary_large_image" />
       <link rel="canonical" href="https://szmd.jp" />
       <link
-        href="https://fonts.googleapis.com/css?family=Noto+Sans+JP|Raleway:700i,900i&display=swap"
+        href="https://fonts.googleapis.com/css?family=Raleway:700i,900i&display=swap"
         rel="stylesheet"
       />
     </Head>
