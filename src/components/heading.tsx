@@ -1,3 +1,5 @@
+// 記事中のh1タグなどはここで整形される
+
 const collectText = (el, acc = []) => {
   if (el) {
     if (typeof el === 'string') acc.push(el)
@@ -18,9 +20,5 @@ export default ({ children: component, id }: { children: any; id?: any }) => {
       .replace(/[?!:]/g, '')
   }
 
-  return (
-    <a href={`#${id}`} id={id} style={{ color: 'inherit' }}>
-      {component}
-    </a>
-  )
+  return <>{component}</>
 }

@@ -9,7 +9,7 @@ import getBlogIndex from '../../lib/notion/getBlogIndex'
 import getNotionUsers from '../../lib/notion/getNotionUsers'
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers'
 
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import Base from '../../components/base'
 
 // Get the data for each blog post
@@ -49,6 +49,34 @@ export async function unstable_getStaticPaths() {
 
 const listTypes = new Set(['bulleted_list', 'numbered_list'])
 
+const Title = styled.h1`
+  font-size: 4rem;
+  font-weight: bold;
+`
+
+const Article = styled.article`
+  padding-top: 1.6rem;
+
+  h1 {
+    font-size: 3.6rem;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 3.2rem;
+    font-weight: bold;
+  }
+
+  h3 {
+    font-size: 2.4rem;
+  }
+
+  p {
+    margin-top: 1em;
+    font-size: 1.6rem;
+  }
+`
+
 const RenderPost = ({ post, redirect }) => {
   let listTagName: string | null = null
   let listLastId: string | null = null
@@ -74,13 +102,11 @@ const RenderPost = ({ post, redirect }) => {
 
   return (
     <Base>
-      <div>
-        <h1>{post.Page || ''}</h1>
-        {post.Date && (
-          <div className="posted">Posted: {getDateStr(post.Date)}</div>
-        )}
+      <Article>
+        <Title>{post.Page || ''}</Title>
+        {post.Date && <span>{getDateStr(post.Date)}</span>}
         {(!post.content || post.content.length === 0) && (
-          <p>This post has no content</p>
+          <p>コンテンツがありません</p>
         )}
 
         {(post.content || []).map((block, blockIdx) => {
@@ -246,7 +272,7 @@ const RenderPost = ({ post, redirect }) => {
           }
           return toRender
         })}
-      </div>
+      </Article>
     </Base>
   )
 }
