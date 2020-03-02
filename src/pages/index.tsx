@@ -47,6 +47,8 @@ const Title = styled.h1`
   position: relative;
   left: -0.05em;
   font-size: 20rem;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;
   ${mq.sp`
@@ -60,6 +62,8 @@ const Address = styled.h2`
   position: relative;
   top: -1em;
   font-size: 2.4rem;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
   font-weight: 700;
   ${mq.sp`
     font-size: 4vw;
@@ -85,6 +89,8 @@ const Menu = styled.ul`
 
 const MenuItem = styled.li`
   font-size: 1.6rem;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
   font-weight: 700;
   margin-left: 20px;
   transition: 0.2s;

@@ -1,6 +1,7 @@
 import Prism from 'prismjs'
 import 'prismjs/components/prism-jsx'
 
+// シンタックスハイライトを使うためのコードらしい
 const Code = ({ children, language = 'javascript' }) => {
   return (
     <>
@@ -23,11 +24,10 @@ const Code = ({ children, language = 'javascript' }) => {
 
         code {
           display: block;
-          padding: 0.8rem;
+          padding: 1em;
+          font-size: 1.6rem;
           line-height: 1.5;
           background: #f5f5f5;
-          font-size: 0.75rem;
-          border-radius: var(--radius);
         }
       `}</style>
     </>
