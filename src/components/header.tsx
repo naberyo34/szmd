@@ -13,6 +13,26 @@ const color = {
 }
 
 const HeaderWrapper = styled.div`
+  @keyframes shrink {
+    0% {
+      margin-bottom: calc(100vh);
+    }
+
+    100% {
+      margin-bottom: 136px;
+    }
+  }
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  min-width: ${width.iphone5};
+
+  animation: shrink 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+`
+
+const Header = styled.header`
   @keyframes fade {
     0% {
       opacity: 0;
@@ -24,19 +44,11 @@ const HeaderWrapper = styled.div`
     }
   }
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  min-width: ${width.iphone5};
-  visibility: hidden;
-  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
-`
-
-const Header = styled.header`
-  display: flex;
   justify-content: space-between;
   width: 1000px;
   color: ${color.content};
+  visibility: hidden;
+  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
 `
 
 const HeaderIcon = styled.h1`
