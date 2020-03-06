@@ -27,20 +27,6 @@ const color = {
   bg: '#f6d365',
 }
 
-const AnimateBg = styled.div`
-  @keyframes shrink {
-    0% {
-      height: 200vh;
-    }
-
-    100% {
-      height: 200px;
-    }
-  }
-  min-width: ${width.iphone5};
-  animation: shrink 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-`
-
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -87,9 +73,7 @@ const Heading = styled.h2`
 
 const Base = props => (
   <>
-    <AnimateBg>
-      <Header />
-    </AnimateBg>
+    <Header />
     <Wrapper>
       <Content>
         {props.heading ? <Heading>{props.heading}</Heading> : <></>}
