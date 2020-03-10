@@ -264,9 +264,7 @@ const RenderPost = ({ post, redirect }) => {
                   );
                 } else {
                   toRender.push(
-                    <components.Code key={id} language={language || ''}>
-                      {content}
-                    </components.Code>
+                    <components.Code key={id}>{content}</components.Code>
                   );
                 }
               }
