@@ -20,23 +20,24 @@ const mq = {
 }
 
 const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: ${width.iphone5};
+  height: calc(100vh - 40px);
+  visibility: hidden;
+  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+
   @keyframes fade {
     0% {
       opacity: 0;
     }
 
     100% {
-      opacity: 1;
       visibility: visible;
+      opacity: 1;
     }
   }
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: ${width.iphone5};
-  height: calc(100vh - 40px);
-  visibility: hidden;
-  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 `
 
 const Content = styled.section`
@@ -46,8 +47,8 @@ const Content = styled.section`
 const Title = styled.h1`
   position: relative;
   left: -0.05em;
-  font-size: 20rem;
   font-family: 'Raleway', sans-serif;
+  font-size: 20rem;
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;
@@ -61,8 +62,8 @@ const Title = styled.h1`
 const Address = styled.h2`
   position: relative;
   top: -1em;
-  font-size: 2.4rem;
   font-family: 'Raleway', sans-serif;
+  font-size: 2.4rem;
   font-style: italic;
   font-weight: 700;
   ${mq.sp`
@@ -88,11 +89,11 @@ const Menu = styled.ul`
 `
 
 const MenuItem = styled.li`
-  font-size: 1.6rem;
+  margin-left: 20px;
   font-family: 'Raleway', sans-serif;
+  font-size: 1.6rem;
   font-style: italic;
   font-weight: 700;
-  margin-left: 20px;
   transition: 0.2s;
   &:hover {
     opacity: 0.4;

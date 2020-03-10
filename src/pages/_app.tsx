@@ -9,8 +9,8 @@ const color = {
 
 const GlobalStyle = createGlobalStyle`
   html {
-    font-size: 62.5%;
     font-family: "ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN","游ゴシック",YuGothic,"メイリオ",Meiryo,sans-serif;
+    font-size: 62.5%;
     line-height: 1;
     color: ${color.text};
     background: ${color.bg};

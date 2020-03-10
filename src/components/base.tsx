@@ -29,23 +29,13 @@ const color = {
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   min-width: ${width.iphone5};
   background: ${color.content};
 `
 
 const Content = styled.section`
-  @keyframes fade {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
   width: 1000px;
   padding: 0 16px;
   visibility: hidden;
@@ -54,12 +44,23 @@ const Content = styled.section`
     width: 100vw;
     min-width: ${width.iphone5};
   `}
+
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 `
 
 const Heading = styled.h2`
   margin: -0.5em 0 0 8px;
-  font-size: 20rem;
   font-family: 'Raleway', sans-serif;
+  font-size: 20rem;
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;

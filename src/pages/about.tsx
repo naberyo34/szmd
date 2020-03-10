@@ -24,11 +24,11 @@ const color = {
 }
 
 const Author = styled.section`
-  margin: 200px auto 0 auto;
   padding: 0 20px 40px 20px;
+  margin: 200px auto 0 auto;
+  text-align: center;
   background: ${color.window};
   border-radius: 20px;
-  text-align: center;
 `
 
 const AuthorIcon = styled.img`
@@ -38,8 +38,8 @@ const AuthorIcon = styled.img`
 
 const AuthorName = styled.h3`
   margin-top: -100px;
-  font-size: 4.8rem;
   font-family: 'Raleway', sans-serif;
+  font-size: 4.8rem;
   font-style: italic;
 `
 

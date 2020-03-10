@@ -55,8 +55,8 @@ const color = {
 }
 
 const Date = styled.span`
-  font-size: 1.6rem;
   font-family: 'Raleway', sans-serif;
+  font-size: 1.6rem;
   font-style: italic;
   color: ${color.bg};
 `

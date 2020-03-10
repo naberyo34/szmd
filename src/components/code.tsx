@@ -23,8 +23,8 @@ const Code = ({ children, language = 'javascript' }) => {
         }
 
         code {
-          margin-top: 1em;
           display: block;
+          margin-top: 1em;
           padding: 1em;
           font-size: 1.6rem;
           line-height: 1.5;

@@ -17,9 +17,9 @@ const Footer = styled.footer`
   padding-top: 200px;
   padding-bottom: 10px;
   color: ${color.bg};
+  text-align: center;
   background: ${color.content};
   border-bottom: 8px solid ${color.bg};
-  text-align: center;
 `
 
 const Nav = styled.nav`
@@ -32,11 +32,11 @@ const Menu = styled.ul`
 `
 
 const MenuItem = styled.li`
-  font-size: 1.6rem;
+  margin-left: 20px;
   font-family: 'Raleway', sans-serif;
+  font-size: 1.6rem;
   font-style: italic;
   font-weight: 700;
-  margin-left: 20px;
   transition: 0.2s;
   &:hover {
     opacity: 0.4;
