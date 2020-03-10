@@ -6,19 +6,6 @@ const width = {
   ipad: '768px',
 };
 
-const mq = {
-  sp: (...args) => css`
-    @media (max-width: ${width.ipad}) {
-      ${css(...args)};
-    }
-  `,
-  min: (...args) => css`
-    @media (max-width: ${width.iphone5}) {
-      ${css(...args)};
-    }
-  `,
-};
-
 const color = {
   window: '#fafafa',
 };
@@ -46,9 +33,9 @@ const AuthorName = styled.h3`
 const AuthorDescription = styled.p`
   margin-top: 40px;
   font-size: 1.6rem;
-  ${mq.sp`
+  @media (max-width: ${width.ipad}) {
     text-align: left;
-  `}
+  }
 `;
 
 export default () => (

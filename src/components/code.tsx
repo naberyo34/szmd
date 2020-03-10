@@ -1,23 +1,18 @@
+import React from 'react';
 import Prism from 'prismjs';
-import '../lib/prism.css';
 import 'prismjs/components/prism-jsx';
 
 // シンタックスハイライトを使うためのコードらしい
-const Code = ({ children, language = 'javascript' }) => {
+const Code = ({ children }) => {
   return (
     <>
       <pre>
         <code
           dangerouslySetInnerHTML={{
-            __html: Prism.highlight(
-              children,
-              Prism.languages[language.toLowerCase()] ||
-                Prism.languages.javascript
-            ),
+            __html: Prism.highlight(children, Prism.languages.js, 'js'),
           }}
         />
       </pre>
-
       <style jsx>{`
         pre {
           tab-size: 2;

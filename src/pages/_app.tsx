@@ -1,5 +1,6 @@
 import React from 'react';
 import 'minireset.css';
+import '../lib/prism.css';
 import Head from 'next/head';
 import { createGlobalStyle } from 'styled-components';
 

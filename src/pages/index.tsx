@@ -6,19 +6,6 @@ const width = {
   ipad: '768px',
 };
 
-const mq = {
-  sp: (...args) => css`
-    @media (max-width: ${width.ipad}) {
-      ${css(...args)};
-    }
-  `,
-  min: (...args) => css`
-    @media (max-width: ${width.iphone5}) {
-      ${css(...args)};
-    }
-  `,
-};
-
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -52,13 +39,14 @@ const Title = styled.h1`
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;
-  ${mq.sp`
+  @media (max-width: ${width.ipad}) {
     font-size: 32vw;
-  `}
-  ${mq.min`
+  }
+  @media (max-width: ${width.iphone5}) {
     font-size: 10rem;
-  `}
+  }
 `;
+
 const Address = styled.h2`
   position: relative;
   top: -1em;
@@ -66,12 +54,12 @@ const Address = styled.h2`
   font-size: 2.4rem;
   font-style: italic;
   font-weight: 700;
-  ${mq.sp`
+  @media (max-width: ${width.ipad}) {
     font-size: 4vw;
-  `}
-  ${mq.min`
+  }
+  @media (max-width: ${width.iphone5}) {
     font-size: 1.25rem;
-  `}
+  }
 `;
 
 const Footer = styled.footer`

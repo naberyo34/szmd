@@ -8,19 +8,6 @@ const width = {
   ipad: '768px',
 };
 
-const mq = {
-  sp: (...args) => css`
-    @media (max-width: ${width.ipad}) {
-      ${css(...args)};
-    }
-  `,
-  min: (...args) => css`
-    @media (max-width: ${width.iphone5}) {
-      ${css(...args)};
-    }
-  `,
-};
-
 const color = {
   content: '#fff',
   window: '#fafafa',
@@ -40,10 +27,10 @@ const Content = styled.section`
   padding: 0 16px;
   visibility: hidden;
   animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
-  ${mq.sp`
+  @media (max-width: ${width.ipad}) {
     width: 100vw;
     min-width: ${width.iphone5};
-  `}
+  }
 
   @keyframes fade {
     0% {
@@ -64,12 +51,12 @@ const Heading = styled.h2`
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;
-  ${mq.sp`
+  @media (max-width: ${width.ipad}) {
     font-size: 24vw;
-  `}
-  ${mq.min`
+  }
+  @media (max-width: ${width.iphone5}) {
     font-size: 8rem;
-  `}
+  }
 `;
 
 const Base = props => (
