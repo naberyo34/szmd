@@ -87,6 +87,13 @@ const Article = styled.article`
     margin-top: 1em;
     font-size: 1.6rem;
   }
+
+  ul {
+    margin-top: 1em;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    list-style: square inside;
+  }
 `
 
 const RenderPost = ({ post, redirect }) => {
