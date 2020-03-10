@@ -1,11 +1,12 @@
-import 'minireset.css'
-import Head from 'next/head'
-import { createGlobalStyle } from 'styled-components'
+import React from 'react';
+import 'minireset.css';
+import Head from 'next/head';
+import { createGlobalStyle } from 'styled-components';
 
 const color = {
   text: '#333',
   bg: '#f6d365',
-}
+};
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -19,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
   p {
     line-height: 1.5;
   }
-`
+`;
 
 export default ({ Component, pageProps }) => (
   <>
@@ -47,4 +48,4 @@ export default ({ Component, pageProps }) => (
     <GlobalStyle />
     <Component {...pageProps} />
   </>
-)
+);

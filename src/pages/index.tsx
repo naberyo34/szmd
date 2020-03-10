@@ -1,10 +1,10 @@
-import Link from 'next/link'
-import styled, { css } from 'styled-components'
+import Link from 'next/link';
+import styled, { css } from 'styled-components';
 
 const width = {
   iphone5: '320px',
   ipad: '768px',
-}
+};
 
 const mq = {
   sp: (...args) => css`
@@ -17,7 +17,7 @@ const mq = {
       ${css(...args)};
     }
   `,
-}
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,11 +38,11 @@ const Wrapper = styled.div`
       opacity: 1;
     }
   }
-`
+`;
 
 const Content = styled.section`
   text-align: center;
-`
+`;
 
 const Title = styled.h1`
   position: relative;
@@ -58,7 +58,7 @@ const Title = styled.h1`
   ${mq.min`
     font-size: 10rem;
   `}
-`
+`;
 const Address = styled.h2`
   position: relative;
   top: -1em;
@@ -72,21 +72,21 @@ const Address = styled.h2`
   ${mq.min`
     font-size: 1.25rem;
   `}
-`
+`;
 
 const Footer = styled.footer`
   min-width: ${width.iphone5};
   height: 40px;
-`
+`;
 
 const Nav = styled.nav`
   display: flex;
   justify-content: center;
-`
+`;
 
 const Menu = styled.ul`
   display: flex;
-`
+`;
 
 const MenuItem = styled.li`
   margin-left: 20px;
@@ -101,13 +101,13 @@ const MenuItem = styled.li`
   &:first-child {
     margin-left: 0;
   }
-`
+`;
 
 // 諸々の事情でLinkに直接スタイルを当てることができない
 const LinkText = styled.a`
   color: inherit;
   text-decoration: none;
-`
+`;
 
 export default () => (
   <>
@@ -141,4 +141,4 @@ export default () => (
       </Nav>
     </Footer>
   </>
-)
+);

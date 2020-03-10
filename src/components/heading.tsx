@@ -2,23 +2,24 @@
 
 const collectText = (el, acc = []) => {
   if (el) {
-    if (typeof el === 'string') acc.push(el)
-    if (Array.isArray(el)) el.map(item => collectText(item, acc))
-    if (typeof el === 'object') collectText(el.props && el.props.children, acc)
+    if (typeof el === 'string') acc.push(el);
+    if (Array.isArray(el)) el.map(item => collectText(item, acc));
+    if (typeof el === 'object') collectText(el.props && el.props.children, acc);
   }
-  return acc.join('').trim()
-}
+
+  return acc.join('').trim();
+};
 
 export default ({ children: component, id }: { children: any; id?: any }) => {
-  const children = component.props.children || ''
-  let text = children
+  const children = component.props.children || '';
+  const text = children;
 
-  if (null == id) {
+  if (id == null) {
     id = collectText(text)
       .toLowerCase()
       .replace(/\s/g, '-')
-      .replace(/[?!:]/g, '')
+      .replace(/[?!:]/g, '');
   }
 
-  return <>{component}</>
-}
+  return <>{component}</>;
+};

@@ -1,10 +1,10 @@
-import styled, { css } from 'styled-components'
-import Base from '../components/base'
+import styled, { css } from 'styled-components';
+import Base from '../components/base';
 
 const width = {
   iphone5: '320px',
   ipad: '768px',
-}
+};
 
 const mq = {
   sp: (...args) => css`
@@ -17,11 +17,11 @@ const mq = {
       ${css(...args)};
     }
   `,
-}
+};
 
 const color = {
   window: '#fafafa',
-}
+};
 
 const Author = styled.section`
   padding: 0 20px 40px 20px;
@@ -29,19 +29,19 @@ const Author = styled.section`
   text-align: center;
   background: ${color.window};
   border-radius: 20px;
-`
+`;
 
 const AuthorIcon = styled.img`
   position: relative;
   top: -100px;
-`
+`;
 
 const AuthorName = styled.h3`
   margin-top: -100px;
   font-family: 'Raleway', sans-serif;
   font-size: 4.8rem;
   font-style: italic;
-`
+`;
 
 const AuthorDescription = styled.p`
   margin-top: 40px;
@@ -49,7 +49,7 @@ const AuthorDescription = styled.p`
   ${mq.sp`
     text-align: left;
   `}
-`
+`;
 
 export default () => (
   <Base heading="ABOUT">
@@ -63,4 +63,4 @@ export default () => (
       </AuthorDescription>
     </Author>
   </Base>
-)
+);

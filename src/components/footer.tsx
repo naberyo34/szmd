@@ -1,16 +1,16 @@
-import Link from 'next/link'
-import styled from 'styled-components'
+import Link from 'next/link';
+import styled from 'styled-components';
 
 const width = {
   iphone5: '320px',
   ipad: '768px',
-}
+};
 
 const color = {
   content: '#fff',
   window: '#fafafa',
   bg: '#f6d365',
-}
+};
 
 const Footer = styled.footer`
   min-width: ${width.iphone5};
@@ -20,16 +20,16 @@ const Footer = styled.footer`
   text-align: center;
   background: ${color.content};
   border-bottom: 8px solid ${color.bg};
-`
+`;
 
 const Nav = styled.nav`
   display: flex;
   justify-content: center;
-`
+`;
 
 const Menu = styled.ul`
   display: flex;
-`
+`;
 
 const MenuItem = styled.li`
   margin-left: 20px;
@@ -44,20 +44,20 @@ const MenuItem = styled.li`
   &:first-child {
     margin-left: 0;
   }
-`
+`;
 
 // 諸々の事情でLinkに直接スタイルを当てることができない
 const LinkText = styled.a`
   color: inherit;
   text-decoration: none;
-`
+`;
 
 const Copyright = styled.small`
   display: inline-block;
   margin-top: 10px;
   font-family: 'Raleway', sans-serif;
   font-style: italic;
-`
+`;
 
 export default () => (
   <Footer>
@@ -82,4 +82,4 @@ export default () => (
     </Nav>
     <Copyright>Copyright (C) SZMD All rights reserved.</Copyright>
   </Footer>
-)
+);

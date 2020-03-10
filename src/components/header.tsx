@@ -1,16 +1,16 @@
-import Link from 'next/link'
-import styled from 'styled-components'
+import Link from 'next/link';
+import styled from 'styled-components';
 
 const width = {
   iphone5: '320px',
   ipad: '768px',
-}
+};
 
 const color = {
   content: '#fff',
   window: '#fafafa',
   bg: '#f6d365',
-}
+};
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -29,7 +29,7 @@ const HeaderWrapper = styled.div`
       margin-bottom: 136px;
     }
   }
-`
+`;
 
 const Header = styled.header`
   display: flex;
@@ -49,7 +49,7 @@ const Header = styled.header`
       opacity: 1;
     }
   }
-`
+`;
 
 const HeaderIcon = styled.h1`
   display: inline-block;
@@ -62,20 +62,20 @@ const HeaderIcon = styled.h1`
   &:hover {
     color: #333;
   }
-`
+`;
 
 const HeaderMenu = styled.span`
   font-family: 'Raleway', sans-serif;
   font-size: 1.2rem;
   font-style: italic;
   line-height: 2.4rem;
-`
+`;
 
 // 諸々の事情でLinkに直接スタイルを当てることができない
 const LinkText = styled.a`
   color: inherit;
   text-decoration: none;
-`
+`;
 
 export default () => (
   <HeaderWrapper>
@@ -88,4 +88,4 @@ export default () => (
       <HeaderMenu>MENU</HeaderMenu>
     </Header>
   </HeaderWrapper>
-)
+);

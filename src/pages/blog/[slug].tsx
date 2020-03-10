@@ -1,65 +1,67 @@
-import React from 'react'
-import Head from 'next/head'
-import Heading from '../../components/heading'
-import components from '../../components/dynamic'
-import ReactJSXParser from '@zeit/react-jsx-parser'
-import { textBlock } from '../../lib/notion/renderers'
-import getPageData from '../../lib/notion/getPageData'
-import getBlogIndex from '../../lib/notion/getBlogIndex'
-import getNotionUsers from '../../lib/notion/getNotionUsers'
-import { getBlogLink, getDateStr } from '../../lib/blog-helpers'
+import React from 'react';
+import Head from 'next/head';
+import ReactJSXParser from '@zeit/react-jsx-parser';
+import styled from 'styled-components';
+import Heading from '../../components/heading';
+import components from '../../components/dynamic';
+import { textBlock } from '../../lib/notion/renderers';
+import getPageData from '../../lib/notion/getPageData';
+import getBlogIndex from '../../lib/notion/getBlogIndex';
+import getNotionUsers from '../../lib/notion/getNotionUsers';
+import { getBlogLink, getDateStr } from '../../lib/blog-helpers';
 
-import styled from 'styled-components'
-import Base from '../../components/base'
+import Base from '../../components/base';
 
 // Get the data for each blog post
 export async function unstable_getStaticProps({ params: { slug } }) {
   // load the postsTable so that we can get the page's ID
-  const postsTable = await getBlogIndex()
-  const post = postsTable[slug]
+  const postsTable = await getBlogIndex();
+  const post = postsTable[slug];
 
   if (!post) {
-    console.log(`Failed to find post for slug: ${slug}`)
+    console.log(`Failed to find post for slug: ${slug}`);
+
     return {
       props: {
         redirect: '/blog',
       },
       revalidate: 5,
-    }
+    };
   }
-  const postData = await getPageData(post.id)
-  post.content = postData.blocks
+  const postData = await getPageData(post.id);
+  post.content = postData.blocks;
 
-  const { users } = await getNotionUsers(post.Authors || [])
-  post.Authors = Object.keys(users).map(id => users[id].full_name)
+  const { users } = await getNotionUsers(post.Authors || []);
+  post.Authors = Object.keys(users).map(id => users[id].full_name);
 
   return {
     props: {
       post,
     },
     revalidate: 10,
-  }
+  };
 }
 
 // Return our list of blog posts to prerender
 export async function unstable_getStaticPaths() {
-  const postsTable = await getBlogIndex()
-  return Object.keys(postsTable).map(slug => getBlogLink(slug))
+  const postsTable = await getBlogIndex();
+
+  return Object.keys(postsTable).map(slug => getBlogLink(slug));
 }
 
-const listTypes = new Set(['bulleted_list', 'numbered_list'])
+const listTypes = new Set(['bulleted_list', 'numbered_list']);
 
 const color = {
   text: '#333',
   bg: '#f6d365',
-}
+};
 
 const Date = styled.span`
   font-family: 'Raleway', sans-serif;
   font-size: 1.6rem;
   font-style: italic;
   color: ${color.bg};
-`
+`;
 
 const Article = styled.article`
   padding-top: 1.6rem;
@@ -94,19 +96,19 @@ const Article = styled.article`
     line-height: 1.5;
     list-style: square inside;
   }
-`
+`;
 
 const RenderPost = ({ post, redirect }) => {
-  let listTagName: string | null = null
-  let listLastId: string | null = null
+  let listTagName: string | null = null;
+  let listLastId: string | null = null;
   let listMap: {
     [id: string]: {
-      key: string
-      isNested?: boolean
-      nested: string[]
-      children: React.ReactFragment
-    }
-  } = {}
+      key: string;
+      isNested?: boolean;
+      nested: string[];
+      children: React.ReactFragment;
+    };
+  } = {};
 
   if (redirect) {
     return (
@@ -116,7 +118,7 @@ const RenderPost = ({ post, redirect }) => {
           <meta httpEquiv="refresh" content={`0;url=${redirect}`} />
         </Head>
       </>
-    )
+    );
   }
 
   return (
@@ -129,25 +131,25 @@ const RenderPost = ({ post, redirect }) => {
         )}
 
         {(post.content || []).map((block, blockIdx) => {
-          const { value } = block
-          const { type, properties, id, parent_id } = value
-          const isLast = blockIdx === post.content.length - 1
-          const isList = listTypes.has(type)
-          let toRender = []
+          const { value } = block;
+          const { type, properties, id, parent_id } = value;
+          const isLast = blockIdx === post.content.length - 1;
+          const isList = listTypes.has(type);
+          const toRender = [];
 
           if (isList) {
-            listTagName = components[type === 'bulleted_list' ? 'ul' : 'ol']
-            listLastId = `list${id}`
+            listTagName = components[type === 'bulleted_list' ? 'ul' : 'ol'];
+            listLastId = `list${id}`;
 
             listMap[id] = {
               key: id,
               nested: [],
               children: textBlock(properties.title, true, id),
-            }
+            };
 
             if (listMap[parent_id]) {
-              listMap[id].isNested = true
-              listMap[parent_id].nested.push(id)
+              listMap[id].isNested = true;
+              listMap[parent_id].nested.push(id);
             }
           }
 
@@ -155,9 +157,9 @@ const RenderPost = ({ post, redirect }) => {
             toRender.push(
               React.createElement(
                 listTagName,
-                { key: listLastId! },
+                { key: listLastId },
                 Object.keys(listMap).map(itemId => {
-                  if (listMap[itemId].isNested) return null
+                  if (listMap[itemId].isNested) return null;
 
                   const createEl = item =>
                     React.createElement(
@@ -167,20 +169,21 @@ const RenderPost = ({ post, redirect }) => {
                       item.nested.length > 0
                         ? React.createElement(
                             components.ul || 'ul',
-                            { key: item + 'sub-list' },
+                            { key: `${item}sub-list` },
                             item.nested.map(nestedId =>
                               createEl(listMap[nestedId])
                             )
                           )
                         : null
-                    )
-                  return createEl(listMap[itemId])
+                    );
+
+                  return createEl(listMap[itemId]);
                 })
               )
-            )
-            listMap = {}
-            listLastId = null
-            listTagName = null
+            );
+            listMap = {};
+            listLastId = null;
+            listTagName = null;
           }
 
           const renderHeading = (Type: string | React.ComponentType) => {
@@ -188,39 +191,39 @@ const RenderPost = ({ post, redirect }) => {
               <Heading key={id}>
                 <Type key={id}>{textBlock(properties.title, true, id)}</Type>
               </Heading>
-            )
-          }
+            );
+          };
 
           switch (type) {
             case 'page':
             case 'divider':
-              break
+              break;
             case 'text':
               if (properties) {
-                toRender.push(textBlock(properties.title, false, id))
+                toRender.push(textBlock(properties.title, false, id));
               }
-              break
+              break;
             case 'image':
             case 'video': {
-              const { format = {} } = value
-              const { block_width } = format
-              const baseBlockWidth = 768
-              const roundFactor = Math.pow(10, 2)
+              const { format = {} } = value;
+              const { block_width } = format;
+              const baseBlockWidth = 768;
+              const roundFactor = Math.pow(10, 2);
               // calculate percentages
               const width = block_width
                 ? `${Math.round(
                     (block_width / baseBlockWidth) * 100 * roundFactor
                   ) / roundFactor}%`
-                : '100%'
+                : '100%';
 
-              const isImage = type === 'image'
-              const Comp = isImage ? 'img' : 'video'
+              const isImage = type === 'image';
+              const Comp = isImage ? 'img' : 'video';
 
               toRender.push(
                 <Comp
                   key={id}
                   src={`/api/asset?assetUrl=${encodeURIComponent(
-                    format.display_source as any
+                    format.display_source
                   )}&blockId=${id}`}
                   controls={!isImage}
                   alt={isImage ? 'An image from Notion' : undefined}
@@ -229,22 +232,22 @@ const RenderPost = ({ post, redirect }) => {
                   autoPlay={!isImage}
                   style={{ width }}
                 />
-              )
-              break
+              );
+              break;
             }
             case 'header':
-              renderHeading('h1')
-              break
+              renderHeading('h1');
+              break;
             case 'sub_header':
-              renderHeading('h2')
-              break
+              renderHeading('h2');
+              break;
             case 'sub_sub_header':
-              renderHeading('h3')
-              break
+              renderHeading('h3');
+              break;
             case 'code': {
               if (properties.title) {
-                const content = properties.title[0][0]
-                const language = properties.language[0][0]
+                const content = properties.title[0][0];
+                const language = properties.language[0][0];
 
                 if (language === 'LiveScript') {
                   // this requires the DOM for now
@@ -255,19 +258,19 @@ const RenderPost = ({ post, redirect }) => {
                       components={components}
                       componentsOnly={false}
                       renderInpost={false}
-                      allowUnknownElements={true}
+                      allowUnknownElements
                       blacklistedTags={['script', 'style']}
                     />
-                  )
+                  );
                 } else {
                   toRender.push(
                     <components.Code key={id} language={language || ''}>
                       {content}
                     </components.Code>
-                  )
+                  );
                 }
               }
-              break
+              break;
             }
             case 'quote':
               if (properties.title) {
@@ -277,23 +280,24 @@ const RenderPost = ({ post, redirect }) => {
                     { key: id },
                     properties.title
                   )
-                )
+                );
               }
-              break
+              break;
             default:
               if (
                 process.env.NODE_ENV !== 'production' &&
                 !listTypes.has(type)
               ) {
-                console.log('unknown type', type)
+                console.log('unknown type', type);
               }
-              break
+              break;
           }
-          return toRender
+
+          return toRender;
         })}
       </Article>
     </Base>
-  )
-}
+  );
+};
 
-export default RenderPost
+export default RenderPost;

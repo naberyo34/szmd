@@ -1,5 +1,5 @@
-import Prism from 'prismjs'
-import 'prismjs/components/prism-jsx'
+import Prism from 'prismjs';
+import 'prismjs/components/prism-jsx';
 
 // シンタックスハイライトを使うためのコードらしい
 const Code = ({ children, language = 'javascript' }) => {
@@ -32,7 +32,7 @@ const Code = ({ children, language = 'javascript' }) => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
-export default Code
+export default Code;

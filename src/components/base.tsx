@@ -1,12 +1,12 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 
-import Header from '../components/header'
-import Footer from '../components/footer'
+import Header from './header';
+import Footer from './footer';
 
 const width = {
   iphone5: '320px',
   ipad: '768px',
-}
+};
 
 const mq = {
   sp: (...args) => css`
@@ -19,13 +19,13 @@ const mq = {
       ${css(...args)};
     }
   `,
-}
+};
 
 const color = {
   content: '#fff',
   window: '#fafafa',
   bg: '#f6d365',
-}
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,7 +33,7 @@ const Wrapper = styled.div`
   justify-content: center;
   min-width: ${width.iphone5};
   background: ${color.content};
-`
+`;
 
 const Content = styled.section`
   width: 1000px;
@@ -55,7 +55,7 @@ const Content = styled.section`
       opacity: 1;
     }
   }
-`
+`;
 
 const Heading = styled.h2`
   margin: -0.5em 0 0 8px;
@@ -70,7 +70,7 @@ const Heading = styled.h2`
   ${mq.min`
     font-size: 8rem;
   `}
-`
+`;
 
 const Base = props => (
   <>
@@ -83,6 +83,6 @@ const Base = props => (
     </Wrapper>
     <Footer />
   </>
-)
+);
 
-export default Base
+export default Base;
