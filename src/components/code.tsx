@@ -1,4 +1,5 @@
 import Prism from 'prismjs';
+import '../lib/prism.css';
 import 'prismjs/components/prism-jsx';
 
 // シンタックスハイライトを使うためのコードらしい
