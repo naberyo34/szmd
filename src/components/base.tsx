@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 
 import Header from './header';
 import Footer from './footer';
@@ -59,17 +60,21 @@ const Heading = styled.h2`
   }
 `;
 
-const Base = props => (
-  <>
-    <Header />
-    <Wrapper>
-      <Content>
-        {props.heading ? <Heading>{props.heading}</Heading> : <></>}
-        {props.children}
-      </Content>
-    </Wrapper>
-    <Footer />
-  </>
-);
+const Base = props => {
+  const { heading, children } = props;
+
+  return (
+    <>
+      <Header />
+      <Wrapper>
+        <Content>
+          {heading ? <Heading>{heading}</Heading> : <></>}
+          {children}
+        </Content>
+      </Wrapper>
+      <Footer />
+    </>
+  );
+};
 
 export default Base;

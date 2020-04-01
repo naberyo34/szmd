@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -12,7 +13,7 @@ const color = {
   bg: '#f6d365',
 };
 
-const Footer = styled.footer`
+const FooterWrapper = styled.footer`
   min-width: ${width.iphone5};
   padding-top: 200px;
   padding-bottom: 10px;
@@ -59,8 +60,8 @@ const Copyright = styled.small`
   font-style: italic;
 `;
 
-export default () => (
-  <Footer>
+const Footer = () => (
+  <FooterWrapper>
     <Nav>
       <Menu>
         <MenuItem>
@@ -81,5 +82,7 @@ export default () => (
       </Menu>
     </Nav>
     <Copyright>Copyright (C) SZMD All rights reserved.</Copyright>
-  </Footer>
+  </FooterWrapper>
 );
+
+export default Footer;
