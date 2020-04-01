@@ -4,7 +4,7 @@ import getNotionUsers from '../lib/notion/getNotionUsers';
 import getWorksIndex from '../lib/notion/getWorksIndex';
 import Base from '../components/base';
 
-export async function unstable_getStaticProps() {
+export async function getStaticProps() {
   const postsTable = await getWorksIndex();
 
   const authorsToGet: Set<string> = new Set();

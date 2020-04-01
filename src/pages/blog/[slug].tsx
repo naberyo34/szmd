@@ -13,7 +13,7 @@ import { getBlogLink, getDateStr } from '../../lib/blog-helpers';
 import Base from '../../components/base';
 
 // Get the data for each blog post
-export async function unstable_getStaticProps({ params: { slug } }) {
+export async function getStaticProps({ params: { slug } }) {
   // load the postsTable so that we can get the page's ID
   const postsTable = await getBlogIndex();
   const post = postsTable[slug];
@@ -43,7 +43,7 @@ export async function unstable_getStaticProps({ params: { slug } }) {
 }
 
 // Return our list of blog posts to prerender
-export async function unstable_getStaticPaths() {
+export async function getStaticPaths() {
   const postsTable = await getBlogIndex();
 
   return Object.keys(postsTable).map(slug => getBlogLink(slug));

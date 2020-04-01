@@ -7,7 +7,7 @@ import getBlogIndex from '../../lib/notion/getBlogIndex';
 
 import Base from '../../components/base';
 
-export async function unstable_getStaticProps() {
+export async function getStaticProps() {
   const postsTable = await getBlogIndex();
 
   const authorsToGet: Set<string> = new Set();
