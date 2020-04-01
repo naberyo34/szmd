@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export default ({ Component, pageProps }) => (
+const App = ({ Component, pageProps }) => (
   <>
     <Head>
       <title>SZMD | tama portfolio page</title>
@@ -50,3 +50,5 @@ export default ({ Component, pageProps }) => (
     <Component {...pageProps} />
   </>
 );
+
+export default App;

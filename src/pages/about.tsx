@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import Base from '../components/base';
 
 const width = {
@@ -38,7 +39,7 @@ const AuthorDescription = styled.p`
   }
 `;
 
-export default () => (
+const About = () => (
   <Base heading="ABOUT">
     <Author>
       <AuthorIcon src="/about_icon.png" alt="tamaのアイコン" width="200" />
@@ -51,3 +52,5 @@ export default () => (
     </Author>
   </Base>
 );
+
+export default About;
