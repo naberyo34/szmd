@@ -13,6 +13,7 @@ import { getBlogLink, getDateStr } from '../../lib/blog-helpers';
 import Base from '../../components/base';
 
 // Get the data for each blog post
+// getStaticProps, getStaticPathsはNextの機能
 export async function getStaticProps({ params: { slug } }) {
   // load the postsTable so that we can get the page's ID
   const postsTable = await getBlogIndex();
@@ -46,7 +47,10 @@ export async function getStaticProps({ params: { slug } }) {
 export async function getStaticPaths() {
   const postsTable = await getBlogIndex();
 
-  return Object.keys(postsTable).map(slug => getBlogLink(slug));
+  return {
+    paths: Object.keys(postsTable).map(slug => getBlogLink(slug)),
+    fallback: true,
+  };
 }
 
 const listTypes = new Set(['bulleted_list', 'numbered_list']);
