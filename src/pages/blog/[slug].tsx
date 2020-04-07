@@ -1,7 +1,9 @@
-import React from 'react';
-import Head from 'next/head';
+import Link from 'next/link';
+import fetch from 'node-fetch';
+import { useRouter } from 'next/router';
 import ReactJSXParser from '@zeit/react-jsx-parser';
-import styled from 'styled-components';
+import React, { CSSProperties, useEffect } from 'react';
+import Header from '../../components/header';
 import Heading from '../../components/heading';
 import components from '../../components/dynamic';
 import { textBlock } from '../../lib/notion/renderers';
@@ -10,10 +12,7 @@ import getBlogIndex from '../../lib/notion/getBlogIndex';
 import getNotionUsers from '../../lib/notion/getNotionUsers';
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers';
 
-import Base from '../../components/base';
-
 // Get the data for each blog post
-// getStaticProps, getStaticPathsはNextの機能
 export async function getStaticProps({ params: { slug }, preview }) {
   // load the postsTable so that we can get the page's ID
   const postsTable = await getBlogIndex();
@@ -35,10 +34,10 @@ export async function getStaticProps({ params: { slug }, preview }) {
   const postData = await getPageData(post.id);
   post.content = postData.blocks;
 
-  for (let i = 0; i < postData.blocks.length; i += 1) {
+  for (let i = 0; i < postData.blocks.length; i++) {
     const { value } = postData.blocks[i];
     const { type, properties } = value;
-    if (type === 'tweet') {
+    if (type == 'tweet') {
       const src = properties.source[0][0];
       // parse id from https://twitter.com/_ijjk/status/TWEET_ID format
       const tweetId = src.split('/')[5].split('?')[0];
@@ -74,7 +73,6 @@ export async function getStaticPaths() {
   const postsTable = await getBlogIndex();
   // we fallback for any unpublished posts to save build time
   // for actually published ones
-
   return {
     paths: Object.keys(postsTable)
       .filter(post => postsTable[post].Published === 'Yes')
@@ -85,54 +83,9 @@ export async function getStaticPaths() {
 
 const listTypes = new Set(['bulleted_list', 'numbered_list']);
 
-const color = {
-  text: '#333',
-  bg: '#f6d365',
-};
+const RenderPost = ({ post, redirect, preview }) => {
+  const router = useRouter();
 
-const Date = styled.span`
-  font-family: 'Raleway', sans-serif;
-  font-size: 1.6rem;
-  font-style: italic;
-  color: ${color.bg};
-`;
-
-const Article = styled.article`
-  padding-top: 1.6rem;
-
-  h1,
-  h2,
-  h3 {
-    margin-top: 1em;
-    font-weight: bold;
-  }
-
-  h1 {
-    font-size: 3.6rem;
-  }
-
-  h2 {
-    font-size: 3.2rem;
-  }
-
-  h3 {
-    font-size: 2.8rem;
-  }
-
-  p {
-    margin-top: 1em;
-    font-size: 1.6rem;
-  }
-
-  ul {
-    margin-top: 1em;
-    font-size: 1.6rem;
-    line-height: 1.5;
-    list-style: square inside;
-  }
-`;
-
-const RenderPost = ({ post }) => {
   let listTagName: string | null = null;
   let listLastId: string | null = null;
   let listMap: {
@@ -144,13 +97,71 @@ const RenderPost = ({ post }) => {
     };
   } = {};
 
+  useEffect(() => {
+    const twitterSrc = 'https://platform.twitter.com/widgets.js';
+    // make sure to initialize any new widgets loading on
+    // client navigation
+    if (post && post.hasTweet) {
+      if ((window as any)?.twttr?.widgets) {
+        (window as any).twttr.widgets.load();
+      } else if (!document.querySelector(`script[src="${twitterSrc}"]`)) {
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = twitterSrc;
+        document.querySelector('body').appendChild(script);
+      }
+    }
+  }, []);
+  useEffect(() => {
+    if (redirect && !post) {
+      router.replace(redirect);
+    }
+  }, [redirect, post]);
+
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
+  // if you don't have a post at this point, and are not
+  // loading one from fallback then  redirect back to the index
+  if (!post) {
+    return (
+      <div>
+        <p>
+          Woops! didn't find that post, redirecting you back to the blog index
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <Base>
-      <Article>
-        {post.Date && <Date>{getDateStr(post.Date)}</Date>}
+    <>
+      <Header />
+      {preview && (
+        <div>
+          <div>
+            <b>Note:</b> Viewing in preview mode{' '}
+            <Link href={`/api/clear-preview?slug=${post.Slug}`}>
+              <button>Exit Preview</button>
+            </Link>
+          </div>
+        </div>
+      )}
+      <div>
         <h1>{post.Page || ''}</h1>
+        {post.Authors.length > 0 && (
+          <div className="authors">By: {post.Authors.join(' ')}</div>
+        )}
+        {post.Date && (
+          <div className="posted">Posted: {getDateStr(post.Date)}</div>
+        )}
+
+        <hr />
+
         {(!post.content || post.content.length === 0) && (
-          <p>コンテンツがありません</p>
+          <p>This post has no content</p>
         )}
 
         {(post.content || []).map((block, blockIdx) => {
@@ -227,9 +238,15 @@ const RenderPost = ({ post }) => {
               }
               break;
             case 'image':
-            case 'video': {
+            case 'video':
+            case 'embed': {
               const { format = {} } = value;
-              const { block_width } = format;
+              const {
+                block_width,
+                block_height,
+                display_source,
+                block_aspect_ratio,
+              } = format;
               const baseBlockWidth = 768;
               const roundFactor = Math.pow(10, 2);
               // calculate percentages
@@ -237,24 +254,72 @@ const RenderPost = ({ post }) => {
                 ? `${Math.round(
                     (block_width / baseBlockWidth) * 100 * roundFactor
                   ) / roundFactor}%`
-                : '100%';
+                : block_height || '100%';
 
               const isImage = type === 'image';
               const Comp = isImage ? 'img' : 'video';
+              const useWrapper = block_aspect_ratio && !block_height;
+              const childStyle: CSSProperties = useWrapper
+                ? {
+                    width: '100%',
+                    height: '100%',
+                    border: 'none',
+                    position: 'absolute',
+                    top: 0,
+                  }
+                : {
+                    width,
+                    border: 'none',
+                    height: block_height,
+                    display: 'block',
+                    maxWidth: '100%',
+                  };
+
+              let child = null;
+
+              if (!isImage && !value.file_ids) {
+                // external resource use iframe
+                child = (
+                  <iframe
+                    style={childStyle}
+                    src={display_source}
+                    key={!useWrapper ? id : undefined}
+                    className={!useWrapper ? 'asset-wrapper' : undefined}
+                  />
+                );
+              } else {
+                // notion resource
+                child = (
+                  <Comp
+                    key={!useWrapper ? id : undefined}
+                    src={`/api/asset?assetUrl=${encodeURIComponent(
+                      display_source
+                    )}&blockId=${id}`}
+                    controls={!isImage}
+                    alt={`An ${isImage ? 'image' : 'video'} from Notion`}
+                    loop={!isImage}
+                    muted={!isImage}
+                    autoPlay={!isImage}
+                    style={childStyle}
+                  />
+                );
+              }
 
               toRender.push(
-                <Comp
-                  key={id}
-                  src={`/api/asset?assetUrl=${encodeURIComponent(
-                    format.display_source
-                  )}&blockId=${id}`}
-                  controls={!isImage}
-                  alt={isImage ? 'An image from Notion' : undefined}
-                  loop={!isImage}
-                  muted={!isImage}
-                  autoPlay={!isImage}
-                  style={{ width }}
-                />
+                useWrapper ? (
+                  <div
+                    style={{
+                      paddingTop: `${Math.round(block_aspect_ratio * 100)}%`,
+                      position: 'relative',
+                    }}
+                    className="asset-wrapper"
+                    key={id}
+                  >
+                    {child}
+                  </div>
+                ) : (
+                  child
+                )
               );
               break;
             }
@@ -293,7 +358,7 @@ const RenderPost = ({ post }) => {
               }
               break;
             }
-            case 'quote':
+            case 'quote': {
               if (properties.title) {
                 toRender.push(
                   React.createElement(
@@ -304,6 +369,31 @@ const RenderPost = ({ post }) => {
                 );
               }
               break;
+            }
+            case 'callout': {
+              toRender.push(
+                <div className="callout" key={id}>
+                  {value.format?.page_icon && (
+                    <div>{value.format?.page_icon}</div>
+                  )}
+                  <div className="text">
+                    {textBlock(properties.title, true, id)}
+                  </div>
+                </div>
+              );
+              break;
+            }
+            case 'tweet': {
+              if (properties.html) {
+                toRender.push(
+                  <div
+                    dangerouslySetInnerHTML={{ __html: properties.html }}
+                    key={id}
+                  />
+                );
+              }
+              break;
+            }
             default:
               if (
                 process.env.NODE_ENV !== 'production' &&
@@ -316,8 +406,8 @@ const RenderPost = ({ post }) => {
 
           return toRender;
         })}
-      </Article>
-    </Base>
+      </div>
+    </>
   );
 };
 
