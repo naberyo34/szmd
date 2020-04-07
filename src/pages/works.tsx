@@ -1,10 +1,10 @@
-import styled, { css } from 'styled-components';
+import React from 'react';
 import { postIsReady } from '../lib/blog-helpers';
 import getNotionUsers from '../lib/notion/getNotionUsers';
 import getWorksIndex from '../lib/notion/getWorksIndex';
 import Base from '../components/base';
 
-export async function unstable_getStaticProps() {
+export async function getStaticProps() {
   const postsTable = await getWorksIndex();
 
   const authorsToGet: Set<string> = new Set();
@@ -38,7 +38,7 @@ export async function unstable_getStaticProps() {
   };
 }
 
-export default ({ posts = [] }) => {
+const Works = ({ posts = [] }) => {
   return (
     <Base heading="WORKS">
       {posts.length === 0 && <p>投稿がありません</p>}
@@ -56,3 +56,5 @@ export default ({ posts = [] }) => {
     </Base>
   );
 };
+
+export default Works;

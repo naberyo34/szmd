@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -31,7 +32,7 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const Header = styled.header`
+const HeaderInner = styled.header`
   display: flex;
   justify-content: space-between;
   width: 1000px;
@@ -77,15 +78,17 @@ const LinkText = styled.a`
   text-decoration: none;
 `;
 
-export default () => (
+const Header = () => (
   <HeaderWrapper>
-    <Header>
+    <HeaderInner>
       <HeaderIcon>
         <Link href="/">
           <LinkText href="/">SZMD</LinkText>
         </Link>
       </HeaderIcon>
       <HeaderMenu>MENU</HeaderMenu>
-    </Header>
+    </HeaderInner>
   </HeaderWrapper>
 );
+
+export default Header;

@@ -1,4 +1,4 @@
-// 記事中のh1タグなどはここで整形される
+import React from 'react';
 
 const collectText = (el, acc = []) => {
   if (el) {
@@ -10,7 +10,7 @@ const collectText = (el, acc = []) => {
   return acc.join('').trim();
 };
 
-export default ({ children: component, id }: { children: any; id?: any }) => {
+const Heading = ({ children: component, id }: { children: any; id?: any }) => {
   const children = component.props.children || '';
   const text = children;
 
@@ -23,3 +23,5 @@ export default ({ children: component, id }: { children: any; id?: any }) => {
 
   return <>{component}</>;
 };
+
+export default Heading;

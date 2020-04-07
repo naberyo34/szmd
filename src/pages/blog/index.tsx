@@ -1,13 +1,12 @@
+import React from 'react';
 import Link from 'next/link';
-
-import styled, { css } from 'styled-components';
 import { getBlogLink, getDateStr, postIsReady } from '../../lib/blog-helpers';
 import getNotionUsers from '../../lib/notion/getNotionUsers';
 import getBlogIndex from '../../lib/notion/getBlogIndex';
 
 import Base from '../../components/base';
 
-export async function unstable_getStaticProps() {
+export async function getStaticProps() {
   const postsTable = await getBlogIndex();
 
   const authorsToGet: Set<string> = new Set();
@@ -41,7 +40,7 @@ export async function unstable_getStaticProps() {
   };
 }
 
-export default ({ posts = [] }) => {
+const Index = ({ posts = [] }) => {
   return (
     <Base heading="BLOG">
       {posts.length === 0 && <p>There are no posts yet</p>}
@@ -62,3 +61,5 @@ export default ({ posts = [] }) => {
     </Base>
   );
 };
+
+export default Index;

@@ -1,5 +1,6 @@
+import React from 'react';
 import Link from 'next/link';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const width = {
   iphone5: '320px',
@@ -97,7 +98,7 @@ const LinkText = styled.a`
   text-decoration: none;
 `;
 
-export default () => (
+const Index = () => (
   <>
     <Wrapper>
       <Content>
@@ -130,3 +131,5 @@ export default () => (
     </Footer>
   </>
 );
+
+export default Index;
