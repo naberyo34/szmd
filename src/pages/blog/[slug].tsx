@@ -128,7 +128,7 @@ const RenderPost = ({ post, redirect }) => {
   return (
     <Base>
       <Article>
-        {post.Date && <Date>{getDateStr(post.Date)}</Date>}
+        {/* {post.Date && <Date>{getDateStr(post.Date)}</Date>} */}
         <h1>{post.Page || ''}</h1>
         {(!post.content || post.content.length === 0) && (
           <p>コンテンツがありません</p>
