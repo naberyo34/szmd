@@ -1,9 +1,8 @@
-import Link from 'next/link';
 import fetch from 'node-fetch';
 import { useRouter } from 'next/router';
 import ReactJSXParser from '@zeit/react-jsx-parser';
 import React, { CSSProperties, useEffect } from 'react';
-import Header from '../../components/header';
+import styled from 'styled-components';
 import Heading from '../../components/heading';
 import components from '../../components/dynamic';
 import { textBlock } from '../../lib/notion/renderers';
@@ -11,6 +10,8 @@ import getPageData from '../../lib/notion/getPageData';
 import getBlogIndex from '../../lib/notion/getBlogIndex';
 import getNotionUsers from '../../lib/notion/getNotionUsers';
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers';
+
+import Base from '../../components/base';
 
 // Get the data for each blog post
 export async function getStaticProps({ params: { slug }, preview }) {
@@ -83,6 +84,53 @@ export async function getStaticPaths() {
 
 const listTypes = new Set(['bulleted_list', 'numbered_list']);
 
+const color = {
+  text: '#333',
+  bg: '#f6d365',
+};
+
+const Date = styled.span`
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  color: ${color.bg};
+`;
+
+const Article = styled.article`
+  padding-top: 1.6rem;
+
+  h1,
+  h2,
+  h3 {
+    margin-top: 1em;
+    font-weight: bold;
+  }
+
+  h1 {
+    font-size: 3.6rem;
+  }
+
+  h2 {
+    font-size: 3.2rem;
+  }
+
+  h3 {
+    font-size: 2.8rem;
+  }
+
+  p {
+    margin-top: 1em;
+    font-size: 1.6rem;
+  }
+
+  ul {
+    margin-top: 1em;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    list-style: square inside;
+  }
+`;
+
 const RenderPost = ({ post, redirect, preview }) => {
   const router = useRouter();
 
@@ -137,31 +185,12 @@ const RenderPost = ({ post, redirect, preview }) => {
   }
 
   return (
-    <>
-      <Header />
-      {preview && (
-        <div>
-          <div>
-            <b>Note:</b> Viewing in preview mode{' '}
-            <Link href={`/api/clear-preview?slug=${post.Slug}`}>
-              <button>Exit Preview</button>
-            </Link>
-          </div>
-        </div>
-      )}
-      <div>
+    <Base>
+      <Article>
+        {post.Date && <Date>{getDateStr(post.Date)}</Date>}
         <h1>{post.Page || ''}</h1>
-        {post.Authors.length > 0 && (
-          <div className="authors">By: {post.Authors.join(' ')}</div>
-        )}
-        {post.Date && (
-          <div className="posted">Posted: {getDateStr(post.Date)}</div>
-        )}
-
-        <hr />
-
         {(!post.content || post.content.length === 0) && (
-          <p>This post has no content</p>
+          <p>コンテンツがありません</p>
         )}
 
         {(post.content || []).map((block, blockIdx) => {
@@ -406,8 +435,8 @@ const RenderPost = ({ post, redirect, preview }) => {
 
           return toRender;
         })}
-      </div>
-    </>
+      </Article>
+    </Base>
   );
 };
 
