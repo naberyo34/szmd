@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = ({ Component, pageProps }) => (
-  <Provider>
+  <>
     <Head>
       <title>SZMD | tama portfolio page</title>
       <meta name="description" content="SZMD | tama portfolio page" />
@@ -45,7 +45,7 @@ const App = ({ Component, pageProps }) => (
     </Head>
     <GlobalStyle />
     <Component {...pageProps} />
-  </Provider>
+  </>
 );
 
 export default App;
