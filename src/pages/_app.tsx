@@ -1,4 +1,5 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import 'minireset.css';
 import '../lib/prism.css';
 import Head from 'next/head';
@@ -20,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = ({ Component, pageProps }) => (
-  <>
+  <Provider>
     <Head>
       <title>SZMD | tama portfolio page</title>
       <meta name="description" content="SZMD | tama portfolio page" />
@@ -44,7 +45,7 @@ const App = ({ Component, pageProps }) => (
     </Head>
     <GlobalStyle />
     <Component {...pageProps} />
-  </>
+  </Provider>
 );
 
 export default App;
