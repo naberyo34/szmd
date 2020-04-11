@@ -3,15 +3,11 @@ import 'minireset.css';
 import '../lib/prism.css';
 import Head from 'next/head';
 import { createGlobalStyle } from 'styled-components';
-
-const color = {
-  text: '#333',
-  bg: '#f6d365',
-};
+import { color } from '../lib/style';
 
 const GlobalStyle = createGlobalStyle`
   html {
-    font-family: "ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN","游ゴシック",YuGothic,"メイリオ",Meiryo,sans-serif;
+    font-family: "ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN","メイリオ",Meiryo,sans-serif;
     font-size: 62.5%;
     line-height: 1;
     color: ${color.text};

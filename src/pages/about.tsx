@@ -1,15 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Base from '../components/base';
-
-const width = {
-  iphone5: '320px',
-  ipad: '768px',
-};
-
-const color = {
-  window: '#fafafa',
-};
+import { width, color } from '../lib/style';
 
 const Author = styled.section`
   padding: 0 20px 40px 20px;

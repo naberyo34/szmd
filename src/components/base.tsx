@@ -1,19 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { width, color } from '../lib/style';
 import Header from './header';
 import Footer from './footer';
-
-const width = {
-  iphone5: '320px',
-  ipad: '768px',
-};
-
-const color = {
-  content: '#fff',
-  window: '#fafafa',
-  bg: '#f6d365',
-};
 
 const Wrapper = styled.div`
   display: flex;
