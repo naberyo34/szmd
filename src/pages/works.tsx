@@ -71,6 +71,7 @@ const ThumbnailImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 0;
   transition: transform 0.4s;
   ${Card}:hover & {
     transform: scale(1.2, 1.2);
