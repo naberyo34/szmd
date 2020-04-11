@@ -133,8 +133,16 @@ const Article = styled.article`
   }
 `;
 
-const Thumbnail = styled.img`
+const Thumbnail = styled.div`
+  width: 100%;
+  height: 242px;
   margin-top: 36px;
+`;
+
+const ThumbnailImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const RenderPost = ({ post, redirect, preview }) => {
@@ -199,11 +207,12 @@ const RenderPost = ({ post, redirect, preview }) => {
           <p>コンテンツがありません</p>
         )}
         {post.Thumbnail && (
-          <Thumbnail
-            key={post.id}
-            src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
-            alt={post.Page}
-          />
+          <Thumbnail key={post.id}>
+            <ThumbnailImage
+              src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
+              alt={post.Page}
+            />
+          </Thumbnail>
         )}
         {(post.content || []).map((block, blockIdx) => {
           const { value } = block;

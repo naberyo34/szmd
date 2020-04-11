@@ -1,4 +1,5 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import 'minireset.css';
 import '../lib/prism.css';
 import Head from 'next/head';
