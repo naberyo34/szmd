@@ -1,17 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-
-const width = {
-  iphone5: '320px',
-  ipad: '768px',
-};
-
-const color = {
-  content: '#fff',
-  window: '#fafafa',
-  bg: '#f6d365',
-};
+import { width, color } from '../lib/style';
 
 const FooterWrapper = styled.footer`
   min-width: ${width.iphone5};

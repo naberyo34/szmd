@@ -1,19 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { width, color } from '../lib/style';
 import Header from './header';
 import Footer from './footer';
-
-const width = {
-  iphone5: '320px',
-  ipad: '768px',
-};
-
-const color = {
-  content: '#fff',
-  window: '#fafafa',
-  bg: '#f6d365',
-};
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,15 +13,11 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled.section`
-  width: 1000px;
+  width: 100vw;
+  max-width: 1000px;
   padding: 0 16px;
   visibility: hidden;
   animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
-  @media (max-width: ${width.ipad}) {
-    width: 100vw;
-    min-width: ${width.iphone5};
-  }
-
   @keyframes fade {
     0% {
       opacity: 0;

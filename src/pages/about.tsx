@@ -1,22 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import Base from '../components/base';
-
-const width = {
-  iphone5: '320px',
-  ipad: '768px',
-};
-
-const color = {
-  window: '#fafafa',
-};
+import { width, color } from '../lib/style';
 
 const Author = styled.section`
+  max-width: 800px;
   padding: 0 20px 40px 20px;
   margin: 200px auto 0 auto;
   text-align: center;
   background: ${color.window};
-  border-radius: 20px;
+  border-radius: 8px;
 `;
 
 const AuthorIcon = styled.img`

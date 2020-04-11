@@ -12,6 +12,7 @@ import getNotionUsers from '../../lib/notion/getNotionUsers';
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers';
 
 import Base from '../../components/base';
+import { color } from '../../lib/style';
 
 // Get the data for each blog post
 export async function getStaticProps({ params: { slug }, preview }) {
@@ -84,11 +85,6 @@ export async function getStaticPaths() {
 
 const listTypes = new Set(['bulleted_list', 'numbered_list']);
 
-const color = {
-  text: '#333',
-  bg: '#f6d365',
-};
-
 const Date = styled.span`
   font-family: 'Raleway', sans-serif;
   font-size: 1.6rem;
@@ -102,19 +98,21 @@ const Article = styled.article`
   h1,
   h2,
   h3 {
-    margin-top: 1em;
     font-weight: bold;
   }
 
   h1 {
+    margin-top: 1em;
     font-size: 3.6rem;
   }
 
   h2 {
+    margin-top: 2em;
     font-size: 3.2rem;
   }
 
   h3 {
+    margin-top: 2em;
     font-size: 2.8rem;
   }
 
@@ -124,10 +122,14 @@ const Article = styled.article`
   }
 
   ul {
+    padding-left: 16px;
     margin-top: 1em;
     font-size: 1.6rem;
     line-height: 1.5;
-    list-style: square inside;
+    list-style: square;
+  }
+  li:not(:first-child) {
+    margin-top: 0.5em;
   }
 `;
 

@@ -1,11 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-
-const width = {
-  iphone5: '320px',
-  ipad: '768px',
-};
+import { width } from '../lib/style';
 
 const Wrapper = styled.div`
   display: flex;
