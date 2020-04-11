@@ -133,6 +133,10 @@ const Article = styled.article`
   }
 `;
 
+const Thumbnail = styled.img`
+  margin-top: 36px;
+`;
+
 const RenderPost = ({ post, redirect, preview }) => {
   const router = useRouter();
 
@@ -194,7 +198,13 @@ const RenderPost = ({ post, redirect, preview }) => {
         {(!post.content || post.content.length === 0) && (
           <p>コンテンツがありません</p>
         )}
-
+        {post.Thumbnail && (
+          <Thumbnail
+            key={post.id}
+            src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
+            alt={post.Page}
+          />
+        )}
         {(post.content || []).map((block, blockIdx) => {
           const { value } = block;
           const { type, properties, id, parent_id } = value;
