@@ -59,6 +59,7 @@ const Card = styled.div`
   cursor: pointer;
   border-radius: 8px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.4s;
   @media (max-width: ${width.ipad}) {
     width: 100%;
   }
@@ -71,8 +72,18 @@ const Thumbnail = styled.div`
   width: 100%;
   height: 120px;
   margin-top: 16px;
-  background: ${color.window};
+  overflow: hidden;
+`;
+
+const ThumbnailImage = styled.img`
+  width: 100%;
+  height: 100%;
   border-radius: 8px;
+  object-fit: cover;
+  transition: transform 0.4s;
+  ${Card}:hover & {
+    transform: scale(1.2, 1.2);
+  }
 `;
 
 const Title = styled.h3`
@@ -105,7 +116,21 @@ const Index = ({ posts = [] }) => {
               <Card>
                 {post.Date && <Date>{getDateStr(post.Date)}</Date>}
                 <Title>{post.Page}</Title>
-                <Thumbnail />
+                <Thumbnail>
+                  {post.Thumbnail ? (
+                    <ThumbnailImage
+                      key={post.id}
+                      src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
+                      alt={post.Page}
+                    />
+                  ) : (
+                    <ThumbnailImage
+                      key={post.id}
+                      src="/noimage.png"
+                      alt={post.Page}
+                    />
+                  )}
+                </Thumbnail>
               </Card>
             </Link>
           );
