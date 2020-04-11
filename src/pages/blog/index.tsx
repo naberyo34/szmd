@@ -64,7 +64,7 @@ const Card = styled.div`
     width: 100%;
   }
   &:hover {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -78,7 +78,6 @@ const Thumbnail = styled.div`
 const ThumbnailImage = styled.img`
   width: 100%;
   height: 100%;
-  border-radius: 8px;
   object-fit: cover;
   transition: transform 0.4s;
   ${Card}:hover & {
@@ -86,19 +85,19 @@ const ThumbnailImage = styled.img`
   }
 `;
 
+const Date = styled.span`
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  color: ${color.bg};
+`;
+
 const Title = styled.h3`
-  margin-top: 1em;
+  margin-top: 0.5em;
   overflow: hidden;
   font-size: 1.6rem;
   text-overflow: ellipsis;
   white-space: nowrap;
-`;
-
-const Date = styled.span`
-  font-family: 'Raleway', sans-serif;
-  font-size: 1.2rem;
-  font-style: italic;
-  color: ${color.bg};
 `;
 
 const Index = ({ posts = [] }) => {
