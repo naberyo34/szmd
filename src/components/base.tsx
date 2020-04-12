@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { width, color } from '../lib/style';
 import Header from './header';
 import Footer from './footer';
@@ -19,6 +19,12 @@ const Content = styled(motion.section)`
   max-width: 1000px;
   padding: 0 16px;
 `;
+
+const contentVariants = {
+  initial: { x: 64, opacity: 0 },
+  fadeIn: { x: 0, opacity: 1 },
+  fadeOut: { x: -64, opacity: 0 },
+};
 
 const Heading = styled.h2`
   margin: -0.5em 0 0 8px;
@@ -43,16 +49,15 @@ const Base = props => {
       <Menu />
       <Header />
       <Wrapper>
-        <AnimatePresence>
-          <Content
-            initial={{ x: 10, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            {heading ? <Heading>{heading}</Heading> : <></>}
-            {children}
-          </Content>
-        </AnimatePresence>
+        <Content
+          variants={contentVariants}
+          initial="initial"
+          animate="fadeIn"
+          exit="fadeOut"
+        >
+          {heading ? <Heading>{heading}</Heading> : <></>}
+          {children}
+        </Content>
       </Wrapper>
       <Footer />
     </>

@@ -3,9 +3,11 @@ import Head from 'next/head';
 import 'minireset.css';
 import '../lib/prism.css';
 import { createGlobalStyle } from 'styled-components';
+import { AnimatePresence } from 'framer-motion';
 import { Provider } from 'react-redux';
 import configureStore from '../store/configureStore';
 import { color } from '../lib/style';
+import { formatters } from 'stylelint';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -19,9 +21,15 @@ const GlobalStyle = createGlobalStyle`
   p {
     line-height: 1.5;
   }
+
+  button {
+    background: none;
+    appearance: none;
+    border: 0;
+  }
 `;
 
-const App = ({ Component, pageProps }) => {
+const App = ({ Component, pageProps, router }) => {
   const store = configureStore();
   // storeの状態をコンソールで見る
   store.subscribe(() => {
@@ -52,7 +60,9 @@ const App = ({ Component, pageProps }) => {
         />
       </Head>
       <GlobalStyle />
-      <Component {...pageProps} />
+      <AnimatePresence exitBeforeEnter>
+        <Component {...pageProps} key={router.route} />
+      </AnimatePresence>
     </Provider>
   );
 };

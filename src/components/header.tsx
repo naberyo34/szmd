@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { toggleMenu } from '../modules/actions';
 import { width, color, transition } from '../lib/style';
 
-const HeaderWrapper = styled.div`
+const Wrapper = styled.header`
   display: flex;
   justify-content: center;
   min-width: ${width.iphone5};
@@ -13,14 +13,14 @@ const HeaderWrapper = styled.div`
   padding: 20px;
 `;
 
-const HeaderInner = styled.header`
+const Inner = styled.div`
   display: flex;
   justify-content: space-between;
   width: 1000px;
   color: ${color.content};
 `;
 
-const HeaderIcon = styled.h1`
+const Icon = styled.h1`
   display: inline-block;
   font-family: 'Raleway', sans-serif;
   font-size: 2.4rem;
@@ -33,11 +33,12 @@ const HeaderIcon = styled.h1`
   }
 `;
 
-const HeaderMenu = styled.span`
+const Menu = styled.button`
+  height: 2.4rem;
   font-family: 'Raleway', sans-serif;
   font-size: 1.2rem;
   font-style: italic;
-  line-height: 2.4rem;
+  color: ${color.content};
   cursor: pointer;
   transition: color ${transition.fast};
   &:hover {
@@ -58,16 +59,16 @@ const Header = () => {
   };
 
   return (
-    <HeaderWrapper>
-      <HeaderInner>
-        <HeaderIcon>
+    <Wrapper>
+      <Inner>
+        <Icon>
           <Link href="/">
             <LinkText href="/">SZMD</LinkText>
           </Link>
-        </HeaderIcon>
-        <HeaderMenu onClick={handleToggleMenu}>MENU</HeaderMenu>
-      </HeaderInner>
-    </HeaderWrapper>
+        </Icon>
+        <Menu onClick={handleToggleMenu}>MENU</Menu>
+      </Inner>
+    </Wrapper>
   );
 };
 
