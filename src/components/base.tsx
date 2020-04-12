@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { AnimatePresence, motion } from 'framer-motion';
 import { width, color } from '../lib/style';
 import Header from './header';
 import Footer from './footer';
@@ -13,7 +14,7 @@ const Wrapper = styled.div`
   background: ${color.content};
 `;
 
-const Content = styled.section`
+const Content = styled(motion.section)`
   width: 100vw;
   max-width: 1000px;
   padding: 0 16px;
@@ -42,10 +43,16 @@ const Base = props => {
       <Menu />
       <Header />
       <Wrapper>
-        <Content>
-          {heading ? <Heading>{heading}</Heading> : <></>}
-          {children}
-        </Content>
+        <AnimatePresence>
+          <Content
+            initial={{ x: 10, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {heading ? <Heading>{heading}</Heading> : <></>}
+            {children}
+          </Content>
+        </AnimatePresence>
       </Wrapper>
       <Footer />
     </>
