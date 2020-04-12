@@ -3,6 +3,7 @@
 import types from './actionTypes';
 
 const initialState = {
+  fixed: false,
   menu: false,
   works: false,
 };
@@ -14,12 +15,14 @@ const reducer = (state = initialState, action) => {
       if (state.menu) {
         return {
           ...state, // スプレッド変数で現在のstateをまるまる返す
+          fixed: false,
           menu: false,
         };
       }
 
       return {
         ...state,
+        fixed: true,
         menu: true,
       };
     }

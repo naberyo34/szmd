@@ -22,10 +22,10 @@ const Wrapper = styled(motion.nav)`
   background: ${color.text};
 `;
 
-const WrapperVariants = {
-  initial: { x: 216, opacity: 0 },
+const wrapperVariants = {
+  initial: { x: 108, opacity: 0 },
   fadeIn: { x: 0, opacity: 1 },
-  fadeOut: { x: 216, opacity: 0 },
+  fadeOut: { x: 108, opacity: 0 },
 };
 
 const MenuList = styled.ul`
@@ -72,11 +72,10 @@ const Menu = () => {
     <AnimatePresence>
       {isOpen && (
         <Wrapper
-          variants={WrapperVariants}
+          variants={wrapperVariants}
           initial="initial"
           animate="fadeIn"
           exit="fadeOut"
-          transition={{ duration: 0.2, type: 'tween', ease: 'easeOut' }}
         >
           <Close onClick={handleToggleMenu}>CLOSE</Close>
           <MenuList>

@@ -7,7 +7,6 @@ import { AnimatePresence } from 'framer-motion';
 import { Provider } from 'react-redux';
 import configureStore from '../store/configureStore';
 import { color } from '../lib/style';
-import { formatters } from 'stylelint';
 
 const GlobalStyle = createGlobalStyle`
   html {

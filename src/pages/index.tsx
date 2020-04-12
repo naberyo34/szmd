@@ -1,9 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { width, transition } from '../lib/style';
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)``;
+
+const wrapperVariants = {
+  initial: { y: 100, opacity: 0 },
+  fadeIn: { y: 0, opacity: 1 },
+  fadeOut: { y: -100, opacity: 0 },
+};
+
+const Content = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,7 +20,7 @@ const Wrapper = styled.div`
   height: calc(100vh - 40px);
 `;
 
-const Content = styled.section`
+const ContentInner = styled.section`
   text-align: center;
 `;
 
@@ -82,15 +91,20 @@ const LinkText = styled.a`
 `;
 
 const Index = () => (
-  <>
-    <Wrapper>
-      <Content>
+  <Wrapper
+    variants={wrapperVariants}
+    initial="initial"
+    animate="fadeIn"
+    exit="fadeOut"
+  >
+    <Content>
+      <ContentInner>
         <div>
           <Title>SZMD</Title>
           <Address>szmd.jp</Address>
         </div>
-      </Content>
-    </Wrapper>
+      </ContentInner>
+    </Content>
     <Footer>
       <Nav>
         <Menu>
@@ -112,7 +126,7 @@ const Index = () => (
         </Menu>
       </Nav>
     </Footer>
-  </>
+  </Wrapper>
 );
 
 export default Index;
