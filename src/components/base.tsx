@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { width, color } from '../lib/style';
 import Header from './header';
 import Footer from './footer';
+import Menu from './menu';
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,23 +14,17 @@ const Wrapper = styled.div`
   background: ${color.content};
 `;
 
-const Content = styled.section`
+const Content = styled(motion.section)`
   width: 100vw;
   max-width: 1000px;
   padding: 0 16px;
-  visibility: hidden;
-  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
-  @keyframes fade {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
 `;
+
+const contentVariants = {
+  initial: { y: 100, opacity: 0 },
+  fadeIn: { y: 0, opacity: 1 },
+  fadeOut: { y: -100, opacity: 0 },
+};
 
 const Heading = styled.h2`
   margin: -0.5em 0 0 8px;
@@ -50,9 +46,15 @@ const Base = props => {
 
   return (
     <>
+      <Menu />
       <Header />
       <Wrapper>
-        <Content>
+        <Content
+          variants={contentVariants}
+          initial="initial"
+          animate="fadeIn"
+          exit="fadeOut"
+        >
           {heading ? <Heading>{heading}</Heading> : <></>}
           {children}
         </Content>

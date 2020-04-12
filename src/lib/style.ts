@@ -1,3 +1,7 @@
+export const zIndex = {
+  menu: 10,
+};
+
 export const width = {
   iphone5: '320px',
   ipad: '768px',
@@ -8,4 +12,8 @@ export const color = {
   window: '#fafafa',
   text: '#333',
   bg: '#f6d365',
+};
+
+export const transition = {
+  fast: '0.2s',
 };

@@ -4,7 +4,7 @@ import { postIsReady } from '../lib/blog-helpers';
 import getNotionUsers from '../lib/notion/getNotionUsers';
 import getWorksIndex from '../lib/notion/getWorksIndex';
 import Base from '../components/base';
-import { width } from '../lib/style';
+import { width, transition } from '../lib/style';
 
 export async function getStaticProps() {
   const postsTable = await getWorksIndex();
@@ -58,7 +58,7 @@ const Card = styled.div`
   cursor: pointer;
   border-radius: 8px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-  transition: box-shadow 0.4s;
+  transition: box-shadow ${transition.fast};
   @media (max-width: ${width.ipad}) {
     width: 100%;
   }
@@ -72,7 +72,7 @@ const ThumbnailImage = styled.img`
   height: 100%;
   object-fit: cover;
   object-position: 50% 0;
-  transition: transform 0.4s;
+  transition: transform ${transition.fast};
   ${Card}:hover & {
     transform: scale(1.2, 1.2);
   }

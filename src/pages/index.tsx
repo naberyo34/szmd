@@ -1,30 +1,26 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { width } from '../lib/style';
+import { motion } from 'framer-motion';
+import { width, transition } from '../lib/style';
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)``;
+
+const wrapperVariants = {
+  initial: { y: 100, opacity: 0 },
+  fadeIn: { y: 0, opacity: 1 },
+  fadeOut: { y: -100, opacity: 0 },
+};
+
+const Content = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: ${width.iphone5};
   height: calc(100vh - 40px);
-  visibility: hidden;
-  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-
-  @keyframes fade {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
 `;
 
-const Content = styled.section`
+const ContentInner = styled.section`
   text-align: center;
 `;
 
@@ -79,7 +75,7 @@ const MenuItem = styled.li`
   font-size: 1.6rem;
   font-style: italic;
   font-weight: 700;
-  transition: 0.2s;
+  transition: opacity ${transition.fast};
   &:hover {
     opacity: 0.4;
   }
@@ -95,15 +91,20 @@ const LinkText = styled.a`
 `;
 
 const Index = () => (
-  <>
-    <Wrapper>
-      <Content>
+  <Wrapper
+    variants={wrapperVariants}
+    initial="initial"
+    animate="fadeIn"
+    exit="fadeOut"
+  >
+    <Content>
+      <ContentInner>
         <div>
           <Title>SZMD</Title>
           <Address>szmd.jp</Address>
         </div>
-      </Content>
-    </Wrapper>
+      </ContentInner>
+    </Content>
     <Footer>
       <Nav>
         <Menu>
@@ -125,7 +126,7 @@ const Index = () => (
         </Menu>
       </Nav>
     </Footer>
-  </>
+  </Wrapper>
 );
 
 export default Index;
