@@ -1,41 +1,53 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { width, color } from '../lib/style';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useDispatch } from 'react-redux';
+import { toggleMenu } from '../modules/actions';
+import { color, zIndex } from '../lib/style';
 
-const Wrapper = styled.nav`
-  position: absolute;
-  z-index: 100;
+const Wrapper = styled(motion.div)`
+  position: fixed;
   top: 0;
   right: 0;
+  z-index: ${zIndex.menu};
+  display: flex;
+  justify-content: center;
+  width: 100vw;
   height: 100vh;
+  padding: 20px;
   background: ${color.text};
+`;
 
-  animation: shrink 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-
-  @keyframes shrink {
-    0% {
-      width: 0;
-    }
-
-    100% {
-      width: 100vw;
-    }
-  }
+const Close = styled.span`
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  line-height: 2.4rem;
+  cursor: pointer;
+  color: #fff;
 `;
 
 const Menu = () => {
+  const dispatch = useDispatch();
+  const handleToggleMenu = () => {
+    dispatch(toggleMenu());
+  };
   const isOpen = useSelector(state => state.menu);
 
-  if (isOpen) {
-    return (
-      <Wrapper>
-        <p>Menu</p>
-      </Wrapper>
-    );
-  }
-
-  return <></>;
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <Wrapper
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <Close onClick={handleToggleMenu}>CLOSE</Close>
+        </Wrapper>
+      )}
+    </AnimatePresence>
+  );
 };
 
 export default Menu;

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { toggleMenu } from '../modules/actions';
-import { width, color } from '../lib/style';
+import { width, color, transition } from '../lib/style';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -18,19 +18,6 @@ const HeaderInner = styled.header`
   justify-content: space-between;
   width: 1000px;
   color: ${color.content};
-  visibility: hidden;
-  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
-
-  @keyframes fade {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
 `;
 
 const HeaderIcon = styled.h1`
@@ -40,7 +27,7 @@ const HeaderIcon = styled.h1`
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;
-  transition: color 0.2s;
+  transition: color ${transition.fast};
   &:hover {
     color: ${color.text};
   }
@@ -52,7 +39,7 @@ const HeaderMenu = styled.span`
   font-style: italic;
   line-height: 2.4rem;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: color ${transition.fast};
   &:hover {
     color: ${color.text};
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { width } from '../lib/style';
+import { width, transition } from '../lib/style';
 
 const Wrapper = styled.div`
   display: flex;
@@ -9,19 +9,6 @@ const Wrapper = styled.div`
   justify-content: center;
   min-width: ${width.iphone5};
   height: calc(100vh - 40px);
-  visibility: hidden;
-  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-
-  @keyframes fade {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
 `;
 
 const Content = styled.section`
@@ -79,7 +66,7 @@ const MenuItem = styled.li`
   font-size: 1.6rem;
   font-style: italic;
   font-weight: 700;
-  transition: 0.2s;
+  transition: opacity ${transition.fast};
   &:hover {
     opacity: 0.4;
   }

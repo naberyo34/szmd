@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { width, color } from '../lib/style';
+import { width, color, transition } from '../lib/style';
 
 const FooterWrapper = styled.footer`
   min-width: ${width.iphone5};
@@ -28,7 +28,7 @@ const MenuItem = styled.li`
   font-size: 1.6rem;
   font-style: italic;
   font-weight: 700;
-  transition: 0.2s;
+  transition: opacity ${transition.fast};
   &:hover {
     opacity: 0.4;
   }
