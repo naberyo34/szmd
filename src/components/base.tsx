@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { width, color } from '../lib/style';
 import Header from './header';
 import Footer from './footer';
+import Menu from './menu';
 
 const Wrapper = styled.div`
   display: flex;
@@ -50,6 +51,7 @@ const Base = props => {
 
   return (
     <>
+      <Menu />
       <Header />
       <Wrapper>
         <Content>

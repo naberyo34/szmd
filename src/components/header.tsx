@@ -73,7 +73,7 @@ const LinkText = styled.a`
 const Header = () => {
   const dispatch = useDispatch();
   const handleToggleMenu = () => {
-    dispatch({ type: 'TOGGLE_MENU' });
+    dispatch(toggleMenu());
   };
 
   return (
