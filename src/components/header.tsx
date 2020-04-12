@@ -1,6 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { toggleMenu } from '../modules/actions';
 import { width, color } from '../lib/style';
 
 const HeaderWrapper = styled.div`
@@ -68,17 +70,24 @@ const LinkText = styled.a`
   text-decoration: none;
 `;
 
-const Header = () => (
-  <HeaderWrapper>
-    <HeaderInner>
-      <HeaderIcon>
-        <Link href="/">
-          <LinkText href="/">SZMD</LinkText>
-        </Link>
-      </HeaderIcon>
-      <HeaderMenu>MENU</HeaderMenu>
-    </HeaderInner>
-  </HeaderWrapper>
-);
+const Header = () => {
+  const dispatch = useDispatch();
+  const handleToggleMenu = () => {
+    dispatch({ type: 'TOGGLE_MENU' });
+  };
+
+  return (
+    <HeaderWrapper>
+      <HeaderInner>
+        <HeaderIcon>
+          <Link href="/">
+            <LinkText href="/">SZMD</LinkText>
+          </Link>
+        </HeaderIcon>
+        <HeaderMenu onClick={handleToggleMenu}>MENU</HeaderMenu>
+      </HeaderInner>
+    </HeaderWrapper>
+  );
+};
 
 export default Header;

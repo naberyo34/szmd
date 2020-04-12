@@ -1,9 +1,10 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import Head from 'next/head';
 import 'minireset.css';
 import '../lib/prism.css';
-import Head from 'next/head';
 import { createGlobalStyle } from 'styled-components';
+import { Provider } from 'react-redux';
+import configureStore from '../store/configureStore';
 import { color } from '../lib/style';
 
 const GlobalStyle = createGlobalStyle`
@@ -20,32 +21,40 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const App = ({ Component, pageProps }) => (
-  <>
-    <Head>
-      <title>SZMD | tama portfolio page</title>
-      <meta name="description" content="SZMD | tama portfolio page" />
-      <meta property="og:url" content="https://szmd.jp" />
-      <meta property="og:title" content="SZMD | tama portfolio page" />
-      <meta property="og:site_name" content="SZMD" />
-      <meta property="og:locale" content="ja_JP" />
-      <meta property="og:type" content="website" />
-      <meta
-        property="og:description"
-        content="tama / Ryo Watanabe のポートフォリオ"
-      />
-      <meta property="og:image" content="https://szmd.jp/og.png" />
-      <meta name="twitter:site" content="@momochitama" />
-      <meta name="twitter:card" content="summary_large_image" />
-      <link rel="canonical" href="https://szmd.jp" />
-      <link
-        href="https://fonts.googleapis.com/css?family=Raleway:700i,900i&display=swap"
-        rel="stylesheet"
-      />
-    </Head>
-    <GlobalStyle />
-    <Component {...pageProps} />
-  </>
-);
+const App = ({ Component, pageProps }) => {
+  const store = configureStore();
+  // storeの状態をコンソールで見る
+  store.subscribe(() => {
+    console.log(store.getState());
+  });
+
+  return (
+    <Provider store={store}>
+      <Head>
+        <title>SZMD | tama portfolio page</title>
+        <meta name="description" content="SZMD | tama portfolio page" />
+        <meta property="og:url" content="https://szmd.jp" />
+        <meta property="og:title" content="SZMD | tama portfolio page" />
+        <meta property="og:site_name" content="SZMD" />
+        <meta property="og:locale" content="ja_JP" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:description"
+          content="tama / Ryo Watanabe のポートフォリオ"
+        />
+        <meta property="og:image" content="https://szmd.jp/og.png" />
+        <meta name="twitter:site" content="@momochitama" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://szmd.jp" />
+        <link
+          href="https://fonts.googleapis.com/css?family=Raleway:700i,900i&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
+      <GlobalStyle />
+      <Component {...pageProps} />
+    </Provider>
+  );
+};
 
 export default App;
