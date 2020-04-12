@@ -7,21 +7,10 @@ import { width, color } from '../lib/style';
 
 const HeaderWrapper = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
   min-width: ${width.iphone5};
+  height: 216px;
   padding: 20px;
-  animation: shrink 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-
-  @keyframes shrink {
-    0% {
-      margin-bottom: calc(100vh);
-    }
-
-    100% {
-      margin-bottom: 136px;
-    }
-  }
 `;
 
 const HeaderInner = styled.header`
@@ -51,9 +40,9 @@ const HeaderIcon = styled.h1`
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;
-  transition: 0.2s;
+  transition: color 0.2s;
   &:hover {
-    color: #333;
+    color: ${color.text};
   }
 `;
 
@@ -62,6 +51,11 @@ const HeaderMenu = styled.span`
   font-size: 1.2rem;
   font-style: italic;
   line-height: 2.4rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  &:hover {
+    color: ${color.text};
+  }
 `;
 
 // 諸々の事情でLinkに直接スタイルを当てることができない

@@ -18,7 +18,7 @@ const Content = styled.section`
   max-width: 1000px;
   padding: 0 16px;
   visibility: hidden;
-  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
+  animation: fade 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   @keyframes fade {
     0% {
       opacity: 0;
