@@ -38,6 +38,8 @@ const About = () => (
       <AuthorIcon src="/about_icon.png" alt="tamaのアイコン" width="200" />
       <AuthorName>tama</AuthorName>
       <AuthorDescription>
+        a.k.a. Ryo Watanabe
+        <br />
         平日は駆け出しエンジニア、週末は趣味でイラストやデザインをやっています。
         <br />
         音楽とカレーが好きです。
