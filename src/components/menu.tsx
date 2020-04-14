@@ -78,7 +78,9 @@ const Menu = () => {
           exit="fadeOut"
           transition={{ type: 'tween', duration: 0.2 }}
         >
-          <Close onClick={handleToggleMenu}>CLOSE</Close>
+          <Close type="button" onClick={handleToggleMenu}>
+            CLOSE
+          </Close>
           <MenuList>
             <MenuItem>
               <Link href="/">

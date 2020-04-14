@@ -5,6 +5,7 @@ import { width, color } from '../lib/style';
 import Header from './header';
 import Footer from './footer';
 import Menu from './menu';
+import Modal from './modal';
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,6 +48,7 @@ const Base = props => {
   return (
     <>
       <Menu />
+      <Modal />
       <Header />
       <Wrapper>
         <Content

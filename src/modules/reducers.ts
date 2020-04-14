@@ -5,7 +5,8 @@ import types from './actionTypes';
 const initialState = {
   fixed: false,
   menu: false,
-  works: false,
+  modal: false,
+  modalData: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -24,6 +25,22 @@ const reducer = (state = initialState, action) => {
         ...state,
         fixed: true,
         menu: true,
+      };
+    }
+    case types.OPEN_MODAL: {
+      return {
+        ...state,
+        fixed: true,
+        modal: true,
+        modalData: action.payload,
+      };
+    }
+    case types.CLOSE_MODAL: {
+      return {
+        ...state,
+        fixed: false,
+        modal: false,
+        modalData: {},
       };
     }
     default:

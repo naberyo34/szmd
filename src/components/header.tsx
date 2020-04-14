@@ -66,7 +66,9 @@ const Header = () => {
             <LinkText href="/">SZMD</LinkText>
           </Link>
         </Icon>
-        <Menu onClick={handleToggleMenu}>MENU</Menu>
+        <Menu type="button" onClick={handleToggleMenu}>
+          MENU
+        </Menu>
       </Inner>
     </Wrapper>
   );

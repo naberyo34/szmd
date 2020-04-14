@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../modules/actions';
 import { postIsReady } from '../lib/blog-helpers';
 import getNotionUsers from '../lib/notion/getNotionUsers';
 import getWorksIndex from '../lib/notion/getWorksIndex';
@@ -50,6 +52,7 @@ const CardWrapper = styled.div`
   }
 `;
 
+// おいおいカードは1コンポーネントとして切り出したいところ……
 const Card = styled.div`
   width: calc(50% - 16px);
   height: 200px;
@@ -79,6 +82,11 @@ const ThumbnailImage = styled.img`
 `;
 
 const Works = ({ posts = [] }) => {
+  const dispatch = useDispatch();
+  const handleOpenModal = payload => {
+    dispatch(openModal(payload));
+  };
+
   return (
     <Base heading="WORKS">
       {posts.length === 0 && <p>投稿がありません</p>}
@@ -86,7 +94,15 @@ const Works = ({ posts = [] }) => {
         {posts.map(post => {
           return (
             // コンテンツの中身が空だとapiがnullになって画像が表示されないらしい
-            <Card key={post.id}>
+            <Card
+              key={post.id}
+              onClick={() =>
+                handleOpenModal({
+                  title: post.Page,
+                  imageUrl: `/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`,
+                })
+              }
+            >
               <ThumbnailImage
                 src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
                 alt={post.Page}
