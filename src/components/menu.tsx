@@ -23,9 +23,9 @@ const Wrapper = styled(motion.nav)`
 `;
 
 const wrapperVariants = {
-  initial: { x: 108, opacity: 0 },
+  initial: { x: 216, opacity: 0 },
   fadeIn: { x: 0, opacity: 1 },
-  fadeOut: { x: 108, opacity: 0 },
+  fadeOut: { x: 216, opacity: 0 },
 };
 
 const MenuList = styled.ul`
@@ -76,6 +76,7 @@ const Menu = () => {
           initial="initial"
           animate="fadeIn"
           exit="fadeOut"
+          transition={{ type: 'tween', duration: 0.2 }}
         >
           <Close onClick={handleToggleMenu}>CLOSE</Close>
           <MenuList>

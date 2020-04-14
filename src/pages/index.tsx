@@ -96,6 +96,7 @@ const Index = () => (
     initial="initial"
     animate="fadeIn"
     exit="fadeOut"
+    transition={{ type: 'tween', duration: 0.2 }}
   >
     <Content>
       <ContentInner>
