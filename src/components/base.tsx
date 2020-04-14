@@ -54,6 +54,7 @@ const Base = props => {
           initial="initial"
           animate="fadeIn"
           exit="fadeOut"
+          transition={{ type: 'tween', duration: 0.2 }}
         >
           {heading ? <Heading>{heading}</Heading> : <></>}
           {children}
