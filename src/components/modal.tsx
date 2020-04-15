@@ -34,10 +34,15 @@ const Modal = () => {
   };
 
   const Inner = styled.div`
-    padding: 16px;
+    display: flex;
     width: 100vw;
     max-width: 1000px;
-    display: flex;
+    padding: 16px;
+    @media (max-width: ${width.ipad}) {
+      flex-direction: column;
+      height: calc(100vh - 32px);
+      overflow-y: scroll;
+    }
   `;
 
   const Image = styled.div`
@@ -45,6 +50,12 @@ const Modal = () => {
     align-items: center;
     justify-content: center;
     width: 50%;
+    @media (max-width: ${width.ipad}) {
+      width: 100%;
+      img {
+        max-height: none;
+      }
+    }
     img {
       max-height: calc(100vh - 32px);
     }
@@ -55,6 +66,11 @@ const Modal = () => {
     align-items: center;
     width: 50%;
     padding-left: 16px;
+    @media (max-width: ${width.ipad}) {
+      width: 100%;
+      padding: 0;
+      margin-top: 32px;
+    }
   `;
 
   const Title = styled.h3`
@@ -67,8 +83,8 @@ const Modal = () => {
   `;
 
   const Close = styled.button`
-    margin-top: 32px;
     height: 2.4rem;
+    margin-top: 32px;
     font-family: 'Raleway', sans-serif;
     font-size: 1.2rem;
     font-style: italic;
@@ -77,6 +93,10 @@ const Modal = () => {
     transition: color ${transition.fast};
     &:hover {
       color: ${color.bg};
+    }
+    @media (max-width: ${width.ipad}) {
+      display: block;
+      margin: 32px auto 0;
     }
   `;
 
