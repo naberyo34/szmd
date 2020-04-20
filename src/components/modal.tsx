@@ -23,6 +23,7 @@ const Modal = () => {
     justify-content: center;
     width: 100vw;
     height: 100vh;
+    padding: 16px;
     color: ${color.content};
     background: rgba(0, 0, 0, 0.6);
   `;
@@ -35,13 +36,12 @@ const Modal = () => {
 
   const Inner = styled.div`
     display: flex;
-    width: 100vw;
+    width: 100%;
     max-width: 1000px;
-    padding: 16px;
+    height: 100%;
+    overflow-y: scroll;
     @media (max-width: ${width.ipad}) {
-      flex-direction: column;
-      height: calc(100vh - 32px);
-      overflow-y: scroll;
+      display: block;
     }
   `;
 
@@ -52,12 +52,12 @@ const Modal = () => {
     width: 50%;
     @media (max-width: ${width.ipad}) {
       width: 100%;
-      img {
-        max-height: none;
-      }
     }
     img {
       max-height: calc(100vh - 32px);
+      @media (max-width: ${width.ipad}) {
+        max-height: none;
+      }
     }
   `;
 
@@ -91,12 +91,12 @@ const Modal = () => {
     color: ${color.content};
     cursor: pointer;
     transition: color ${transition.fast};
-    &:hover {
-      color: ${color.bg};
-    }
     @media (max-width: ${width.ipad}) {
       display: block;
       margin: 32px auto 0;
+    }
+    &:hover {
+      color: ${color.bg};
     }
   `;
 
