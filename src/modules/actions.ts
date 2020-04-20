@@ -1,5 +1,10 @@
 import types from './actionTypes';
 
+export const getInnerHeight = (payload: number) => ({
+  type: types.GET_INNER_HEIGHT,
+  payload,
+});
+
 export const toggleMenu = () => ({
   type: types.TOGGLE_MENU,
 });

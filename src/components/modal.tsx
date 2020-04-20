@@ -1,9 +1,96 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModal } from '../modules/actions';
+import { getInnerHeight, closeModal } from '../modules/actions';
 import { zIndex, width, color, transition } from '../lib/style';
+
+const Wrapper = styled(motion.div)<{ innerHeight: number }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: ${zIndex.menu};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: ${({ innerHeight }) => (innerHeight ? `${innerHeight}px` : '100vh')};
+  padding: 16px;
+  color: ${color.content};
+  background: rgba(0, 0, 0, 0.6);
+`;
+
+const wrapperVariants = {
+  initial: { opacity: 0 },
+  fadeIn: { opacity: 1 },
+  fadeOut: { opacity: 0 },
+};
+
+const Inner = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  height: 100%;
+  overflow-y: scroll;
+  @media (max-width: ${width.ipad}) {
+    display: block;
+  }
+`;
+
+const Image = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  @media (max-width: ${width.ipad}) {
+    width: 100%;
+  }
+  img {
+    max-height: calc(100vh - 32px);
+    @media (max-width: ${width.ipad}) {
+      max-height: none;
+    }
+  }
+`;
+
+const Text = styled.div`
+  display: flex;
+  align-items: center;
+  width: 50%;
+  padding-left: 16px;
+  @media (max-width: ${width.ipad}) {
+    width: 100%;
+    padding: 0;
+    margin-top: 32px;
+  }
+`;
+
+const Title = styled.h3`
+  font-size: 2.4rem;
+`;
+
+const Description = styled.p`
+  margin-top: 1em;
+  font-size: 1.6rem;
+`;
+
+const Close = styled.button`
+  height: 2.4rem;
+  margin-top: 32px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: ${color.content};
+  cursor: pointer;
+  transition: color ${transition.fast};
+  @media (max-width: ${width.ipad}) {
+    display: block;
+    margin: 32px auto 0;
+  }
+  &:hover {
+    color: ${color.bg};
+  }
+`;
 
 const Modal = () => {
   const isOpen = useSelector(state => state.modal);
@@ -13,92 +100,19 @@ const Modal = () => {
     dispatch(closeModal());
   };
 
-  const Wrapper = styled(motion.div)`
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: ${zIndex.menu};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-    padding: 16px;
-    color: ${color.content};
-    background: rgba(0, 0, 0, 0.6);
-  `;
+  useEffect(() => {
+    // viewportの高さを取得し、コンテンツのheightを決定
+    const setInnerHeight = () => {
+      const { innerHeight } = window;
+      dispatch(getInnerHeight(innerHeight));
+    };
 
-  const wrapperVariants = {
-    initial: { opacity: 0 },
-    fadeIn: { opacity: 1 },
-    fadeOut: { opacity: 0 },
-  };
+    setInnerHeight();
+    // リサイズを監視し、コンテンツのheightを更新
+    window.addEventListener('resize', setInnerHeight);
+  }, [dispatch]);
 
-  const Inner = styled.div`
-    display: flex;
-    width: 100%;
-    max-width: 1000px;
-    height: 100%;
-    overflow-y: scroll;
-    @media (max-width: ${width.ipad}) {
-      display: block;
-    }
-  `;
-
-  const Image = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    @media (max-width: ${width.ipad}) {
-      width: 100%;
-    }
-    img {
-      max-height: calc(100vh - 32px);
-      @media (max-width: ${width.ipad}) {
-        max-height: none;
-      }
-    }
-  `;
-
-  const Text = styled.div`
-    display: flex;
-    align-items: center;
-    width: 50%;
-    padding-left: 16px;
-    @media (max-width: ${width.ipad}) {
-      width: 100%;
-      padding: 0;
-      margin-top: 32px;
-    }
-  `;
-
-  const Title = styled.h3`
-    font-size: 2.4rem;
-  `;
-
-  const Description = styled.p`
-    margin-top: 1em;
-    font-size: 1.6rem;
-  `;
-
-  const Close = styled.button`
-    height: 2.4rem;
-    margin-top: 32px;
-    font-family: 'Raleway', sans-serif;
-    font-size: 1.2rem;
-    font-style: italic;
-    color: ${color.content};
-    cursor: pointer;
-    transition: color ${transition.fast};
-    @media (max-width: ${width.ipad}) {
-      display: block;
-      margin: 32px auto 0;
-    }
-    &:hover {
-      color: ${color.bg};
-    }
-  `;
+  const innerHeight = useSelector(state => state.innerHeight);
 
   return (
     <AnimatePresence>
@@ -109,6 +123,7 @@ const Modal = () => {
           animate="fadeIn"
           exit="fadeOut"
           transition={{ duration: 0.2 }}
+          innerHeight={innerHeight}
         >
           <Inner>
             <Image>
