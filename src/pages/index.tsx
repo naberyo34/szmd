@@ -96,7 +96,6 @@ const LinkText = styled.a`
 const Index = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log('useEffect発火');
     // viewportの高さを取得し、コンテンツのheightを決定
     const setInnerHeight = () => {
       const { innerHeight } = window;
