@@ -3,6 +3,7 @@
 import types from './actionTypes';
 
 const initialState = {
+  innerHeight: 0,
   fixed: false,
   menu: false,
   modal: false,
@@ -11,6 +12,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.GET_INNER_HEIGHT: {
+      return {
+        ...state,
+        innerHeight: action.payload,
+      };
+    }
     case types.TOGGLE_MENU: {
       // 開いている場合は閉じる
       if (state.menu) {

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { getInnerHeight } from '../modules/actions';
 import { width, transition } from '../lib/style';
 
 const Wrapper = styled(motion.div)``;
@@ -12,12 +14,13 @@ const wrapperVariants = {
   fadeOut: { opacity: 0 },
 };
 
-const Content = styled.div`
+const Content = styled.div<{ innerHeight: number }>`
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: ${width.iphone5};
-  height: calc(100vh - 40px);
+  height: ${({ innerHeight }) =>
+    innerHeight ? `${innerHeight - 40}px` : 'calc(100vh - 40px)'};
 `;
 
 const ContentInner = styled.section`
@@ -90,44 +93,62 @@ const LinkText = styled.a`
   text-decoration: none;
 `;
 
-const Index = () => (
-  <Wrapper
-    variants={wrapperVariants}
-    initial="initial"
-    animate="fadeIn"
-    exit="fadeOut"
-    transition={{ type: 'tween', duration: 0.2 }}
-  >
-    <Content>
-      <ContentInner>
-        <div>
-          <Title>SZMD</Title>
-          <Address>szmd.jp</Address>
-        </div>
-      </ContentInner>
-    </Content>
-    <Footer>
-      <Nav>
-        <Menu>
-          <MenuItem>
-            <Link href="/about">
-              <LinkText href="/about">ABOUT</LinkText>
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href="/works">
-              <LinkText href="/works">WORKS</LinkText>
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href="/blog">
-              <LinkText href="/blog">BLOG</LinkText>
-            </Link>
-          </MenuItem>
-        </Menu>
-      </Nav>
-    </Footer>
-  </Wrapper>
-);
+const Index = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log('useEffect発火');
+    // viewportの高さを取得し、コンテンツのheightを決定
+    const setInnerHeight = () => {
+      const { innerHeight } = window;
+      dispatch(getInnerHeight(innerHeight));
+    };
+
+    setInnerHeight();
+    // リサイズを監視し、コンテンツのheightを更新
+    window.addEventListener('resize', setInnerHeight);
+  }, [dispatch]);
+
+  const innerHeight = useSelector(state => state.innerHeight);
+
+  return (
+    <Wrapper
+      variants={wrapperVariants}
+      initial="initial"
+      animate="fadeIn"
+      exit="fadeOut"
+      transition={{ type: 'tween', duration: 0.2 }}
+    >
+      <Content innerHeight={innerHeight}>
+        <ContentInner>
+          <div>
+            <Title>SZMD</Title>
+            <Address>szmd.jp</Address>
+          </div>
+        </ContentInner>
+      </Content>
+      <Footer>
+        <Nav>
+          <Menu>
+            <MenuItem>
+              <Link href="/about">
+                <LinkText href="/about">ABOUT</LinkText>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link href="/works">
+                <LinkText href="/works">WORKS</LinkText>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link href="/blog">
+                <LinkText href="/blog">BLOG</LinkText>
+              </Link>
+            </MenuItem>
+          </Menu>
+        </Nav>
+      </Footer>
+    </Wrapper>
+  );
+};
 
 export default Index;
