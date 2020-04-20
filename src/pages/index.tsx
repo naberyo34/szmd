@@ -7,9 +7,9 @@ import { width, transition } from '../lib/style';
 const Wrapper = styled(motion.div)``;
 
 const wrapperVariants = {
-  initial: { y: 100, opacity: 0 },
-  fadeIn: { y: 0, opacity: 1 },
-  fadeOut: { y: -100, opacity: 0 },
+  initial: { opacity: 0 },
+  fadeIn: { opacity: 1 },
+  fadeOut: { opacity: 0 },
 };
 
 const Content = styled.div`
