@@ -65,8 +65,10 @@ const Card = styled.div`
   @media (max-width: ${width.ipad}) {
     width: 100%;
   }
-  &:hover {
-    box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+  @media (min-width: ${width.pc}) {
+    &:hover {
+      box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+    }
   }
 `;
 
@@ -76,8 +78,10 @@ const ThumbnailImage = styled.img`
   object-fit: cover;
   object-position: 50% 0;
   transition: transform ${transition.fast};
-  ${Card}:hover & {
-    transform: scale(1.2, 1.2);
+  @media (min-width: ${width.pc}) {
+    ${Card}:hover & {
+      transform: scale(1.2, 1.2);
+    }
   }
 `;
 

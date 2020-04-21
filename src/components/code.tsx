@@ -25,6 +25,7 @@ const Code = ({ children }) => {
           font-size: 1.6rem;
           line-height: 1.5;
           background: #f5f5f5;
+          overflow-x: scroll;
         }
       `}</style>
     </>

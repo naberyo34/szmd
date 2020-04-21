@@ -99,6 +99,7 @@ const Article = styled.article`
   h2,
   h3 {
     font-weight: bold;
+    line-height: 1.2;
   }
 
   h1 {

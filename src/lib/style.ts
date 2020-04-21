@@ -5,6 +5,7 @@ export const zIndex = {
 export const width = {
   iphone5: '320px',
   ipad: '768px',
+  pc: '769px',
 };
 
 export const color = {
