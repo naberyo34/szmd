@@ -102,7 +102,7 @@ const Article = styled.article`
   }
 
   h1 {
-    margin-top: 1em;
+    margin: 1em 0;
     font-size: 3.6rem;
   }
 
