@@ -4,17 +4,19 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { getInnerHeight } from '../modules/actions';
 import { width, color } from '../lib/style';
-import Header from './header';
-import Footer from './footer';
+// コンポーネント
+import ScrollFixed from './scrollFixed';
 import Menu from './menu';
 import Modal from './modal';
-import ScrollFixed from './scrollFixed';
+import Header from './header';
+import Footer from './footer';
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: ${width.iphone5};
+  padding-bottom: 120px;
   background: ${color.white};
 `;
 
