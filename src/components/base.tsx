@@ -27,9 +27,9 @@ const Content = styled(motion.section)`
 `;
 
 const contentVariants = {
-  initial: { y: 100, opacity: 0 },
+  initial: { y: 32, opacity: 0 },
   fadeIn: { y: 0, opacity: 1 },
-  fadeOut: { y: -100, opacity: 0 },
+  fadeOut: { y: -32, opacity: 0 },
 };
 
 const Heading = styled.h2`
