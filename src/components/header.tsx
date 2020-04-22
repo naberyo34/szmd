@@ -17,7 +17,7 @@ const Inner = styled.div`
   display: flex;
   justify-content: space-between;
   width: 1000px;
-  color: ${color.content};
+  color: ${color.white};
 `;
 
 const Icon = styled.h1`
@@ -38,7 +38,7 @@ const Menu = styled.button`
   font-family: 'Raleway', sans-serif;
   font-size: 1.2rem;
   font-style: italic;
-  color: ${color.content};
+  color: ${color.white};
   cursor: pointer;
   transition: color ${transition.fast};
   &:hover {

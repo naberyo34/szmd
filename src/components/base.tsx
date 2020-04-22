@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { width, color } from '../lib/style';
@@ -6,13 +7,14 @@ import Header from './header';
 import Footer from './footer';
 import Menu from './menu';
 import Modal from './modal';
+import ScrollFixed from './scrollFixed';
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: ${width.iphone5};
-  background: ${color.content};
+  background: ${color.white};
 `;
 
 const Content = styled(motion.section)`
@@ -42,11 +44,13 @@ const Heading = styled.h2`
   }
 `;
 
-const Base = props => {
+const BaseComponent = props => {
   const { heading, children } = props;
+  const isFixed = useSelector(state => state.fixed);
 
   return (
     <>
+      <ScrollFixed isFixed={isFixed} />
       <Menu />
       <Modal />
       <Header />
@@ -67,4 +71,4 @@ const Base = props => {
   );
 };
 
-export default Base;
+export default BaseComponent;

@@ -1,51 +1,27 @@
+/** 独自にかなり修正を加えています **/
 /* PrismJS 1.19.0
 https://prismjs.com/download.html#themes=prism-tomorrow&languages=markup+css+clike+javascript */
 /**
  * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
- * Based on https://github.com/chriskempson/tomorrow-theme
+ * BaseComponentd on https://github.com/chriskempson/tomorrow-theme
  * @author Rose Pritchard
  */
 
-code[class*='language-'],
-pre[class*='language-'] {
-  color: #ccc;
-  background: none;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  font-size: 1em;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  line-height: 1.5;
-
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-}
-
-/* Code blocks */
-pre[class*='language-'] {
+pre {
+  margin-top: 1em;
   padding: 1em;
-  margin: 0.5em 0;
-  overflow: auto;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  white-space: pre;
+  tab-size: 2;
+  color: #333;
+  background: #f5f5f5;
+  overflow-x: scroll;
 }
 
-:not(pre) > code[class*='language-'],
-pre[class*='language-'] {
-  background: #2d2d2d;
-}
-
-/* Inline code */
-:not(pre) > code[class*='language-'] {
-  padding: 0.1em;
-  border-radius: 0.3em;
-  white-space: normal;
+code {
+  font-family: 'Monaco', 'Consolas', 'ヒラギノ角ゴ ProN W3',
+    'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, sans-serif;
 }
 
 .token.comment,

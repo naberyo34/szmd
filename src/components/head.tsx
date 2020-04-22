@@ -1,13 +1,21 @@
 import React from 'react';
 import Head from 'next/head';
 
-const HeadComponent = () => {
+const HeadComponent = props => {
+  const { title } = props;
+
   return (
     <Head>
-      <title>SZMD | tama portfolio page</title>
-      <meta name="description" content="SZMD | tama portfolio page" />
+      <title>{title ? `${title} | SZMD` : 'SZMD | tama portfolio page'}</title>
+      <meta
+        name="description"
+        content={title ? `${title} | SZMD` : 'SZMD | tama portfolio page'}
+      />
       <meta property="og:url" content="https://szmd.jp" />
-      <meta property="og:title" content="SZMD | tama portfolio page" />
+      <meta
+        property="og:title"
+        content={title ? `${title} | SZMD` : 'SZMD | tama portfolio page'}
+      />
       <meta property="og:site_name" content="SZMD" />
       <meta property="og:locale" content="ja_JP" />
       <meta property="og:type" content="website" />

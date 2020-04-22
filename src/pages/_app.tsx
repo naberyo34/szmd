@@ -6,7 +6,6 @@ import { createGlobalStyle } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
 import configureStore from '../store/configureStore';
 import { color } from '../lib/style';
-import HeadComponent from '../components/head';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -14,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
     line-height: 1;
     color: ${color.text};
-    background: ${color.bg};
+    background: ${color.primary};
   }
 
   p {
@@ -37,7 +36,6 @@ const App = ({ Component, pageProps, router }) => {
 
   return (
     <Provider store={store}>
-      <HeadComponent />
       <GlobalStyle />
       <AnimatePresence exitBeforeEnter>
         <Component {...pageProps} key={router.route} />

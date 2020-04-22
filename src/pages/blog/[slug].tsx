@@ -10,8 +10,9 @@ import getPageData from '../../lib/notion/getPageData';
 import getBlogIndex from '../../lib/notion/getBlogIndex';
 import getNotionUsers from '../../lib/notion/getNotionUsers';
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers';
+import HeadComponent from '../../components/head';
 
-import Base from '../../components/base';
+import BaseComponent from '../../components/base';
 import { color } from '../../lib/style';
 
 // Get the data for each blog post
@@ -89,7 +90,7 @@ const Date = styled.span`
   font-family: 'Raleway', sans-serif;
   font-size: 1.6rem;
   font-style: italic;
-  color: ${color.bg};
+  color: ${color.primary};
 `;
 
 const Article = styled.article`
@@ -99,6 +100,13 @@ const Article = styled.article`
   h2,
   h3 {
     font-weight: bold;
+    line-height: 1.5;
+  }
+
+  h2,
+  h3,
+  p {
+    margin-top: 2em;
   }
 
   h1 {
@@ -107,29 +115,26 @@ const Article = styled.article`
   }
 
   h2 {
-    margin-top: 2em;
     font-size: 3.2rem;
   }
 
   h3 {
-    margin-top: 2em;
     font-size: 2.8rem;
   }
 
   p {
-    margin-top: 1em;
     font-size: 1.6rem;
   }
 
   ul {
     padding-left: 16px;
-    margin-top: 1em;
+    margin-top: 2em;
     font-size: 1.6rem;
     line-height: 1.5;
     list-style: square;
   }
   li:not(:first-child) {
-    margin-top: 0.5em;
+    margin-top: 2em;
   }
 `;
 
@@ -199,265 +204,268 @@ const RenderPost = ({ post, redirect, preview }) => {
   }
 
   return (
-    <Base>
-      <Article>
-        {post.Date && <Date>{getDateStr(post.Date)}</Date>}
-        <h1>{post.Page || ''}</h1>
-        {(!post.content || post.content.length === 0) && (
-          <p>コンテンツがありません</p>
-        )}
-        {post.Thumbnail && (
-          <Thumbnail key={post.id}>
-            <ThumbnailImage
-              src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
-              alt={post.Page}
-            />
-          </Thumbnail>
-        )}
-        {(post.content || []).map((block, blockIdx) => {
-          const { value } = block;
-          const { type, properties, id, parent_id } = value;
-          const isLast = blockIdx === post.content.length - 1;
-          const isList = listTypes.has(type);
-          const toRender = [];
+    <>
+      <HeadComponent title={post.Page} />
+      <BaseComponent>
+        <Article>
+          {post.Date && <Date>{getDateStr(post.Date)}</Date>}
+          <h1>{post.Page || ''}</h1>
+          {(!post.content || post.content.length === 0) && (
+            <p>コンテンツがありません</p>
+          )}
+          {post.Thumbnail && (
+            <Thumbnail key={post.id}>
+              <ThumbnailImage
+                src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
+                alt={post.Page}
+              />
+            </Thumbnail>
+          )}
+          {(post.content || []).map((block, blockIdx) => {
+            const { value } = block;
+            const { type, properties, id, parent_id } = value;
+            const isLast = blockIdx === post.content.length - 1;
+            const isList = listTypes.has(type);
+            const toRender = [];
 
-          if (isList) {
-            listTagName = components[type === 'bulleted_list' ? 'ul' : 'ol'];
-            listLastId = `list${id}`;
+            if (isList) {
+              listTagName = components[type === 'bulleted_list' ? 'ul' : 'ol'];
+              listLastId = `list${id}`;
 
-            listMap[id] = {
-              key: id,
-              nested: [],
-              children: textBlock(properties.title, true, id),
-            };
+              listMap[id] = {
+                key: id,
+                nested: [],
+                children: textBlock(properties.title, true, id),
+              };
 
-            if (listMap[parent_id]) {
-              listMap[id].isNested = true;
-              listMap[parent_id].nested.push(id);
+              if (listMap[parent_id]) {
+                listMap[id].isNested = true;
+                listMap[parent_id].nested.push(id);
+              }
             }
-          }
 
-          if (listTagName && (isLast || !isList)) {
-            toRender.push(
-              React.createElement(
-                listTagName,
-                { key: listLastId },
-                Object.keys(listMap).map(itemId => {
-                  if (listMap[itemId].isNested) return null;
-
-                  const createEl = item =>
-                    React.createElement(
-                      components.li || 'ul',
-                      { key: item.key },
-                      item.children,
-                      item.nested.length > 0
-                        ? React.createElement(
-                            components.ul || 'ul',
-                            { key: `${item}sub-list` },
-                            item.nested.map(nestedId =>
-                              createEl(listMap[nestedId])
-                            )
-                          )
-                        : null
-                    );
-
-                  return createEl(listMap[itemId]);
-                })
-              )
-            );
-            listMap = {};
-            listLastId = null;
-            listTagName = null;
-          }
-
-          const renderHeading = (Type: string | React.ComponentType) => {
-            toRender.push(
-              <Heading key={id}>
-                <Type key={id}>{textBlock(properties.title, true, id)}</Type>
-              </Heading>
-            );
-          };
-
-          switch (type) {
-            case 'page':
-            case 'divider':
-              break;
-            case 'text':
-              if (properties) {
-                toRender.push(textBlock(properties.title, false, id));
-              }
-              break;
-            case 'image':
-            case 'video':
-            case 'embed': {
-              const { format = {} } = value;
-              const {
-                block_width,
-                block_height,
-                display_source,
-                block_aspect_ratio,
-              } = format;
-              const baseBlockWidth = 768;
-              const roundFactor = Math.pow(10, 2);
-              // calculate percentages
-              const width = block_width
-                ? `${Math.round(
-                    (block_width / baseBlockWidth) * 100 * roundFactor
-                  ) / roundFactor}%`
-                : block_height || '100%';
-
-              const isImage = type === 'image';
-              const Comp = isImage ? 'img' : 'video';
-              const useWrapper = block_aspect_ratio && !block_height;
-              const childStyle: CSSProperties = useWrapper
-                ? {
-                    width: '100%',
-                    height: '100%',
-                    border: 'none',
-                    position: 'absolute',
-                    top: 0,
-                  }
-                : {
-                    width,
-                    border: 'none',
-                    height: block_height,
-                    display: 'block',
-                    maxWidth: '100%',
-                  };
-
-              let child = null;
-
-              if (!isImage && !value.file_ids) {
-                // external resource use iframe
-                child = (
-                  <iframe
-                    style={childStyle}
-                    src={display_source}
-                    key={!useWrapper ? id : undefined}
-                    className={!useWrapper ? 'asset-wrapper' : undefined}
-                  />
-                );
-              } else {
-                // notion resource
-                child = (
-                  <Comp
-                    key={!useWrapper ? id : undefined}
-                    src={`/api/asset?assetUrl=${encodeURIComponent(
-                      display_source
-                    )}&blockId=${id}`}
-                    controls={!isImage}
-                    alt={`An ${isImage ? 'image' : 'video'} from Notion`}
-                    loop={!isImage}
-                    muted={!isImage}
-                    autoPlay={!isImage}
-                    style={childStyle}
-                  />
-                );
-              }
-
+            if (listTagName && (isLast || !isList)) {
               toRender.push(
-                useWrapper ? (
-                  <div
-                    style={{
-                      paddingTop: `${Math.round(block_aspect_ratio * 100)}%`,
-                      position: 'relative',
-                    }}
-                    className="asset-wrapper"
-                    key={id}
-                  >
-                    {child}
-                  </div>
-                ) : (
-                  child
+                React.createElement(
+                  listTagName,
+                  { key: listLastId },
+                  Object.keys(listMap).map(itemId => {
+                    if (listMap[itemId].isNested) return null;
+
+                    const createEl = item =>
+                      React.createElement(
+                        components.li || 'ul',
+                        { key: item.key },
+                        item.children,
+                        item.nested.length > 0
+                          ? React.createElement(
+                              components.ul || 'ul',
+                              { key: `${item}sub-list` },
+                              item.nested.map(nestedId =>
+                                createEl(listMap[nestedId])
+                              )
+                            )
+                          : null
+                      );
+
+                    return createEl(listMap[itemId]);
+                  })
                 )
               );
-              break;
+              listMap = {};
+              listLastId = null;
+              listTagName = null;
             }
-            case 'header':
-              renderHeading('h1');
-              break;
-            case 'sub_header':
-              renderHeading('h2');
-              break;
-            case 'sub_sub_header':
-              renderHeading('h3');
-              break;
-            case 'code': {
-              if (properties.title) {
-                const content = properties.title[0][0];
-                const language = properties.language[0][0];
 
-                if (language === 'LiveScript') {
-                  // this requires the DOM for now
-                  toRender.push(
-                    <ReactJSXParser
-                      key={id}
-                      jsx={content}
-                      components={components}
-                      componentsOnly={false}
-                      renderInpost={false}
-                      allowUnknownElements
-                      blacklistedTags={['script', 'style']}
+            const renderHeading = (Type: string | React.ComponentType) => {
+              toRender.push(
+                <Heading key={id}>
+                  <Type key={id}>{textBlock(properties.title, true, id)}</Type>
+                </Heading>
+              );
+            };
+
+            switch (type) {
+              case 'page':
+              case 'divider':
+                break;
+              case 'text':
+                if (properties) {
+                  toRender.push(textBlock(properties.title, false, id));
+                }
+                break;
+              case 'image':
+              case 'video':
+              case 'embed': {
+                const { format = {} } = value;
+                const {
+                  block_width,
+                  block_height,
+                  display_source,
+                  block_aspect_ratio,
+                } = format;
+                const baseBlockWidth = 768;
+                const roundFactor = Math.pow(10, 2);
+                // calculate percentages
+                const width = block_width
+                  ? `${Math.round(
+                      (block_width / baseBlockWidth) * 100 * roundFactor
+                    ) / roundFactor}%`
+                  : block_height || '100%';
+
+                const isImage = type === 'image';
+                const Comp = isImage ? 'img' : 'video';
+                const useWrapper = block_aspect_ratio && !block_height;
+                const childStyle: CSSProperties = useWrapper
+                  ? {
+                      width: '100%',
+                      height: '100%',
+                      border: 'none',
+                      position: 'absolute',
+                      top: 0,
+                    }
+                  : {
+                      width,
+                      border: 'none',
+                      height: block_height,
+                      display: 'block',
+                      maxWidth: '100%',
+                    };
+
+                let child = null;
+
+                if (!isImage && !value.file_ids) {
+                  // external resource use iframe
+                  child = (
+                    <iframe
+                      style={childStyle}
+                      src={display_source}
+                      key={!useWrapper ? id : undefined}
+                      className={!useWrapper ? 'asset-wrapper' : undefined}
                     />
                   );
                 } else {
-                  toRender.push(
-                    <components.Code key={id}>{content}</components.Code>
+                  // notion resource
+                  child = (
+                    <Comp
+                      key={!useWrapper ? id : undefined}
+                      src={`/api/asset?assetUrl=${encodeURIComponent(
+                        display_source
+                      )}&blockId=${id}`}
+                      controls={!isImage}
+                      alt={`An ${isImage ? 'image' : 'video'} from Notion`}
+                      loop={!isImage}
+                      muted={!isImage}
+                      autoPlay={!isImage}
+                      style={childStyle}
+                    />
                   );
                 }
-              }
-              break;
-            }
-            case 'quote': {
-              if (properties.title) {
+
                 toRender.push(
-                  React.createElement(
-                    components.blockquote,
-                    { key: id },
-                    properties.title
+                  useWrapper ? (
+                    <div
+                      style={{
+                        paddingTop: `${Math.round(block_aspect_ratio * 100)}%`,
+                        position: 'relative',
+                      }}
+                      className="asset-wrapper"
+                      key={id}
+                    >
+                      {child}
+                    </div>
+                  ) : (
+                    child
                   )
                 );
+                break;
               }
-              break;
-            }
-            case 'callout': {
-              toRender.push(
-                <div className="callout" key={id}>
-                  {value.format?.page_icon && (
-                    <div>{value.format?.page_icon}</div>
-                  )}
-                  <div className="text">
-                    {textBlock(properties.title, true, id)}
-                  </div>
-                </div>
-              );
-              break;
-            }
-            case 'tweet': {
-              if (properties.html) {
-                toRender.push(
-                  <div
-                    dangerouslySetInnerHTML={{ __html: properties.html }}
-                    key={id}
-                  />
-                );
-              }
-              break;
-            }
-            default:
-              if (
-                process.env.NODE_ENV !== 'production' &&
-                !listTypes.has(type)
-              ) {
-                console.log('unknown type', type);
-              }
-              break;
-          }
+              case 'header':
+                renderHeading('h1');
+                break;
+              case 'sub_header':
+                renderHeading('h2');
+                break;
+              case 'sub_sub_header':
+                renderHeading('h3');
+                break;
+              case 'code': {
+                if (properties.title) {
+                  const content = properties.title[0][0];
+                  const language = properties.language[0][0];
 
-          return toRender;
-        })}
-      </Article>
-    </Base>
+                  if (language === 'LiveScript') {
+                    // this requires the DOM for now
+                    toRender.push(
+                      <ReactJSXParser
+                        key={id}
+                        jsx={content}
+                        components={components}
+                        componentsOnly={false}
+                        renderInpost={false}
+                        allowUnknownElements
+                        blacklistedTags={['script', 'style']}
+                      />
+                    );
+                  } else {
+                    toRender.push(
+                      <components.Code key={id}>{content}</components.Code>
+                    );
+                  }
+                }
+                break;
+              }
+              case 'quote': {
+                if (properties.title) {
+                  toRender.push(
+                    React.createElement(
+                      components.blockquote,
+                      { key: id },
+                      properties.title
+                    )
+                  );
+                }
+                break;
+              }
+              case 'callout': {
+                toRender.push(
+                  <div className="callout" key={id}>
+                    {value.format?.page_icon && (
+                      <div>{value.format?.page_icon}</div>
+                    )}
+                    <div className="text">
+                      {textBlock(properties.title, true, id)}
+                    </div>
+                  </div>
+                );
+                break;
+              }
+              case 'tweet': {
+                if (properties.html) {
+                  toRender.push(
+                    <div
+                      dangerouslySetInnerHTML={{ __html: properties.html }}
+                      key={id}
+                    />
+                  );
+                }
+                break;
+              }
+              default:
+                if (
+                  process.env.NODE_ENV !== 'production' &&
+                  !listTypes.has(type)
+                ) {
+                  console.log('unknown type', type);
+                }
+                break;
+            }
+
+            return toRender;
+          })}
+        </Article>
+      </BaseComponent>
+    </>
   );
 };
 

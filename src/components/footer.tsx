@@ -7,10 +7,10 @@ const FooterWrapper = styled.footer`
   min-width: ${width.iphone5};
   padding-top: 200px;
   padding-bottom: 10px;
-  color: ${color.bg};
+  color: ${color.primary};
   text-align: center;
-  background: ${color.content};
-  border-bottom: 8px solid ${color.bg};
+  background: ${color.white};
+  border-bottom: 8px solid ${color.primary};
 `;
 
 const Nav = styled.nav`
