@@ -20,7 +20,7 @@ const HeadComponent = props => {
         property="og:description"
         content="tama / Ryo Watanabe のポートフォリオ"
       />
-      <meta property="og:image" content="https://szmd.jp/og.png" />
+      <meta property="og:image" content="https://szmd.jp/og.jpg" />
       <meta name="twitter:site" content="@momochitama" />
       <meta name="twitter:card" content="summary_large_image" />
       <link rel="canonical" href="https://szmd.jp/" />
