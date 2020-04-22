@@ -5,7 +5,8 @@ import { getBlogLink, getDateStr, postIsReady } from '../../lib/blog-helpers';
 import getNotionUsers from '../../lib/notion/getNotionUsers';
 import getBlogIndex from '../../lib/notion/getBlogIndex';
 
-import Base from '../../components/base';
+import BaseComponent from '../../components/base';
+import HeadComponent from '../../components/head';
 import { width, color } from '../../lib/style';
 
 export async function getStaticProps() {
@@ -57,8 +58,8 @@ const Card = styled.div`
   padding: 20px;
   margin-top: 32px;
   cursor: pointer;
-  border-radius: 8px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.4s;
   @media (max-width: ${width.ipad}) {
     width: 100%;
@@ -93,7 +94,7 @@ const Date = styled.span`
   font-family: 'Raleway', sans-serif;
   font-size: 1.6rem;
   font-style: italic;
-  color: ${color.bg};
+  color: ${color.primary};
 `;
 
 const Title = styled.h3`
@@ -106,40 +107,43 @@ const Title = styled.h3`
 
 const Index = ({ posts = [] }) => {
   return (
-    <Base heading="BLOG">
-      {posts.length === 0 && <p>oops! 投稿が見つかりません……</p>}
-      <CardWrapper>
-        {posts.map(post => {
-          return (
-            <Link
-              href="/blog/[slug]"
-              as={getBlogLink(post.Slug)}
-              key={post.Slug}
-            >
-              <Card>
-                {post.Date && <Date>{getDateStr(post.Date)}</Date>}
-                <Title>{post.Page}</Title>
-                <Thumbnail>
-                  {post.Thumbnail ? (
-                    <ThumbnailImage
-                      key={post.id}
-                      src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
-                      alt={post.Page}
-                    />
-                  ) : (
-                    <ThumbnailImage
-                      key={post.id}
-                      src="/noimage.png"
-                      alt={post.Page}
-                    />
-                  )}
-                </Thumbnail>
-              </Card>
-            </Link>
-          );
-        })}
-      </CardWrapper>
-    </Base>
+    <>
+      <HeadComponent title="ABOUT" />
+      <BaseComponent heading="BLOG">
+        {posts.length === 0 && <p>oops! 投稿が見つかりません……</p>}
+        <CardWrapper>
+          {posts.map(post => {
+            return (
+              <Link
+                href="/blog/[slug]"
+                as={getBlogLink(post.Slug)}
+                key={post.Slug}
+              >
+                <Card>
+                  {post.Date && <Date>{getDateStr(post.Date)}</Date>}
+                  <Title>{post.Page}</Title>
+                  <Thumbnail>
+                    {post.Thumbnail ? (
+                      <ThumbnailImage
+                        key={post.id}
+                        src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
+                        alt={post.Page}
+                      />
+                    ) : (
+                      <ThumbnailImage
+                        key={post.id}
+                        src="/noimage.png"
+                        alt={post.Page}
+                      />
+                    )}
+                  </Thumbnail>
+                </Card>
+              </Link>
+            );
+          })}
+        </CardWrapper>
+      </BaseComponent>
+    </>
   );
 };
 

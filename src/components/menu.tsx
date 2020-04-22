@@ -29,7 +29,7 @@ const wrapperVariants = {
 };
 
 const MenuList = styled.ul`
-  color: ${color.content};
+  color: ${color.white};
   text-align: center;
 `;
 
@@ -38,7 +38,7 @@ const MenuItem = styled.li`
   font-size: 2.4rem;
   transition: color ${transition.fast};
   &:hover {
-    color: ${color.bg};
+    color: ${color.primary};
   }
 `;
 
@@ -53,11 +53,11 @@ const Close = styled.button`
   font-family: 'Raleway', sans-serif;
   font-size: 1.2rem;
   font-style: italic;
-  color: ${color.content};
+  color: ${color.white};
   cursor: pointer;
   transition: color ${transition.fast};
   &:hover {
-    color: ${color.bg};
+    color: ${color.primary};
   }
 `;
 

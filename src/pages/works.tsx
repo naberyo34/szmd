@@ -5,7 +5,9 @@ import { openModal } from '../modules/actions';
 import { postIsReady } from '../lib/blog-helpers';
 import getNotionUsers from '../lib/notion/getNotionUsers';
 import getWorksIndex from '../lib/notion/getWorksIndex';
-import Base from '../components/base';
+import BaseComponent from '../components/base';
+import HeadComponent from '../components/head';
+
 import { width, transition } from '../lib/style';
 
 export async function getStaticProps() {
@@ -59,8 +61,7 @@ const Card = styled.div`
   margin-top: 32px;
   overflow: hidden;
   cursor: pointer;
-  border-radius: 8px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
   transition: box-shadow ${transition.fast};
   @media (max-width: ${width.ipad}) {
     width: 100%;
@@ -92,30 +93,33 @@ const Works = ({ posts = [] }) => {
   };
 
   return (
-    <Base heading="WORKS">
-      {posts.length === 0 && <p>投稿がありません</p>}
-      <CardWrapper>
-        {posts.map(post => {
-          return (
-            // コンテンツの中身が空だとapiがnullになって画像が表示されないらしい
-            <Card
-              key={post.id}
-              onClick={() =>
-                handleOpenModal({
-                  title: post.Page,
-                  imageUrl: `/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`,
-                })
-              }
-            >
-              <ThumbnailImage
-                src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
-                alt={post.Page}
-              />
-            </Card>
-          );
-        })}
-      </CardWrapper>
-    </Base>
+    <>
+      <HeadComponent title="WORKS" />
+      <BaseComponent heading="WORKS">
+        {posts.length === 0 && <p>投稿がありません</p>}
+        <CardWrapper>
+          {posts.map(post => {
+            return (
+              // コンテンツの中身が空だとapiがnullになって画像が表示されないらしい
+              <Card
+                key={post.id}
+                onClick={() =>
+                  handleOpenModal({
+                    title: post.Page,
+                    imageUrl: `/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`,
+                  })
+                }
+              >
+                <ThumbnailImage
+                  src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
+                  alt={post.Page}
+                />
+              </Card>
+            );
+          })}
+        </CardWrapper>
+      </BaseComponent>
+    </>
   );
 };
 

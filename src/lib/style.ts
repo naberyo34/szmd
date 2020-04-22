@@ -9,10 +9,10 @@ export const width = {
 };
 
 export const color = {
-  content: '#fff',
-  window: '#fafafa',
+  primary: '#f6d365',
   text: '#333',
-  bg: '#f6d365',
+  white: '#fff',
+  gray: '#fafafa',
 };
 
 export const transition = {

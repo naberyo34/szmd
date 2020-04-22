@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Base from '../components/base';
+import BaseComponent from '../components/base';
+import HeadComponent from '../components/head';
 import { width, color } from '../lib/style';
 
 const Author = styled.section`
@@ -8,8 +9,7 @@ const Author = styled.section`
   padding: 0 20px 40px 20px;
   margin: 200px auto 0 auto;
   text-align: center;
-  background: ${color.window};
-  border-radius: 8px;
+  background: ${color.gray};
 `;
 
 const AuthorIcon = styled.img`
@@ -33,19 +33,22 @@ const AuthorDescription = styled.p`
 `;
 
 const About = () => (
-  <Base heading="ABOUT">
-    <Author>
-      <AuthorIcon src="/about_icon.png" alt="tamaのアイコン" width="200" />
-      <AuthorName>tama</AuthorName>
-      <AuthorDescription>
-        a.k.a. Ryo Watanabe
-        <br />
-        平日は駆け出しエンジニア、週末は趣味でイラストやデザインをやっています。
-        <br />
-        音楽とカレーが好きです。
-      </AuthorDescription>
-    </Author>
-  </Base>
+  <>
+    <HeadComponent title="ABOUT" />
+    <BaseComponent heading="ABOUT">
+      <Author>
+        <AuthorIcon src="/about_icon.png" alt="tamaのアイコン" width="200" />
+        <AuthorName>tama</AuthorName>
+        <AuthorDescription>
+          a.k.a. Ryo Watanabe
+          <br />
+          平日は駆け出しエンジニア、週末は趣味でイラストやデザインをやっています。
+          <br />
+          音楽とカレーが好きです。
+        </AuthorDescription>
+      </Author>
+    </BaseComponent>
+  </>
 );
 
 export default About;

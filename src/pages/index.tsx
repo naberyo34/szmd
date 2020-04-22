@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { getInnerHeight } from '../modules/actions';
 import { width, transition } from '../lib/style';
+import HeadComponent from '../components/head';
 
 const Wrapper = styled(motion.div)``;
 
@@ -110,43 +111,46 @@ const Index = () => {
   const innerHeight = useSelector(state => state.innerHeight);
 
   return (
-    <Wrapper
-      variants={wrapperVariants}
-      initial="initial"
-      animate="fadeIn"
-      exit="fadeOut"
-      transition={{ type: 'tween', duration: 0.2 }}
-    >
-      <Content innerHeight={innerHeight}>
-        <ContentInner>
-          <div>
-            <Title>SZMD</Title>
-            <Address>szmd.jp</Address>
-          </div>
-        </ContentInner>
-      </Content>
-      <Footer>
-        <Nav>
-          <Menu>
-            <MenuItem>
-              <Link href="/about">
-                <LinkText href="/about">ABOUT</LinkText>
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link href="/works">
-                <LinkText href="/works">WORKS</LinkText>
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link href="/blog">
-                <LinkText href="/blog">BLOG</LinkText>
-              </Link>
-            </MenuItem>
-          </Menu>
-        </Nav>
-      </Footer>
-    </Wrapper>
+    <>
+      <HeadComponent />
+      <Wrapper
+        variants={wrapperVariants}
+        initial="initial"
+        animate="fadeIn"
+        exit="fadeOut"
+        transition={{ type: 'tween', duration: 0.2 }}
+      >
+        <Content innerHeight={innerHeight}>
+          <ContentInner>
+            <div>
+              <Title>SZMD</Title>
+              <Address>szmd.jp</Address>
+            </div>
+          </ContentInner>
+        </Content>
+        <Footer>
+          <Nav>
+            <Menu>
+              <MenuItem>
+                <Link href="/about">
+                  <LinkText href="/about">ABOUT</LinkText>
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link href="/works">
+                  <LinkText href="/works">WORKS</LinkText>
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link href="/blog">
+                  <LinkText href="/blog">BLOG</LinkText>
+                </Link>
+              </MenuItem>
+            </Menu>
+          </Nav>
+        </Footer>
+      </Wrapper>
+    </>
   );
 };
 

@@ -16,7 +16,7 @@ const Wrapper = styled(motion.div)<{ innerHeight: number }>`
   width: 100vw;
   height: ${({ innerHeight }) => (innerHeight ? `${innerHeight}px` : '100vh')};
   padding: 16px;
-  color: ${color.content};
+  color: ${color.white};
   background: rgba(0, 0, 0, 0.6);
 `;
 
@@ -80,7 +80,7 @@ const Close = styled.button`
   font-family: 'Raleway', sans-serif;
   font-size: 1.2rem;
   font-style: italic;
-  color: ${color.content};
+  color: ${color.white};
   cursor: pointer;
   transition: color ${transition.fast};
   @media (max-width: ${width.ipad}) {
@@ -88,7 +88,7 @@ const Close = styled.button`
     margin: 32px auto 0;
   }
   &:hover {
-    color: ${color.bg};
+    color: ${color.primary};
   }
 `;
 
