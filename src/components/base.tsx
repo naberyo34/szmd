@@ -1,19 +1,22 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { getInnerHeight } from '../modules/actions';
 import { width, color } from '../lib/style';
-import Header from './header';
-import Footer from './footer';
+// コンポーネント
+import ScrollFixed from './scrollFixed';
 import Menu from './menu';
 import Modal from './modal';
-import ScrollFixed from './scrollFixed';
+import Header from './header';
+import Footer from './footer';
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: ${width.iphone5};
+  padding-bottom: 120px;
   background: ${color.white};
 `;
 
@@ -46,13 +49,30 @@ const Heading = styled.h2`
 
 const BaseComponent = props => {
   const { heading, children } = props;
+  const dispatch = useDispatch();
   const isFixed = useSelector(state => state.fixed);
+  const menuIsOpen = useSelector(state => state.menu);
+  const modal = useSelector(state => state.modal);
+
+  useEffect(() => {
+    // viewportの高さを取得し、コンテンツのheightを決定
+    const setInnerHeight = () => {
+      const { innerHeight } = window;
+      dispatch(getInnerHeight(innerHeight));
+    };
+
+    setInnerHeight();
+    // リサイズを監視し、コンテンツのheightを更新
+    window.addEventListener('resize', setInnerHeight);
+  }, [dispatch]);
+
+  const innerHeight = useSelector(state => state.innerHeight);
 
   return (
     <>
       <ScrollFixed isFixed={isFixed} />
-      <Menu />
-      <Modal />
+      <Menu isOpen={menuIsOpen} />
+      <Modal isOpen={modal.open} data={modal.data} innerHeight={innerHeight} />
       <Header />
       <Wrapper>
         <Content
@@ -62,7 +82,7 @@ const BaseComponent = props => {
           exit="fadeOut"
           transition={{ type: 'tween', duration: 0.2 }}
         >
-          {heading ? <Heading>{heading}</Heading> : <></>}
+          {heading && <Heading>{heading}</Heading>}
           {children}
         </Content>
       </Wrapper>

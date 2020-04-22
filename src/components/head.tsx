@@ -7,10 +7,7 @@ const HeadComponent = props => {
   return (
     <Head>
       <title>{title ? `${title} | SZMD` : 'SZMD | tama portfolio page'}</title>
-      <meta
-        name="description"
-        content={title ? `${title} | SZMD` : 'SZMD | tama portfolio page'}
-      />
+      <meta name="description" content="tama / Ryo Watanabe のポートフォリオ" />
       <meta property="og:url" content="https://szmd.jp" />
       <meta
         property="og:title"

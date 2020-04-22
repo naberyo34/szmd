@@ -47,7 +47,6 @@ const CardWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 64px auto 0;
   @media (max-width: ${width.ipad}) {
     flex-direction: column;
   }

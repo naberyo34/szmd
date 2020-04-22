@@ -5,7 +5,6 @@ import { width, color, transition } from '../lib/style';
 
 const FooterWrapper = styled.footer`
   min-width: ${width.iphone5};
-  padding-top: 200px;
   padding-bottom: 10px;
   color: ${color.primary};
   text-align: center;

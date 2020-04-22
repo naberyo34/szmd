@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
-import { getInnerHeight, closeModal } from '../modules/actions';
+import { useDispatch } from 'react-redux';
+import { closeModal } from '../modules/actions';
 import { zIndex, width, color, transition } from '../lib/style';
 
 const Wrapper = styled(motion.div)<{ innerHeight: number }>`
@@ -92,27 +92,12 @@ const Close = styled.button`
   }
 `;
 
-const Modal = () => {
-  const isOpen = useSelector(state => state.modal);
-  const data = useSelector(state => state.modalData);
+const Modal = props => {
+  const { isOpen, data, innerHeight } = props;
   const dispatch = useDispatch();
   const handleCloseModal = () => {
     dispatch(closeModal());
   };
-
-  useEffect(() => {
-    // viewportの高さを取得し、コンテンツのheightを決定
-    const setInnerHeight = () => {
-      const { innerHeight } = window;
-      dispatch(getInnerHeight(innerHeight));
-    };
-
-    setInnerHeight();
-    // リサイズを監視し、コンテンツのheightを更新
-    window.addEventListener('resize', setInnerHeight);
-  }, [dispatch]);
-
-  const innerHeight = useSelector(state => state.innerHeight);
 
   return (
     <AnimatePresence>

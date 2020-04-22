@@ -7,7 +7,7 @@ import { width, color } from '../lib/style';
 const Author = styled.section`
   max-width: 800px;
   padding: 0 20px 40px 20px;
-  margin: 200px auto 0 auto;
+  margin: 120px auto 0;
   text-align: center;
   background: ${color.gray};
 `;
