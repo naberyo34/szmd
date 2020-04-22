@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toggleMenu } from '../modules/actions';
@@ -61,12 +61,12 @@ const Close = styled.button`
   }
 `;
 
-const Menu = () => {
+const Menu = props => {
+  const { isOpen } = props;
   const dispatch = useDispatch();
   const handleToggleMenu = () => {
     dispatch(toggleMenu());
   };
-  const isOpen = useSelector(state => state.menu);
 
   return (
     <AnimatePresence>

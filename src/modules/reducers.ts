@@ -6,8 +6,10 @@ const initialState = {
   innerHeight: 0,
   fixed: false,
   menu: false,
-  modal: false,
-  modalData: {},
+  modal: {
+    open: false,
+    data: {},
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -38,16 +40,20 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         fixed: true,
-        modal: true,
-        modalData: action.payload,
+        modal: {
+          open: true,
+          data: action.payload,
+        },
       };
     }
     case types.CLOSE_MODAL: {
       return {
         ...state,
         fixed: false,
-        modal: false,
-        modalData: {},
+        modal: {
+          open: false,
+          data: {},
+        },
       };
     }
     default:
