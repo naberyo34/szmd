@@ -107,7 +107,7 @@ const Title = styled.h3`
 const Index = ({ posts = [] }) => {
   return (
     <>
-      <HeadComponent title="ABOUT" />
+      <HeadComponent title="BLOG" />
       <BaseComponent heading="BLOG">
         {posts.length === 0 && <p>oops! 投稿が見つかりません……</p>}
         <CardWrapper>
