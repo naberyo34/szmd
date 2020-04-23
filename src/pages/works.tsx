@@ -5,9 +5,9 @@ import { openModal } from '../modules/actions';
 import { postIsReady } from '../lib/blog-helpers';
 import getNotionUsers from '../lib/notion/getNotionUsers';
 import getWorksIndex from '../lib/notion/getWorksIndex';
-import BaseComponent from '../components/base';
+// コンポーネント
 import HeadComponent from '../components/head';
-
+import BaseComponent from '../components/base';
 import { width, transition } from '../lib/style';
 
 export async function getStaticProps() {

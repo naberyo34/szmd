@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { getBlogLink, getDateStr, postIsReady } from '../../lib/blog-helpers';
 import getNotionUsers from '../../lib/notion/getNotionUsers';
 import getBlogIndex from '../../lib/notion/getBlogIndex';
-
-import BaseComponent from '../../components/base';
+//　コンポーネント
 import HeadComponent from '../../components/head';
+import BaseComponent from '../../components/base';
 import { width, color } from '../../lib/style';
 
 export async function getStaticProps() {
