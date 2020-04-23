@@ -1,3 +1,5 @@
+import Slugger from 'github-slugger';
+import { normalizeSlug } from '../blog-helpers';
 import { values } from './rpc';
 import queryCollection from './queryCollection';
 
