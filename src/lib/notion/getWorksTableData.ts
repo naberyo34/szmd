@@ -4,6 +4,7 @@ import { values } from './rpc';
 import queryCollection from './queryCollection';
 
 export default async function loadTable(collectionBlock: any, isPosts = false) {
+  const slugger = new Slugger();
   // getWorksIndexで取ってきたWORKSテーブルの情報
   const { value } = collectionBlock;
   // 最終的に返却するテーブル ここに色々ぶちこんでいく
@@ -59,17 +60,32 @@ export default async function loadTable(collectionBlock: any, isPosts = false) {
     }
 
     schemaKeys.forEach(key => {
-      let val = props[key];
-      // Imageのみ要素を2つ持っており、2つ目の要素にURLが格納されているためそちらを採用する
-      if (props[key][0][1]) {
-        val = props[key][0][1][0];
+      // might be undefined
+      let val = props[key] && props[key][0][0];
+
+      // Imageの項目だけスキーマの形が違うため整形してからrowに格納している. 要リファクタリング
+      // authors and blocks are centralized
+      if (val && props[key][0][1]) {
+        const type = props[key][0][1][0];
+
+        switch (type[0]) {
+          case 'a': // link
+            val = type[1];
+            break;
+          default:
+            console.error('unknown type', type[0], type);
+            break;
+        }
       }
-      // ex. rowの'Category'にCategoryのvalを代入 など
+
+      if (typeof val === 'string') {
+        val = val.trim();
+      }
       row[schema[key].name] = val || null;
     });
 
     // TitleからSlugを取得し、rowにプロパティとして加える
-    row.Slug = normalizeSlug(row.Slug || Slugger.slug(row.Title || ''));
+    row.Slug = normalizeSlug(row.Slug || slugger.slug(row.Title || ''));
     const key = row.Slug;
     if (isPosts && !key) continue;
 

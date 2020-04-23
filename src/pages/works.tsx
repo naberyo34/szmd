@@ -85,8 +85,6 @@ const Works = ({ posts = [] }) => {
         {posts.length === 0 && <p>投稿がありません</p>}
         <CardWrapper>
           {posts.map(post => {
-            console.log(post);
-
             return (
               // コンテンツの中身が空だとapiがnullになって画像が表示されないらしい
               <Card
