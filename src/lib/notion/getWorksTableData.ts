@@ -59,66 +59,18 @@ export default async function loadTable(collectionBlock: any, isPosts = false) {
     }
 
     schemaKeys.forEach(key => {
-      // might be undefined
-      let val = props[key] && props[key][0][0];
-      console.log('props', props);
-      console.log('propskey', props[key], props[key][0][0]);
-      // authors and blocks are centralized
-      if (val && props[key][0][1]) {
-        const type = props[key][0][1][0];
-        console.log('type', type);
-
-        switch (type[0]) {
-          case 'a': // link
-            val = type[1];
-            break;
-          case 'u': // user
-            val = props[key]
-              .filter((arr: any[]) => arr.length > 1)
-              .map((arr: any[]) => arr[1][0][1]);
-            break;
-          case 'p': // page (block)
-            const page = col.recordMap.block[type[1]];
-            row.id = page.value.id;
-            val = page.value.properties.title[0][0];
-            break;
-          case 'd': // date
-            // start_date: 2019-06-18
-            // start_time: 07:00
-            // time_zone: Europe/Berlin, America/Los_Angeles
-
-            // 日付の整形処理と思われる
-            if (!type[1].start_date) {
-              break;
-            }
-            // initial with provided date
-            const providedDate = new Date(
-              `${type[1].start_date} ${type[1].start_time || ''}`
-            ).getTime();
-
-            // calculate offset from provided time zone
-            const timezoneOffset =
-              new Date(
-                new Date().toLocaleString('en-US', {
-                  timeZone: type[1].time_zone,
-                })
-              ).getTime() - new Date().getTime();
-
-            // initialize subtracting time zone offset
-            val = new Date(providedDate - timezoneOffset).getTime();
-            break;
-          default:
-            console.error('unknown type', type[0], type);
-            break;
-        }
+      let val = props[key];
+      // Imageのみ要素を2つ持っており、2つ目の要素にURLが格納されているためそちらを採用する
+      if (props[key][0][1]) {
+        val = props[key][0][1][0];
       }
-
-      if (typeof val === 'string') {
-        val = val.trim();
-      }
+      // ex. rowの'Category'にCategoryのvalを代入 など
       row[schema[key].name] = val || null;
     });
 
+    // TitleからSlugを取得し、rowにプロパティとして加える
+    row.Slug = normalizeSlug(row.Slug || Slugger.slug(row.Title || ''));
+    const key = row.Slug;
     if (isPosts && !key) continue;
 
     if (key) {
