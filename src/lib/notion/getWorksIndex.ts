@@ -1,7 +1,7 @@
 import { Sema } from 'async-sema';
 import rpc, { values } from './rpc';
 import createTable from './createTable';
-import getTableData from './getTableData';
+import getWorksTableData from './getWorksTableData';
 import { getPostPreview } from './getPostPreview';
 import { readFile, writeFile } from '../fs-helpers';
 import { BLOG_INDEX_ID, BLOG_INDEX_CACHE } from './server-constants';
@@ -41,10 +41,10 @@ export default async function getWorksIndex(previews = true) {
           block.value.id === '22349c3e-6e31-4073-b6c9-08763fe1c4eb'
       );
 
-      postsTable = await getTableData(WorksTableBlock, true);
+      postsTable = await getWorksTableData(WorksTableBlock, true);
     } catch (err) {
       console.warn(
-        // テーブルを取得できなかった場合は勝手にUntitledのテーブルが新規作成される
+        // テーブルを取得できなかった場合はUntitledのテーブル新規作成を試みる
         'Failed to load Notion posts, attempting to auto create table'
       );
       try {

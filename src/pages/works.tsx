@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../modules/actions';
 import { postIsReady } from '../lib/blog-helpers';
-import getNotionUsers from '../lib/notion/getNotionUsers';
 import getWorksIndex from '../lib/notion/getWorksIndex';
 // コンポーネント
 import HeadComponent from '../components/head';
@@ -12,8 +11,6 @@ import { width, transition } from '../lib/style';
 
 export async function getStaticProps() {
   const postsTable = await getWorksIndex();
-
-  const authorsToGet: Set<string> = new Set();
   const posts: any[] = Object.keys(postsTable)
     .map(slug => {
       const post = postsTable[slug];
@@ -21,20 +18,10 @@ export async function getStaticProps() {
       if (!postIsReady(post)) {
         return null;
       }
-      post.Authors = post.Authors || [];
-      for (const author of post.Authors) {
-        authorsToGet.add(author);
-      }
 
       return post;
     })
     .filter(Boolean);
-
-  const { users } = await getNotionUsers([...authorsToGet]);
-
-  posts.map(post => {
-    post.Authors = post.Authors.map(id => users[id].full_name);
-  });
 
   return {
     props: {
@@ -98,19 +85,22 @@ const Works = ({ posts = [] }) => {
         {posts.length === 0 && <p>投稿がありません</p>}
         <CardWrapper>
           {posts.map(post => {
+            console.log(post);
+
             return (
               // コンテンツの中身が空だとapiがnullになって画像が表示されないらしい
               <Card
                 key={post.id}
                 onClick={() =>
                   handleOpenModal({
-                    title: post.Page,
-                    imageUrl: `/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`,
+                    title: post.Title,
+                    description: post.Description,
+                    imageUrl: `/api/asset?assetUrl=${post.Image}&blockId=${post.id}`,
                   })
                 }
               >
                 <ThumbnailImage
-                  src={`/api/asset?assetUrl=${post.Thumbnail}&blockId=${post.id}`}
+                  src={`/api/asset?assetUrl=${post.Image}&blockId=${post.id}`}
                   alt={post.Page}
                 />
               </Card>
