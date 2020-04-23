@@ -10,8 +10,8 @@ import getPageData from '../../lib/notion/getPageData';
 import getBlogIndex from '../../lib/notion/getBlogIndex';
 import getNotionUsers from '../../lib/notion/getNotionUsers';
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers';
+// コンポーネント
 import HeadComponent from '../../components/head';
-
 import BaseComponent from '../../components/base';
 import { color } from '../../lib/style';
 
