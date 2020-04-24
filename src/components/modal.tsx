@@ -117,7 +117,7 @@ const Modal = props => {
             <Text>
               <div>
                 <Title>{data.title}</Title>
-                <Description>ダミーダミーダミーダミー</Description>
+                <Description>{data.description}</Description>
                 <Close type="button" onClick={handleCloseModal}>
                   CLOSE
                 </Close>

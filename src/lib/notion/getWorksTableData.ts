@@ -35,6 +35,7 @@ export default async function loadTable(collectionBlock: any, isPosts = false) {
     }
   */
   const { schema } = col.recordMap.collection[colId].value;
+  console.log('schema', schema);
   // '1|>d'のようなスキーマに与えられるプロパティ名の配列
   const schemaKeys = Object.keys(schema);
 
@@ -67,15 +68,7 @@ export default async function loadTable(collectionBlock: any, isPosts = false) {
       // authors and blocks are centralized
       if (val && props[key][0][1]) {
         const type = props[key][0][1][0];
-
-        switch (type[0]) {
-          case 'a': // link
-            val = type[1];
-            break;
-          default:
-            console.error('unknown type', type[0], type);
-            break;
-        }
+        val = type[1];
       }
 
       if (typeof val === 'string') {
