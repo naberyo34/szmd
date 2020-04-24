@@ -1,3 +1,4 @@
+// Slugを/blog/のついた文字列に整形して返す
 export const getBlogLink = (slug: string) => {
   return `/blog/${slug}`;
 };
@@ -11,6 +12,7 @@ export const postIsReady = (post: any) => {
   return process.env.NODE_ENV !== 'production' || post.Published === 'Yes';
 };
 
+// 自動生成したSlugに不要な/が含まれている場合は切り取って返す
 export const normalizeSlug = slug => {
   if (typeof slug !== 'string') return slug;
 

@@ -29,10 +29,6 @@ const GlobalStyle = createGlobalStyle`
 
 const App = ({ Component, pageProps, router }) => {
   const store = configureStore();
-  // storeの状態をコンソールで見る
-  store.subscribe(() => {
-    console.log(store.getState(), 'test');
-  });
 
   return (
     <Provider store={store}>
