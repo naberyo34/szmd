@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../modules/actions';
-import { postIsReady } from '../lib/blog-helpers';
 import getWorksIndex from '../lib/notion/getWorksIndex';
 // コンポーネント
 import HeadComponent from '../components/head';
@@ -14,10 +13,6 @@ export async function getStaticProps() {
   const posts: any[] = Object.keys(postsTable)
     .map(slug => {
       const post = postsTable[slug];
-      // remove draft posts in production
-      if (!postIsReady(post)) {
-        return null;
-      }
 
       return post;
     })

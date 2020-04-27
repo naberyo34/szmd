@@ -35,7 +35,6 @@ export default async function loadTable(collectionBlock: any, isPosts = false) {
     }
   */
   const { schema } = col.recordMap.collection[colId].value;
-  console.log('schema', schema);
   // '1|>d'のようなスキーマに与えられるプロパティ名の配列
   const schemaKeys = Object.keys(schema);
 
