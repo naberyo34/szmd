@@ -8,7 +8,7 @@ const Fixed = createGlobalStyle`
 `;
 
 // trueを受け取ったときにスクロールが止まる
-const scrollFixed = props => {
+const scrollFixed = (props) => {
   const { isFixed } = props;
 
   return <>{isFixed && <Fixed />}</>;
