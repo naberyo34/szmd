@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { getInnerHeight } from '../modules/actions';
 import { width, transition } from '../services/style';
-import HeadComponent from '../components/head';
+import HeadComponent from '../components/headComponent';
 import { State } from '../modules/reducers';
 
 declare module 'react-redux' {

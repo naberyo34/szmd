@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 // import Link from 'next/link';
 // コンポーネント
-import HeadComponent from '../../components/head';
+import HeadComponent from '../../components/headComponent';
 import BaseComponent from '../../components/base';
 import { width } from '../../services/style';
 

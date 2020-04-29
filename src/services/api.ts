@@ -24,7 +24,7 @@ const getWorksFactory = () => {
     try {
       const response = await instance.get('/works');
       if (response.status !== 200) {
-        throw new Error('Error! works取得失敗');
+        throw new Error('Worksの取得に失敗しました……');
       }
       const works = response.data;
       return works;
