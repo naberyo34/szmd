@@ -4,7 +4,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { getInnerHeight } from '../modules/actions';
-import { width, transition } from '../lib/style';
+import { width, transition } from '../services/style';
 import HeadComponent from '../components/head';
 import { State } from '../modules/reducers';
 
@@ -113,7 +113,7 @@ const Index = () => {
     window.addEventListener('resize', setInnerHeight);
   }, [dispatch]);
 
-  const innerHeight = useSelector(state => state.innerHeight);
+  const innerHeight = useSelector((state) => state.innerHeight);
 
   return (
     <>

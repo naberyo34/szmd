@@ -4,7 +4,7 @@ import styled from 'styled-components';
 // コンポーネント
 import HeadComponent from '../../components/head';
 import BaseComponent from '../../components/base';
-import { width } from '../../lib/style';
+import { width } from '../../services/style';
 
 const CardWrapper = styled.div`
   display: flex;

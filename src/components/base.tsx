@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { getInnerHeight } from '../modules/actions';
-import { width, color } from '../lib/style';
+import { width, color } from '../services/style';
 // コンポーネント
 import ScrollFixed from './scrollFixed';
 import Menu from './menu';

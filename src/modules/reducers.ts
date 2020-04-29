@@ -1,15 +1,18 @@
 // 便宜的に1つのreducerですべて管理してみよう
-
+import { AxiosError } from 'axios';
 import types from './actionTypes';
 
 export interface State {
-  innerHeight: number,
-  fixed: boolean,
-  menu: boolean,
+  innerHeight: number;
+  fixed: boolean;
+  menu: boolean;
   modal: {
-    open: boolean,
-    data: {},
-  }
+    open: boolean;
+    data: {};
+  };
+  works: [];
+  isLoading: boolean;
+  error?: AxiosError | null;
 }
 
 const initialState: State = {
@@ -20,6 +23,8 @@ const initialState: State = {
     open: false,
     data: {},
   },
+  works: [],
+  isLoading: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -64,6 +69,27 @@ const reducer = (state = initialState, action) => {
           open: false,
           data: {},
         },
+      };
+    }
+    case types.GET_WORKS_START: {
+      return {
+        ...state,
+        works: [],
+        isLoading: true,
+      };
+    }
+    case types.GET_WORKS_SUCCEED: {
+      return {
+        ...state,
+        works: action.payload.contents,
+        isLoading: false,
+      };
+    }
+    case types.GET_WORKS_FAIL: {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload.error,
       };
     }
     default:

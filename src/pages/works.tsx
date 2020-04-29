@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-// import { useDispatch } from 'react-redux';
+import { getWorks } from '../modules/actions';
 // import { openModal } from '../modules/actions';
 // コンポーネント
 import HeadComponent from '../components/head';
 import BaseComponent from '../components/base';
-import { width } from '../lib/style';
+import { width } from '../services/style';
 
 const CardWrapper = styled.div`
   display: flex;
@@ -49,17 +50,19 @@ const CardWrapper = styled.div`
 // `;
 
 const Works = () => {
-  // const dispatch = useDispatch();
-  // const handleOpenModal = (payload) => {
-  //   dispatch(openModal(payload));
-  // };
+  const dispatch = useDispatch();
+  const works = useSelector((state) => state.works);
+
+  useEffect(() => {
+    dispatch(getWorks.start());
+  }, []);
 
   return (
     <>
       <HeadComponent title="WORKS" />
       <BaseComponent heading="WORKS">
-        {/* {posts.length === 0 && <p>Oops! 投稿が見つかりません……</p>} */}
         <CardWrapper />
+        {works && <p>worksとれてるで</p>}
       </BaseComponent>
     </>
   );

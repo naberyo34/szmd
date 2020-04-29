@@ -1,0 +1,7 @@
+{
+  "build": {
+    "env": {
+      "X_API_KEY": "@x-api-key-production-1nk4"
+    }
+  }
+}

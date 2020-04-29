@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import BaseComponent from '../components/base';
 import HeadComponent from '../components/head';
-import { width, color } from '../lib/style';
+import { width, color } from '../services/style';
 
 const Author = styled.section`
   max-width: 800px;
