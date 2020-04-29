@@ -1,10 +1,7 @@
 {
   "build": {
     "env": {
-      "NOTION_TOKEN": "@notion-token",
-      "BLOG_INDEX_ID": "@blog-index-id"
+      "X_API_KEY": "@x-api-key-production-1nk4"
     }
-  },
-  "env": { "NOTION_TOKEN": "@notion-token", "BLOG_INDEX_ID": "@blog-index-id" },
-  "name": "szmd"
+  }
 }

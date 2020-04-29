@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { closeModal } from '../modules/actions';
-import { zIndex, width, color, transition } from '../lib/style';
+import { zIndex, width, color, transition } from '../services/style';
 
 const Wrapper = styled(motion.div)<{ innerHeight: number }>`
   position: fixed;

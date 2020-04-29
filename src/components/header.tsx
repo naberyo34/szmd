@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { toggleMenu } from '../modules/actions';
-import { width, color, transition } from '../lib/style';
+import { width, color, transition } from '../services/style';
 
 const Wrapper = styled.header`
   display: flex;

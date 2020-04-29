@@ -1,11 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import 'minireset.css';
-import '../lib/prism.css';
 import { createGlobalStyle } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
 import configureStore from '../store/configureStore';
-import { color } from '../lib/style';
+import { color } from '../services/style';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -34,6 +33,7 @@ const App = ({ Component, pageProps, router }) => {
     <Provider store={store}>
       <GlobalStyle />
       <AnimatePresence exitBeforeEnter>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} key={router.route} />
       </AnimatePresence>
     </Provider>

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toggleMenu } from '../modules/actions';
-import { color, zIndex, transition } from '../lib/style';
+import { color, zIndex, transition } from '../services/style';
 
 const Wrapper = styled(motion.nav)`
   position: fixed;

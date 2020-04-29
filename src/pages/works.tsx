@@ -1,30 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { getWorks } from '../modules/actions';
 import { openModal } from '../modules/actions';
-import getWorksIndex from '../lib/notion/getWorksIndex';
 // コンポーネント
-import HeadComponent from '../components/head';
+import HeadComponent from '../components/headComponent';
 import BaseComponent from '../components/base';
-import { width, transition } from '../lib/style';
-
-export async function getStaticProps() {
-  const postsTable = await getWorksIndex();
-  const posts: any[] = Object.keys(postsTable)
-    .map(slug => {
-      const post = postsTable[slug];
-
-      return post;
-    })
-    .filter(Boolean);
-
-  return {
-    props: {
-      posts,
-    },
-    revalidate: 10,
-  };
-}
+import { width, transition } from '../services/style';
 
 const CardWrapper = styled.div`
   display: flex;
@@ -67,38 +49,49 @@ const ThumbnailImage = styled.img`
   }
 `;
 
-const Works = ({ posts = [] }) => {
+interface Work {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  image: {
+    url: string;
+  };
+  description: string;
+}
+
+const Works = () => {
   const dispatch = useDispatch();
-  const handleOpenModal = payload => {
+  const works = useSelector((state) => state.works);
+  const isLoading = useSelector((state) => state.isLoading);
+  const handleOpenModal = (payload) => {
     dispatch(openModal(payload));
   };
+
+  useEffect(() => {
+    dispatch(getWorks.start());
+  }, []);
 
   return (
     <>
       <HeadComponent title="WORKS" />
       <BaseComponent heading="WORKS">
-        {posts.length === 0 && <p>投稿がありません</p>}
         <CardWrapper>
-          {posts.map(post => {
-            return (
-              // コンテンツの中身が空だとapiがnullになって画像が表示されないらしい
-              <Card
-                key={post.id}
-                onClick={() =>
+          {isLoading && <p>ロード中</p>}
+          {works.map((work: Work) => (
+            <Card key={work.id}>
+              <ThumbnailImage
+                src={work.image.url}
+                onClick={() => {
                   handleOpenModal({
-                    title: post.Title,
-                    description: post.Description,
-                    imageUrl: `/api/asset?assetUrl=${post.Image}&blockId=${post.id}`,
-                  })
-                }
-              >
-                <ThumbnailImage
-                  src={`/api/asset?assetUrl=${post.Image}&blockId=${post.id}`}
-                  alt={post.Page}
-                />
-              </Card>
-            );
-          })}
+                    title: work.title,
+                    imageUrl: work.image.url,
+                    description: work.description,
+                  });
+                }}
+              />
+            </Card>
+          ))}
         </CardWrapper>
       </BaseComponent>
     </>
