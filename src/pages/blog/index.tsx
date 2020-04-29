@@ -72,7 +72,7 @@ const Index = () => {
     <>
       <HeadComponent title="BLOG" />
       <BaseComponent heading="BLOG">
-        <CardWrapper />
+        <p>under construction</p>
       </BaseComponent>
     </>
   );
