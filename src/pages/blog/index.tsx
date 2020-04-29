@@ -6,14 +6,14 @@ import HeadComponent from '../../components/headComponent';
 import BaseComponent from '../../components/base';
 import { width } from '../../services/style';
 
-const CardWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  @media (max-width: ${width.ipad}) {
-    flex-direction: column;
-  }
-`;
+// const CardWrapper = styled.div`
+//   display: flex;
+//   flex-wrap: wrap;
+//   justify-content: space-between;
+//   @media (max-width: ${width.ipad}) {
+//     flex-direction: column;
+//   }
+// `;
 
 // const Card = styled.div`
 //   width: calc(50% - 16px);
