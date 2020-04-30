@@ -1,10 +1,17 @@
 import React from 'react';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { toggleMenu } from '../modules/actions';
 import { color, zIndex, transition } from '../services/style';
+import { State } from '../modules/reducers';
+
+const wrapperVariants = {
+  initial: { x: 216, opacity: 0 },
+  fadeIn: { x: 0, opacity: 1 },
+  fadeOut: { x: 216, opacity: 0 },
+};
 
 const Wrapper = styled(motion.nav)`
   position: fixed;
@@ -13,45 +20,38 @@ const Wrapper = styled(motion.nav)`
   z-index: ${zIndex.menu};
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
   width: 216px;
   height: 100vh;
-  padding: 20px;
+  padding: 32px;
   font-family: 'Raleway', sans-serif;
   font-style: italic;
   background: ${color.text};
 `;
 
-const wrapperVariants = {
-  initial: { x: 216, opacity: 0 },
-  fadeIn: { x: 0, opacity: 1 },
-  fadeOut: { x: 216, opacity: 0 },
-};
-
 const MenuList = styled.ul`
   color: ${color.white};
-  text-align: center;
 `;
 
 const MenuItem = styled.li`
-  margin-top: 20px;
   font-size: 2.4rem;
   transition: color ${transition.fast};
+  &:not(:first-child) {
+    margin-top: 32px;
+  }
   &:hover {
     color: ${color.primary};
   }
 `;
 
-// 諸々の事情でLinkに直接スタイルを当てることができない
 const LinkText = styled.a`
   color: inherit;
   text-decoration: none;
 `;
 
 const Close = styled.button`
-  height: 2.4rem;
   font-family: 'Raleway', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-style: italic;
   color: ${color.white};
   cursor: pointer;
@@ -61,10 +61,10 @@ const Close = styled.button`
   }
 `;
 
-const Menu = props => {
-  const { isOpen } = props;
+const Menu: React.FC = () => {
   const dispatch = useDispatch();
-  const handleToggleMenu = () => {
+  const isOpen = useSelector((state: State) => state.menu.isOpen);
+  const handleToggleMenu = (): void => {
     dispatch(toggleMenu());
   };
 
@@ -78,9 +78,6 @@ const Menu = props => {
           exit="fadeOut"
           transition={{ type: 'tween', duration: 0.2 }}
         >
-          <Close type="button" onClick={handleToggleMenu}>
-            CLOSE
-          </Close>
           <MenuList>
             <MenuItem>
               <Link href="/">
@@ -103,6 +100,9 @@ const Menu = props => {
               </Link>
             </MenuItem>
           </MenuList>
+          <Close type="button" onClick={handleToggleMenu}>
+            CLOSE
+          </Close>
         </Wrapper>
       )}
     </AnimatePresence>

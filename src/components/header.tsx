@@ -9,19 +9,18 @@ const Wrapper = styled.header`
   display: flex;
   justify-content: center;
   min-width: ${width.iphone5};
-  height: 216px;
-  padding: 20px;
 `;
 
 const Inner = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 1000px;
+  width: 100%;
+  max-width: 1000px;
+  padding: 16px;
   color: ${color.white};
 `;
 
-const Icon = styled.h1`
-  display: inline-block;
+const Title = styled.h1`
   font-family: 'Raleway', sans-serif;
   font-size: 2.4rem;
   font-style: italic;
@@ -34,9 +33,8 @@ const Icon = styled.h1`
 `;
 
 const Menu = styled.button`
-  height: 2.4rem;
   font-family: 'Raleway', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-style: italic;
   color: ${color.white};
   cursor: pointer;
@@ -46,26 +44,26 @@ const Menu = styled.button`
   }
 `;
 
-// 諸々の事情でLinkに直接スタイルを当てることができない
+// Linkとaは入れ子にするのが良いらしい. 色々あってLinkには直接スタイルが当たらない
 const LinkText = styled.a`
   color: inherit;
   text-decoration: none;
 `;
 
-const Header = () => {
+const Header: React.FC = () => {
   const dispatch = useDispatch();
-  const handleToggleMenu = () => {
+  const handleToggleMenu = (): void => {
     dispatch(toggleMenu());
   };
 
   return (
     <Wrapper>
       <Inner>
-        <Icon>
+        <Title>
           <Link href="/">
             <LinkText href="/">SZMD</LinkText>
           </Link>
-        </Icon>
+        </Title>
         <Menu type="button" onClick={handleToggleMenu}>
           MENU
         </Menu>

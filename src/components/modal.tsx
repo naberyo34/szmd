@@ -1,30 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from '../modules/actions';
 import { zIndex, width, color, transition } from '../services/style';
+import { State } from '../modules/reducers';
 
-const Wrapper = styled(motion.div)<{ innerHeight: number }>`
+const Wrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: ${zIndex.menu};
+  z-index: ${zIndex.modal};
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: ${({ innerHeight }) => (innerHeight ? `${innerHeight}px` : '100vh')};
+  height: 100vh;
   padding: 16px;
   color: ${color.white};
   background: rgba(0, 0, 0, 0.6);
 `;
-
-const wrapperVariants = {
-  initial: { opacity: 0 },
-  fadeIn: { opacity: 1 },
-  fadeOut: { opacity: 0 },
-};
 
 const Inner = styled.div`
   display: flex;
@@ -67,6 +61,7 @@ const Text = styled.div`
 
 const Title = styled.h3`
   font-size: 2.4rem;
+  line-height: 1.5;
 `;
 
 const Description = styled.p`
@@ -75,49 +70,42 @@ const Description = styled.p`
 `;
 
 const Close = styled.button`
-  height: 2.4rem;
-  margin-top: 32px;
+  margin-top: 2em;
   font-family: 'Raleway', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-style: italic;
   color: ${color.white};
   cursor: pointer;
   transition: color ${transition.fast};
-  @media (max-width: ${width.ipad}) {
-    display: block;
-    margin: 32px auto 0;
-  }
   &:hover {
     color: ${color.primary};
   }
 `;
 
-const Modal = props => {
-  const { isOpen, data, innerHeight } = props;
+const Modal: React.FC = () => {
   const dispatch = useDispatch();
-  const handleCloseModal = () => {
+  const isOpen = useSelector((state: State) => state.modal.isOpen);
+  const data = useSelector((state: State) => state.modal.data);
+  const handleCloseModal = (): void => {
     dispatch(closeModal());
   };
 
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
-        <Wrapper
-          variants={wrapperVariants}
-          initial="initial"
-          animate="fadeIn"
-          exit="fadeOut"
-          transition={{ duration: 0.2 }}
-          innerHeight={innerHeight}
-        >
+        <Wrapper>
           <Inner>
             <Image>
-              <img src={data.imageUrl} alt={data.title} />
+              <img src={data.image} alt={data.title} />
             </Image>
             <Text>
               <div>
                 <Title>{data.title}</Title>
-                <Description>{data.description}</Description>
+                <Description
+                  dangerouslySetInnerHTML={{
+                    __html: data.description,
+                  }}
+                />
                 <Close type="button" onClick={handleCloseModal}>
                   CLOSE
                 </Close>
@@ -126,7 +114,7 @@ const Modal = props => {
           </Inner>
         </Wrapper>
       )}
-    </AnimatePresence>
+    </>
   );
 };
 

@@ -1,35 +1,17 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { getInnerHeight } from '../modules/actions';
+import DynamicHead from '../components/dynamicHead';
 import { width, transition } from '../services/style';
-import HeadComponent from '../components/headComponent';
-import { State } from '../modules/reducers';
 
-declare module 'react-redux' {
-  interface DefaultRootState extends State {}
-}
-
-const Wrapper = styled(motion.div)``;
-
-const wrapperVariants = {
-  initial: { opacity: 0 },
-  fadeIn: { opacity: 1 },
-  fadeOut: { opacity: 0 },
-};
-
-const Content = styled.div<{ innerHeight: number }>`
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: ${width.iphone5};
-  height: ${({ innerHeight }) =>
-    innerHeight ? `${innerHeight - 40}px` : 'calc(100vh - 40px)'};
+  height: 100vh;
 `;
 
-const ContentInner = styled.section`
+const Inner = styled.section`
   text-align: center;
 `;
 
@@ -65,8 +47,10 @@ const Address = styled.h2`
 `;
 
 const Footer = styled.footer`
+  position: fixed;
+  bottom: 32px;
+  width: 100%;
   min-width: ${width.iphone5};
-  height: 40px;
 `;
 
 const Nav = styled.nav`
@@ -79,84 +63,55 @@ const Menu = styled.ul`
 `;
 
 const MenuItem = styled.li`
-  margin-left: 20px;
   font-family: 'Raleway', sans-serif;
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-style: italic;
   font-weight: 700;
   transition: opacity ${transition.fast};
-  &:hover {
-    opacity: 0.4;
+  &:not(:first-child) {
+    margin-left: 20px;
   }
-  &:first-child {
-    margin-left: 0;
+  &:hover {
+    opacity: 0.8;
   }
 `;
 
-// 諸々の事情でLinkに直接スタイルを当てることができない
 const LinkText = styled.a`
   color: inherit;
   text-decoration: none;
 `;
 
-const Index = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    // viewportの高さを取得し、コンテンツのheightを決定
-    const setInnerHeight = () => {
-      const { innerHeight } = window;
-      dispatch(getInnerHeight(innerHeight));
-    };
-
-    setInnerHeight();
-    // リサイズを監視し、コンテンツのheightを更新
-    window.addEventListener('resize', setInnerHeight);
-  }, [dispatch]);
-
-  const innerHeight = useSelector((state) => state.innerHeight);
-
-  return (
-    <>
-      <HeadComponent />
-      <Wrapper
-        variants={wrapperVariants}
-        initial="initial"
-        animate="fadeIn"
-        exit="fadeOut"
-        transition={{ type: 'tween', duration: 0.2 }}
-      >
-        <Content innerHeight={innerHeight}>
-          <ContentInner>
-            <div>
-              <Title>SZMD</Title>
-              <Address>szmd.jp</Address>
-            </div>
-          </ContentInner>
-        </Content>
-        <Footer>
-          <Nav>
-            <Menu>
-              <MenuItem>
-                <Link href="/about">
-                  <LinkText href="/about">ABOUT</LinkText>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/works">
-                  <LinkText href="/works">WORKS</LinkText>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/blog">
-                  <LinkText href="/blog">BLOG</LinkText>
-                </Link>
-              </MenuItem>
-            </Menu>
-          </Nav>
-        </Footer>
-      </Wrapper>
-    </>
-  );
-};
+const Index: React.FC = () => (
+  <>
+    <DynamicHead />
+    <Wrapper>
+      <Inner>
+        <Title>SZMD</Title>
+        <Address>szmd.jp</Address>
+      </Inner>
+      <Footer>
+        <Nav>
+          <Menu>
+            <MenuItem>
+              <Link href="/about">
+                <LinkText href="/about">ABOUT</LinkText>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link href="/works">
+                <LinkText href="/works">WORKS</LinkText>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link href="/blog">
+                <LinkText href="/blog">BLOG</LinkText>
+              </Link>
+            </MenuItem>
+          </Menu>
+        </Nav>
+      </Footer>
+    </Wrapper>
+  </>
+);
 
 export default Index;

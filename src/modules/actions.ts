@@ -1,20 +1,21 @@
 import types from './actionTypes';
 
-export const getInnerHeight = (payload: number) => ({
-  type: types.GET_INNER_HEIGHT,
-  payload,
-});
+interface Action {
+  type: string;
+  payload?: any;
+  error?: boolean;
+}
 
-export const toggleMenu = () => ({
+export const toggleMenu = (): Action => ({
   type: types.TOGGLE_MENU,
 });
 
-export const openModal = (payload: string) => ({
+export const openModal = (payload: string): Action => ({
   type: types.OPEN_MODAL,
   payload,
 });
 
-export const closeModal = () => ({
+export const closeModal = (): Action => ({
   type: types.CLOSE_MODAL,
 });
 
@@ -22,16 +23,16 @@ export const closeModal = () => ({
   非同期処理には処理開始、成功、失敗の状態があるのでわざわざ3つに分けている */
 
 export const getWorks = {
-  start: () => ({
+  start: (): Action => ({
     type: types.GET_WORKS_START,
   }),
 
-  succeed: (result) => ({
+  succeed: (result): Action => ({
     type: types.GET_WORKS_SUCCEED,
     payload: result,
   }),
 
-  fail: (error) => ({
+  fail: (error): Action => ({
     type: types.GET_WORKS_FAIL,
     payload: error,
     error: true,

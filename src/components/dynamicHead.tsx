@@ -3,15 +3,23 @@ import Head from 'next/head';
 
 interface Props {
   title?: string;
+  description?: string;
 }
 
-const HeadComponent: React.FC<Props> = (props) => {
-  const { title } = props;
+const DynamicHead: React.FC<Props> = (props) => {
+  const { title, description } = props;
 
   return (
     <Head>
       <title>{title ? `${title} | SZMD` : 'SZMD | tama portfolio page'}</title>
-      <meta name="description" content="tama / Ryo Watanabe のポートフォリオ" />
+      <meta
+        name="description"
+        content={
+          description
+            ? `${description} | SZMD`
+            : 'tama / Ryo Watanabeのポートフォリオページ'
+        }
+      />
       <meta property="og:url" content="https://szmd.jp" />
       <meta
         property="og:title"
@@ -22,7 +30,11 @@ const HeadComponent: React.FC<Props> = (props) => {
       <meta property="og:type" content="website" />
       <meta
         property="og:description"
-        content="tama / Ryo Watanabe のポートフォリオ"
+        content={
+          description
+            ? `${description} | SZMD`
+            : 'tama / Ryo Watanabeのポートフォリオページ'
+        }
       />
       <meta property="og:image" content="https://szmd.jp/og.jpg" />
       <meta name="twitter:site" content="@momochitama" />
@@ -36,4 +48,4 @@ const HeadComponent: React.FC<Props> = (props) => {
   );
 };
 
-export default HeadComponent;
+export default DynamicHead;

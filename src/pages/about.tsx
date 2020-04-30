@@ -1,53 +1,61 @@
 import React from 'react';
 import styled from 'styled-components';
-import BaseComponent from '../components/base';
-import HeadComponent from '../components/headComponent';
+import DynamicHead from '../components/dynamicHead';
+import ScrollFixed from '../components/scrollFixed';
+import Menu from '../components/menu';
+import Header from '../components/header';
+import Content from '../components/content';
+import Footer from '../components/footer';
 import { width, color } from '../services/style';
 
-const Author = styled.section`
+const Wrapper = styled.section`
   max-width: 800px;
-  padding: 0 20px 40px 20px;
-  margin: 120px auto 0;
+  padding: 0 16px 32px 16px;
+  margin: 50px auto 0;
   text-align: center;
   background: ${color.gray};
 `;
 
-const AuthorIcon = styled.img`
+const Icon = styled.img`
   position: relative;
   top: -100px;
 `;
 
-const AuthorName = styled.h3`
+const Name = styled.h3`
   margin-top: -100px;
   font-family: 'Raleway', sans-serif;
   font-size: 4.8rem;
   font-style: italic;
 `;
 
-const AuthorDescription = styled.p`
-  margin-top: 40px;
+const Description = styled.p`
+  margin-top: 32px;
   font-size: 1.6rem;
   @media (max-width: ${width.ipad}) {
     text-align: left;
   }
 `;
 
-const About = () => (
+const About: React.FC = () => (
   <>
-    <HeadComponent title="ABOUT" />
-    <BaseComponent heading="ABOUT">
-      <Author>
-        <AuthorIcon src="/about_icon.png" alt="tamaのアイコン" width="200" />
-        <AuthorName>tama</AuthorName>
-        <AuthorDescription>
+    <DynamicHead title="ABOUT" />
+    <ScrollFixed />
+    <Menu />
+    <Header />
+    <Content title="ABOUT">
+      <Wrapper>
+        <Icon src="/about_icon.png" alt="tamaのアイコン" width="200" />
+        <Name>tama</Name>
+        <Description>
           a.k.a. Ryo Watanabe
           <br />
           平日は駆け出しエンジニア、週末は趣味でイラストやデザインをやっています。
           <br />
           音楽とカレーが好きです。
-        </AuthorDescription>
-      </Author>
-    </BaseComponent>
+        </Description>
+      </Wrapper>
+    </Content>
+    <Footer />
   </>
 );
 

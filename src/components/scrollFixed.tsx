@@ -1,21 +1,20 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
+import { State } from '../modules/reducers';
 
 // TODO: 現状iOS Safariでスクロールが固定しない
 const Fixed = createGlobalStyle`
-  html {
+  body {
     overflow: hidden;
   }
 `;
 
-interface Props {
-  isFixed: boolean;
-}
-
 // trueを受け取ったときにスクロールが止まる
-const scrollFixed: React.FC<Props> = (props) => {
-  const { isFixed } = props;
+const ScrollFixed: React.FC = () => {
+  const isFixed = useSelector((state: State) => state.isFixed);
+
   return <>{isFixed && <Fixed />}</>;
 };
 
-export default scrollFixed;
+export default ScrollFixed;
