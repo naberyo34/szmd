@@ -32,8 +32,8 @@ const Works: React.FC = () => {
   };
 
   useEffect(() => {
-    // 非同期通信でworks一覧を取得しに行く
-    dispatch(getWorks.start());
+    // Storeにworksが格納されていない場合は, 非同期通信でworksを取得する
+    if (!works.length) dispatch(getWorks.start());
   }, []);
 
   return (

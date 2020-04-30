@@ -52,12 +52,21 @@ const reducer = (state = initialState, action): State => {
         menu: {
           isOpen: true,
         },
+        // 同時に開かないようモーダルは閉じる(※基本的にモーダル表示中にメニューは開かないはずだが)
+        modal: {
+          isOpen: false,
+          data: {},
+        },
       };
     }
     case types.OPEN_MODAL: {
       return {
         ...state,
         isFixed: true,
+        // 同時に開かないようメニューは閉じる
+        menu: {
+          isOpen: false,
+        },
         modal: {
           isOpen: true,
           data: action.payload,

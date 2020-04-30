@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import withRedux from 'next-redux-wrapper';
 import 'minireset.css';
 import { createGlobalStyle } from 'styled-components';
 // import { AnimatePresence } from 'framer-motion';
@@ -26,18 +27,18 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const App = ({ Component, pageProps, router }) => {
-  const store = configureStore();
+// ReduxをNextと連携するための設定
+const store = configureStore();
+const makeStore = () => store;
 
-  return (
-    <Provider store={store}>
-      <GlobalStyle />
-      {/* <AnimatePresence exitBeforeEnter> */}
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <Component {...pageProps} key={router.route} />
-      {/* </AnimatePresence> */}
-    </Provider>
-  );
-};
+const App = ({ Component, pageProps, router }) => (
+  <Provider store={store}>
+    <GlobalStyle />
+    {/* <AnimatePresence exitBeforeEnter> */}
+    {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+    <Component {...pageProps} key={router.route} />
+    {/* </AnimatePresence> */}
+  </Provider>
+);
 
-export default App;
+export default withRedux(makeStore)(App);
