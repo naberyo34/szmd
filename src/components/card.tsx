@@ -34,7 +34,9 @@ const Card: React.FC<Props> = (props) => {
   const { onClick, image } = props;
 
   return (
-    <Wrapper onClick={onClick}>{image && <Thumbnail src={image} />}</Wrapper>
+    <Wrapper onClick={onClick}>
+      {image && <Thumbnail src={image} alt="クリックで詳細を表示" />}
+    </Wrapper>
   );
 };
 

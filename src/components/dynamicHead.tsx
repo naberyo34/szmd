@@ -41,7 +41,7 @@ const DynamicHead: React.FC<Props> = (props) => {
       <meta name="twitter:card" content="summary_large_image" />
       <link rel="icon" href="/favicon.ico" />
       <link rel="apple-touch-icon" href="/apple_icon.png" sizes="224x224" />
-      <link rel="canonical" href="https://szmd.jp/" />
+      <link rel="canonical" href="https://szmd.jp" />
       <link
         href="https://fonts.googleapis.com/css?family=Raleway:700i,900i&display=swap"
         rel="stylesheet"
