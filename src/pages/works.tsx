@@ -1,53 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { getWorks } from '../modules/actions';
-import { openModal } from '../modules/actions';
-// コンポーネント
-import HeadComponent from '../components/headComponent';
-import BaseComponent from '../components/base';
-import { width, transition } from '../services/style';
-
-const CardWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  @media (max-width: ${width.ipad}) {
-    flex-direction: column;
-  }
-`;
-
-// おいおいカードは1コンポーネントとして切り出したいところ……
-const Card = styled.div`
-  width: calc(50% - 16px);
-  height: 200px;
-  margin-top: 32px;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-  transition: box-shadow ${transition.fast};
-  @media (max-width: ${width.ipad}) {
-    width: 100%;
-  }
-  @media (min-width: ${width.pc}) {
-    &:hover {
-      box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
-    }
-  }
-`;
-
-const ThumbnailImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 0;
-  transition: transform ${transition.fast};
-  @media (min-width: ${width.pc}) {
-    ${Card}:hover & {
-      transform: scale(1.2, 1.2);
-    }
-  }
-`;
+import { getWorks, openModal } from '../modules/actions';
+import DynamicHead from '../components/dynamicHead';
+import ScrollFixed from '../components/scrollFixed';
+import Menu from '../components/menu';
+import Modal from '../components/modal';
+import Header from '../components/header';
+import Content from '../components/content';
+import Loading from '../components/loading';
+import CardWrapper from '../components/cardWrapper';
+import Card from '../components/card';
+import Footer from '../components/footer';
+import { State } from '../modules/reducers';
 
 interface Work {
   id: string;
@@ -60,40 +24,44 @@ interface Work {
   description: string;
 }
 
-const Works = () => {
+const Works: React.FC = () => {
   const dispatch = useDispatch();
-  const works = useSelector((state) => state.works);
-  const isLoading = useSelector((state) => state.isLoading);
-  const handleOpenModal = (payload) => {
+  const works = useSelector((state: State) => state.works);
+  const handleOpenModal = (payload): void => {
     dispatch(openModal(payload));
   };
 
   useEffect(() => {
+    // 非同期通信でworks一覧を取得しに行く
     dispatch(getWorks.start());
   }, []);
 
   return (
     <>
-      <HeadComponent title="WORKS" />
-      <BaseComponent heading="WORKS">
+      <DynamicHead title="WORKS" />
+      <ScrollFixed />
+      <Menu />
+      <Modal />
+      <Header />
+      <Content title="WORKS">
+        <Loading />
         <CardWrapper>
-          {isLoading && <p>ロード中</p>}
           {works.map((work: Work) => (
-            <Card key={work.id}>
-              <ThumbnailImage
-                src={work.image.url}
-                onClick={() => {
-                  handleOpenModal({
-                    title: work.title,
-                    imageUrl: work.image.url,
-                    description: work.description,
-                  });
-                }}
-              />
-            </Card>
+            <Card
+              key={work.id}
+              onClick={(): void => {
+                handleOpenModal({
+                  title: work.title,
+                  image: work.image.url,
+                  description: work.description,
+                });
+              }}
+              image={work.image.url}
+            />
           ))}
         </CardWrapper>
-      </BaseComponent>
+      </Content>
+      <Footer />
     </>
   );
 };

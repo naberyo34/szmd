@@ -3,60 +3,63 @@ import { AxiosError } from 'axios';
 import types from './actionTypes';
 
 export interface State {
-  innerHeight: number;
-  fixed: boolean;
-  menu: boolean;
+  isLoading: boolean;
+  isFixed: boolean;
+  menu: {
+    isOpen: boolean;
+  };
   modal: {
-    open: boolean;
-    data: {};
+    isOpen: boolean;
+    data: {
+      image?: string;
+      title?: string;
+      description?: string;
+    };
   };
   works: [];
-  isLoading: boolean;
   error?: AxiosError | null;
 }
 
 const initialState: State = {
-  innerHeight: 0,
-  fixed: false,
-  menu: false,
+  isLoading: false,
+  isFixed: false,
+  menu: {
+    isOpen: false,
+  },
   modal: {
-    open: false,
+    isOpen: false,
     data: {},
   },
   works: [],
-  isLoading: false,
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action): State => {
   switch (action.type) {
-    case types.GET_INNER_HEIGHT: {
-      return {
-        ...state,
-        innerHeight: action.payload,
-      };
-    }
     case types.TOGGLE_MENU: {
-      // 開いている場合は閉じる
-      if (state.menu) {
+      if (state.menu.isOpen) {
         return {
-          ...state, // スプレッド変数で現在のstateをまるまる返す
-          fixed: false,
-          menu: false,
+          ...state,
+          isFixed: false,
+          menu: {
+            isOpen: false,
+          },
         };
       }
 
       return {
         ...state,
-        fixed: true,
-        menu: true,
+        isFixed: true,
+        menu: {
+          isOpen: true,
+        },
       };
     }
     case types.OPEN_MODAL: {
       return {
         ...state,
-        fixed: true,
+        isFixed: true,
         modal: {
-          open: true,
+          isOpen: true,
           data: action.payload,
         },
       };
@@ -64,9 +67,9 @@ const reducer = (state = initialState, action) => {
     case types.CLOSE_MODAL: {
       return {
         ...state,
-        fixed: false,
+        isFixed: false,
         modal: {
-          open: false,
+          isOpen: false,
           data: {},
         },
       };

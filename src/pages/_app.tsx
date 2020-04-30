@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import 'minireset.css';
 import { createGlobalStyle } from 'styled-components';
-import { AnimatePresence } from 'framer-motion';
+// import { AnimatePresence } from 'framer-motion';
 import configureStore from '../store/configureStore';
 import { color } from '../services/style';
 
@@ -32,10 +32,10 @@ const App = ({ Component, pageProps, router }) => {
   return (
     <Provider store={store}>
       <GlobalStyle />
-      <AnimatePresence exitBeforeEnter>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Component {...pageProps} key={router.route} />
-      </AnimatePresence>
+      {/* <AnimatePresence exitBeforeEnter> */}
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <Component {...pageProps} key={router.route} />
+      {/* </AnimatePresence> */}
     </Provider>
   );
 };

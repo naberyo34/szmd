@@ -1,7 +1,9 @@
 export const zIndex = {
   menu: 10,
+  modal: 100,
 };
 
+// iphone5サイズは分岐ではなく下限値として使っているので注意
 export const width = {
   iphone5: '320px',
   ipad: '768px',
@@ -9,10 +11,10 @@ export const width = {
 };
 
 export const color = {
-  primary: '#f6d365',
-  text: '#222',
-  white: '#fff',
-  gray: '#fafafa',
+  primary: '#fcc200',
+  text: '#1a1a1a',
+  white: '#ffff',
+  gray: '#f5f7f8',
 };
 
 export const transition = {
