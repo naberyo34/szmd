@@ -39,6 +39,8 @@ const DynamicHead: React.FC<Props> = (props) => {
       <meta property="og:image" content="https://szmd.jp/og.jpg" />
       <meta name="twitter:site" content="@momochitama" />
       <meta name="twitter:card" content="summary_large_image" />
+      <link rel="icon" href="/favicon.ico" />
+      <link rel="apple-touch-icon" href="/apple_icon.png" sizes="224x224" />
       <link rel="canonical" href="https://szmd.jp/" />
       <link
         href="https://fonts.googleapis.com/css?family=Raleway:700i,900i&display=swap"
