@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import types from './actionTypes';
 
 export interface State {
+  innerHeight: number | null;
   isLoading: boolean;
   isFixed: boolean;
   menu: {
@@ -21,6 +22,7 @@ export interface State {
 }
 
 const initialState: State = {
+  innerHeight: null,
   isLoading: false,
   isFixed: false,
   menu: {
@@ -35,6 +37,13 @@ const initialState: State = {
 
 const reducer = (state = initialState, action): State => {
   switch (action.type) {
+    // viewportの高さを取得して100vh指定の箇所を置き換える
+    case types.GET_INNER_HEIGHT: {
+      return {
+        ...state,
+        innerHeight: action.payload,
+      };
+    }
     // ページ遷移時にメニュー開閉を初期化する
     case types.PAGE_TRANSITION: {
       return {

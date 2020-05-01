@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import DynamicHead from '../components/dynamicHead';
 import ScrollFixed from '../components/scrollFixed';
 import Menu from '../components/menu';
@@ -8,7 +9,13 @@ import Content from '../components/content';
 import Footer from '../components/footer';
 import { width, color } from '../services/style';
 
-const Wrapper = styled.section`
+const wrapperVariants = {
+  initial: { opacity: 0 },
+  fadeIn: { opacity: 1 },
+  fadeOut: { opacity: 0 },
+};
+
+const Wrapper = styled(motion.div)`
   max-width: 800px;
   padding: 0 16px 32px 16px;
   margin: 50px auto 0;
@@ -43,7 +50,13 @@ const About: React.FC = () => (
     <Menu />
     <Header />
     <Content title="ABOUT">
-      <Wrapper>
+      <Wrapper
+        variants={wrapperVariants}
+        initial="initial"
+        animate="fadeIn"
+        exit="fadeOut"
+        transition={{ type: 'tween', duration: 0.2, delay: 0.1 }}
+      >
         <Icon src="/about_icon.png" alt="tamaのアイコン" width="200" />
         <Name>tama</Name>
         <Description>

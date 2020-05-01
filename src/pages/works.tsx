@@ -46,9 +46,10 @@ const Works: React.FC = () => {
       <Content title="WORKS">
         <Loading />
         <CardWrapper>
-          {works.map((work: Work) => (
+          {works.map((work: Work, index) => (
             <Card
               key={work.id}
+              index={index}
               onClick={(): void => {
                 handleOpenModal({
                   title: work.title,

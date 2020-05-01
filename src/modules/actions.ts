@@ -10,6 +10,11 @@ export const pageTransition = (): Action => ({
   type: types.PAGE_TRANSITION,
 });
 
+export const getInnerHeight = (payload: number): Action => ({
+  type: types.GET_INNER_HEIGHT,
+  payload,
+});
+
 export const toggleMenu = (): Action => ({
   type: types.TOGGLE_MENU,
 });

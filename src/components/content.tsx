@@ -1,6 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { width, color } from '../services/style';
+
+const headingVariants = {
+  initial: { y: -32, opacity: 0 },
+  fadeIn: { y: 0, opacity: 1 },
+  fadeOut: { y: 32, opacity: 0 },
+};
 
 const Wrapper = styled.section`
   display: flex;
@@ -15,7 +22,7 @@ const Inner = styled.div`
   max-width: 1000px;
 `;
 
-const Heading = styled.h2`
+const Heading = styled(motion.h2)`
   padding: 0 16px;
   margin-top: -0.4em;
   font-family: 'Raleway', sans-serif;
@@ -46,7 +53,17 @@ const Content: React.FC<Props> = (props) => {
   return (
     <Wrapper>
       <Inner>
-        {title && <Heading>{title}</Heading>}
+        {title && (
+          <Heading
+            variants={headingVariants}
+            initial="initial"
+            animate="fadeIn"
+            exit="fadeOut"
+            transition={{ type: 'tween', duration: 0.2 }}
+          >
+            {title}
+          </Heading>
+        )}
         <Children>{children}</Children>
       </Inner>
     </Wrapper>
