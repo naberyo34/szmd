@@ -1,11 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { AnimatePresence, motion } from 'framer-motion';
 import { closeModal } from '../modules/actions';
 import { zIndex, width, color, transition } from '../services/style';
 import { State } from '../modules/reducers';
 
-const Wrapper = styled.div`
+const wrapperVariants = {
+  initial: { opacity: 0 },
+  fadeIn: { opacity: 1 },
+  fadeOut: { opacity: 0 },
+};
+
+interface WrapperProps {
+  innerHeight?: number;
+}
+
+const Wrapper = styled(motion.div)`
   position: fixed;
   top: 0;
   left: 0;
@@ -14,7 +25,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: 100vh;
+  height: ${(props: WrapperProps): string =>
+    props.innerHeight ? `${props.innerHeight}px` : '100vh'};
   padding: 16px;
   color: ${color.white};
   background: rgba(0, 0, 0, 0.6);
@@ -25,9 +37,9 @@ const Inner = styled.div`
   width: 100%;
   max-width: 1000px;
   height: 100%;
-  overflow-y: scroll;
   @media (max-width: ${width.ipad}) {
     display: block;
+    overflow-y: scroll;
   }
 `;
 
@@ -84,6 +96,7 @@ const Close = styled.button`
 
 const Modal: React.FC = () => {
   const dispatch = useDispatch();
+  const innerHeight = useSelector((state: State) => state.innerHeight);
   const isOpen = useSelector((state: State) => state.modal.isOpen);
   const data = useSelector((state: State) => state.modal.data);
   const handleCloseModal = (): void => {
@@ -91,9 +104,16 @@ const Modal: React.FC = () => {
   };
 
   return (
-    <>
+    <AnimatePresence>
       {isOpen && (
-        <Wrapper>
+        <Wrapper
+          innerHeight={innerHeight}
+          variants={wrapperVariants}
+          initial="initial"
+          animate="fadeIn"
+          exit="fadeOut"
+          transition={{ type: 'tween', duration: 0.2 }}
+        >
           <Inner>
             <Image>
               <img src={data.image} alt={data.title} />
@@ -114,7 +134,7 @@ const Modal: React.FC = () => {
           </Inner>
         </Wrapper>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 

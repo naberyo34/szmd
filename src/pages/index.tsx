@@ -1,17 +1,37 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import DynamicHead from '../components/dynamicHead';
 import { width, transition } from '../services/style';
+import { State } from '../modules/reducers';
 
-const Wrapper = styled.div`
+const wrapperVariants = {
+  initial: { opacity: 0 },
+  fadeIn: { opacity: 1 },
+  fadeOut: { opacity: 0 },
+};
+
+const innerVariants = {
+  initial: { scale: 0.5, opacity: 0 },
+  fadeIn: { scale: 1, opacity: 1 },
+  fadeOut: { scale: 0.5, opacity: 0 },
+};
+
+interface WrapperProps {
+  innerHeight?: number;
+}
+
+const Wrapper = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: ${(props: WrapperProps): string =>
+    props.innerHeight ? `${props.innerHeight}px` : '100vh'};
 `;
 
-const Inner = styled.section`
+const Inner = styled(motion.section)`
   text-align: center;
 `;
 
@@ -81,37 +101,54 @@ const LinkText = styled.a`
   text-decoration: none;
 `;
 
-const Index: React.FC = () => (
-  <>
-    <DynamicHead />
-    <Wrapper>
-      <Inner>
-        <Title>SZMD</Title>
-        <Address>szmd.jp</Address>
-      </Inner>
-      <Footer>
-        <Nav>
-          <Menu>
-            <MenuItem>
-              <Link href="/about">
-                <LinkText href="/about">ABOUT</LinkText>
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link href="/works">
-                <LinkText href="/works">WORKS</LinkText>
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link href="/blog">
-                <LinkText href="/blog">BLOG</LinkText>
-              </Link>
-            </MenuItem>
-          </Menu>
-        </Nav>
-      </Footer>
-    </Wrapper>
-  </>
-);
+const Index: React.FC = () => {
+  const innerHeight = useSelector((state: State) => state.innerHeight);
+
+  return (
+    <>
+      <DynamicHead />
+      <Wrapper
+        innerHeight={innerHeight}
+        variants={wrapperVariants}
+        initial="initial"
+        animate="fadeIn"
+        exit="fadeOut"
+        transition={{ type: 'tween', duration: 0.2 }}
+      >
+        <Inner
+          variants={innerVariants}
+          initial="initial"
+          animate="fadeIn"
+          exit="fadeOut"
+          transition={{ type: 'tween', duration: 0.2 }}
+        >
+          <Title>SZMD</Title>
+          <Address>szmd.jp</Address>
+        </Inner>
+        <Footer>
+          <Nav>
+            <Menu>
+              <MenuItem>
+                <Link href="/about">
+                  <LinkText href="/about">ABOUT</LinkText>
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link href="/works">
+                  <LinkText href="/works">WORKS</LinkText>
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link href="/blog">
+                  <LinkText href="/blog">BLOG</LinkText>
+                </Link>
+              </MenuItem>
+            </Menu>
+          </Nav>
+        </Footer>
+      </Wrapper>
+    </>
+  );
+};
 
 export default Index;

@@ -3,9 +3,10 @@ import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import 'minireset.css';
 import { createGlobalStyle } from 'styled-components';
-// import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import configureStore from '../store/configureStore';
 import PageTransition from '../components/pageTransition';
+import GetInnerHeight from '../components/getInnerHeight';
 import { color } from '../services/style';
 
 const GlobalStyle = createGlobalStyle`
@@ -36,10 +37,11 @@ const App = ({ Component, pageProps, router }) => (
   <Provider store={store}>
     <GlobalStyle />
     <PageTransition />
-    {/* <AnimatePresence exitBeforeEnter> */}
-    {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-    <Component {...pageProps} key={router.route} />
-    {/* </AnimatePresence> */}
+    <GetInnerHeight />
+    <AnimatePresence exitBeforeEnter>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <Component {...pageProps} key={router.route} />
+    </AnimatePresence>
   </Provider>
 );
 

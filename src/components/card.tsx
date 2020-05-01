@@ -1,8 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { width, transition } from '../services/style';
 
-const Wrapper = styled.div`
+const wrapperVariants = {
+  initial: { scale: 0.5, opacity: 0 },
+  fadeIn: { scale: 1, opacity: 1 },
+  fadeOut: { scale: 0.5, opacity: 0 },
+};
+
+const Wrapper = styled(motion.div)`
   width: calc(50% - 16px);
   height: 200px;
   margin-top: 32px;
@@ -26,15 +33,24 @@ const Thumbnail = styled.img`
 `;
 
 interface Props {
+  index: number;
   onClick: () => void;
   image?: string;
 }
 
 const Card: React.FC<Props> = (props) => {
-  const { onClick, image } = props;
+  const { index, onClick, image } = props;
+  const delay = 0.1 + index * 0.05;
 
   return (
-    <Wrapper onClick={onClick}>
+    <Wrapper
+      onClick={onClick}
+      variants={wrapperVariants}
+      initial="initial"
+      animate="fadeIn"
+      exit="fadeOut"
+      transition={{ type: 'tween', duration: 0.2, delay }}
+    >
       {image && <Thumbnail src={image} alt="クリックで詳細を表示" />}
     </Wrapper>
   );

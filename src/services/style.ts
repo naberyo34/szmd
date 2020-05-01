@@ -1,6 +1,6 @@
 export const zIndex = {
-  menu: 10,
-  modal: 100,
+  modal: 10,
+  menu: 100,
 };
 
 // iphone5サイズは分岐ではなく下限値として使っているので注意
