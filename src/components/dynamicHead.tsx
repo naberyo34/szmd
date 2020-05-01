@@ -27,7 +27,7 @@ const DynamicHead: React.FC<Props> = (props) => {
       />
       <meta property="og:site_name" content="SZMD" />
       <meta property="og:locale" content="ja_JP" />
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={title ? 'website' : 'article'} />
       <meta
         property="og:description"
         content={
