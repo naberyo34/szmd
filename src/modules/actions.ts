@@ -6,6 +6,10 @@ interface Action {
   error?: boolean;
 }
 
+export const pageTransition = (): Action => ({
+  type: types.PAGE_TRANSITION,
+});
+
 export const toggleMenu = (): Action => ({
   type: types.TOGGLE_MENU,
 });

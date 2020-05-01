@@ -2,18 +2,18 @@ import React from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { AnimatePresence, motion } from 'framer-motion';
+// import { AnimatePresence, motion } from 'framer-motion';
 import { toggleMenu } from '../modules/actions';
 import { color, zIndex, transition } from '../services/style';
 import { State } from '../modules/reducers';
 
-const wrapperVariants = {
-  initial: { x: 216, opacity: 0 },
-  fadeIn: { x: 0, opacity: 1 },
-  fadeOut: { x: 216, opacity: 0 },
-};
+// const wrapperVariants = {
+//   initial: { x: 216, opacity: 0 },
+//   fadeIn: { x: 0, opacity: 1 },
+//   fadeOut: { x: 216, opacity: 0 },
+// };
 
-const Wrapper = styled(motion.nav)`
+const Wrapper = styled.nav`
   position: fixed;
   top: 0;
   right: 0;
@@ -69,14 +69,14 @@ const Menu: React.FC = () => {
   };
 
   return (
-    <AnimatePresence>
+    <>
       {isOpen && (
         <Wrapper
-          variants={wrapperVariants}
-          initial="initial"
-          animate="fadeIn"
-          exit="fadeOut"
-          transition={{ type: 'tween', duration: 0.2 }}
+        // variants={wrapperVariants}
+        // initial="initial"
+        // animate="fadeIn"
+        // exit="fadeOut"
+        // transition={{ type: 'tween', duration: 0.2 }}
         >
           <MenuList>
             <MenuItem>
@@ -105,7 +105,7 @@ const Menu: React.FC = () => {
           </Close>
         </Wrapper>
       )}
-    </AnimatePresence>
+    </>
   );
 };
 
