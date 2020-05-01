@@ -15,25 +15,25 @@ const DEFAULT_API_CONFIG: ApiConfig = {
   },
 };
 
-const getWorksFactory = () => {
+const getDataFactory = (target: string) => {
   const config = {
     ...DEFAULT_API_CONFIG,
   };
   const instance = axios.create(config);
-  const getWorks = async () => {
+  const getData = async () => {
     try {
-      const response = await instance.get('/works');
+      const response = await instance.get(target);
       if (response.status !== 200) {
-        throw new Error('Worksの取得に失敗しました……');
+        throw new Error(`${target}の取得に失敗しました……`);
       }
-      const works = response.data;
-      return works;
+      const { data } = response;
+      return data;
     } catch (err) {
       console.log(err);
       throw err;
     }
   };
-  return getWorks;
+  return getData;
 };
 
-export default getWorksFactory;
+export default getDataFactory;

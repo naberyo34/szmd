@@ -11,7 +11,7 @@
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import types from '../modules/actionTypes';
 import { getWorks } from '../modules/actions';
-import getWorksFactory from '../services/api';
+import getDataFactory from '../services/api';
 
 /* function* はGenerator関数を作るための構文(ES6の機能)
   async/awaitと似ているが別物らしい. Sagaではあえてこちらを使っている
@@ -22,7 +22,7 @@ import getWorksFactory from '../services/api';
 // api.tsで定義した非同期処理を実行 成功したらsucceedアクションを起こし、失敗したらfailアクションを起こす
 function* runGetWorks() {
   try {
-    const api = getWorksFactory();
+    const api = getDataFactory('/works');
     const works = yield call(api);
     yield put(getWorks.succeed(works));
   } catch (error) {
