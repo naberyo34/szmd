@@ -35,6 +35,20 @@ const initialState: State = {
 
 const reducer = (state = initialState, action): State => {
   switch (action.type) {
+    // ページ遷移時にメニュー開閉を初期化する
+    case types.PAGE_TRANSITION: {
+      return {
+        ...state,
+        isFixed: false,
+        menu: {
+          isOpen: false,
+        },
+        modal: {
+          isOpen: false,
+          data: {},
+        },
+      };
+    }
     case types.TOGGLE_MENU: {
       if (state.menu.isOpen) {
         return {

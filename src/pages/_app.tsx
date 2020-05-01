@@ -5,6 +5,7 @@ import 'minireset.css';
 import { createGlobalStyle } from 'styled-components';
 // import { AnimatePresence } from 'framer-motion';
 import configureStore from '../store/configureStore';
+import PageTransition from '../components/pageTransition';
 import { color } from '../services/style';
 
 const GlobalStyle = createGlobalStyle`
@@ -34,6 +35,7 @@ const makeStore = () => store;
 const App = ({ Component, pageProps, router }) => (
   <Provider store={store}>
     <GlobalStyle />
+    <PageTransition />
     {/* <AnimatePresence exitBeforeEnter> */}
     {/* eslint-disable-next-line react/jsx-props-no-spreading */}
     <Component {...pageProps} key={router.route} />
