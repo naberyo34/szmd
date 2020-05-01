@@ -51,7 +51,7 @@ const Card: React.FC<Props> = (props) => {
       exit="fadeOut"
       transition={{ type: 'tween', duration: 0.2, delay }}
     >
-      {image && <Thumbnail src={image} alt="クリックで詳細を表示" />}
+      {image && <Thumbnail src={`${image}?w=468`} alt="クリックで詳細を表示" />}
     </Wrapper>
   );
 };
