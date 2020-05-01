@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import LazyLoad from 'react-lazyload';
 import { width, transition } from '../services/style';
 
 const wrapperVariants = {
@@ -51,7 +52,11 @@ const Card: React.FC<Props> = (props) => {
       exit="fadeOut"
       transition={{ type: 'tween', duration: 0.2, delay }}
     >
-      {image && <Thumbnail src={`${image}?w=468`} alt="クリックで詳細を表示" />}
+      {image && (
+        <LazyLoad height={200}>
+          <Thumbnail src={`${image}?w=468`} alt="クリックで詳細を表示" />
+        </LazyLoad>
+      )}
     </Wrapper>
   );
 };
