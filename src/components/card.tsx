@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import LazyLoad from 'react-lazyload';
@@ -35,12 +36,15 @@ const Thumbnail = styled.img`
 
 interface Props {
   index: number;
-  onClick: () => void;
+  onClick?: () => void;
   image?: string;
+  blogId?: string;
+  title?: string;
+  posted?: string;
 }
 
 const Card: React.FC<Props> = (props) => {
-  const { index, onClick, image } = props;
+  const { index, onClick, image, blogId, title, posted } = props;
   const delay = 0.1 + index * 0.05;
 
   return (
@@ -56,6 +60,16 @@ const Card: React.FC<Props> = (props) => {
         <LazyLoad height={200}>
           <Thumbnail src={`${image}?w=468`} alt="クリックで詳細を表示" />
         </LazyLoad>
+      )}
+      {blogId && (
+        <>
+          <Link href="/blog/[slug]" as={`/blog/${blogId}`}>
+            <div>
+              <p>{title}</p>
+              <p>{posted}</p>
+            </div>
+          </Link>
+        </>
       )}
     </Wrapper>
   );

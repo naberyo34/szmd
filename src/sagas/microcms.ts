@@ -10,7 +10,7 @@
 */
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import types from '../modules/actionTypes';
-import { getWorks } from '../modules/actions';
+import { getWorks, getBlog } from '../modules/actions';
 import getDataFactory from '../services/api';
 
 /* function* はGenerator関数を作るための構文(ES6の機能)
@@ -35,7 +35,21 @@ export function* watchGetWorks() {
   yield takeLatest(types.GET_WORKS_START, runGetWorks);
 }
 
+function* runGetBlog() {
+  try {
+    const api = getDataFactory('/blog');
+    const blog = yield call(api);
+    yield put(getBlog.succeed(blog));
+  } catch (error) {
+    yield put(getBlog.fail(error));
+  }
+}
+
+export function* watchGetBlog() {
+  yield takeLatest(types.GET_BLOG_START, runGetBlog);
+}
+
 // アプリ起動時に立ち上がる最上位タスク 各watchタスクのスタンバイを開始
 export default function* rootSaga() {
-  yield all([fork(watchGetWorks)]);
+  yield all([fork(watchGetWorks), fork(watchGetBlog)]);
 }

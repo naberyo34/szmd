@@ -44,7 +44,7 @@ const Children = styled.div`
 `;
 
 interface Props {
-  title: string;
+  title?: string;
 }
 
 const Content: React.FC<Props> = (props) => {
