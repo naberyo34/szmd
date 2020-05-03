@@ -46,6 +46,10 @@ const DynamicHead: React.FC<Props> = (props) => {
         href="https://fonts.googleapis.com/css?family=Raleway:700i,900i&display=swap"
         rel="stylesheet"
       />
+      <link
+        href="https://highlightjs.org/static/demo/styles/zenburn.css"
+        rel="stylesheet"
+      />
     </Head>
   );
 };

@@ -21,7 +21,7 @@ export interface Article {
   title: string;
   posted: string;
   category: string;
-  article: string;
+  text: string;
 }
 
 const Blog: React.FC = () => {
@@ -50,6 +50,7 @@ const Blog: React.FC = () => {
               index={index}
               title={article.title}
               posted={generateDisplayDate(article.posted)}
+              category={article.category}
             />
           ))}
         </CardWrapper>

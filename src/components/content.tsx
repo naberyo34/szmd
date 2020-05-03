@@ -24,12 +24,11 @@ const Inner = styled.div`
 
 const Heading = styled(motion.h2)`
   padding: 0 16px;
-  margin-top: -0.4em;
+  margin-top: -0.5em;
   font-family: 'Raleway', sans-serif;
   font-size: 20rem;
   font-style: italic;
   font-weight: 900;
-  line-height: 0.8;
   letter-spacing: -0.15em;
   @media (max-width: ${width.ipad}) {
     font-size: 24vw;
