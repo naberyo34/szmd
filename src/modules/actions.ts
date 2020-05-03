@@ -47,3 +47,20 @@ export const getWorks = {
     error: true,
   }),
 };
+
+export const getBlog = {
+  start: (): Action => ({
+    type: types.GET_BLOG_START,
+  }),
+
+  succeed: (result): Action => ({
+    type: types.GET_BLOG_SUCCEED,
+    payload: result,
+  }),
+
+  fail: (error): Action => ({
+    type: types.GET_BLOG_FAIL,
+    payload: error,
+    error: true,
+  }),
+};

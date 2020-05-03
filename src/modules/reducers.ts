@@ -18,6 +18,7 @@ export interface State {
     };
   };
   works: [];
+  blog: [];
   error?: AxiosError | null;
 }
 
@@ -33,6 +34,7 @@ const initialState: State = {
     data: {},
   },
   works: [],
+  blog: [],
 };
 
 const reducer = (state = initialState, action): State => {
@@ -121,6 +123,27 @@ const reducer = (state = initialState, action): State => {
       };
     }
     case types.GET_WORKS_FAIL: {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload.error,
+      };
+    }
+    case types.GET_BLOG_START: {
+      return {
+        ...state,
+        blog: [],
+        isLoading: true,
+      };
+    }
+    case types.GET_BLOG_SUCCEED: {
+      return {
+        ...state,
+        blog: action.payload.contents,
+        isLoading: false,
+      };
+    }
+    case types.GET_BLOG_FAIL: {
       return {
         ...state,
         isLoading: false,

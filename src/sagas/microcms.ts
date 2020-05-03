@@ -10,8 +10,8 @@
 */
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import types from '../modules/actionTypes';
-import { getWorks } from '../modules/actions';
-import getWorksFactory from '../services/api';
+import { getWorks, getBlog } from '../modules/actions';
+import getDataFactory from '../services/api';
 
 /* function* はGenerator関数を作るための構文(ES6の機能)
   async/awaitと似ているが別物らしい. Sagaではあえてこちらを使っている
@@ -22,7 +22,7 @@ import getWorksFactory from '../services/api';
 // api.tsで定義した非同期処理を実行 成功したらsucceedアクションを起こし、失敗したらfailアクションを起こす
 function* runGetWorks() {
   try {
-    const api = getWorksFactory();
+    const api = getDataFactory('/works');
     const works = yield call(api);
     yield put(getWorks.succeed(works));
   } catch (error) {
@@ -35,7 +35,21 @@ export function* watchGetWorks() {
   yield takeLatest(types.GET_WORKS_START, runGetWorks);
 }
 
+function* runGetBlog() {
+  try {
+    const api = getDataFactory('/blog');
+    const blog = yield call(api);
+    yield put(getBlog.succeed(blog));
+  } catch (error) {
+    yield put(getBlog.fail(error));
+  }
+}
+
+export function* watchGetBlog() {
+  yield takeLatest(types.GET_BLOG_START, runGetBlog);
+}
+
 // アプリ起動時に立ち上がる最上位タスク 各watchタスクのスタンバイを開始
 export default function* rootSaga() {
-  yield all([fork(watchGetWorks)]);
+  yield all([fork(watchGetWorks), fork(watchGetBlog)]);
 }

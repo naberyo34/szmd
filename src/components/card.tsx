@@ -1,8 +1,9 @@
 import React from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import LazyLoad from 'react-lazyload';
-import { width, transition } from '../services/style';
+import { width, color, transition } from '../services/style';
 
 const wrapperVariants = {
   initial: { scale: 0.5, opacity: 0 },
@@ -16,6 +17,7 @@ const Wrapper = styled(motion.div)`
   margin-top: 32px;
   overflow: hidden;
   cursor: pointer;
+  background: ${color.gray};
   @media (max-width: ${width.ipad}) {
     width: 100%;
   }
@@ -33,14 +35,48 @@ const Thumbnail = styled.img`
   }
 `;
 
+const LinkInner = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  border-left: 4px solid ${color.primary};
+`;
+
+const Info = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Posted = styled.p`
+  font-size: 1.2rem;
+`;
+
+const Category = styled.p`
+  position: relative;
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: 1.2rem;
+  background: ${color.primary};
+`;
+
+const Title = styled.h1`
+  margin-top: 1em;
+  font-size: 1.6rem;
+`;
+
 interface Props {
   index: number;
-  onClick: () => void;
+  onClick?: () => void;
   image?: string;
+  blogId?: string;
+  title?: string;
+  posted?: string;
+  category?: string;
 }
 
 const Card: React.FC<Props> = (props) => {
-  const { index, onClick, image } = props;
+  const { index, onClick, image, blogId, title, posted, category } = props;
   const delay = 0.1 + index * 0.05;
 
   return (
@@ -56,6 +92,19 @@ const Card: React.FC<Props> = (props) => {
         <LazyLoad height={200}>
           <Thumbnail src={`${image}?w=468`} alt="クリックで詳細を表示" />
         </LazyLoad>
+      )}
+      {blogId && (
+        <>
+          <Link href="/blog/[slug]" as={`/blog/${blogId}`}>
+            <LinkInner>
+              <Info>
+                <Posted>{posted}</Posted>
+                <Category>{category}</Category>
+              </Info>
+              <Title>{title}</Title>
+            </LinkInner>
+          </Link>
+        </>
       )}
     </Wrapper>
   );
