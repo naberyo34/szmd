@@ -20,6 +20,10 @@ const wrapperVariants = {
 
 const Wrapper = styled(motion.article)``;
 
+const Error = styled.p`
+  font-size: 1.6rem;
+`;
+
 const Title = styled.h1`
   padding-left: 8px;
   font-size: 3.6rem;
@@ -95,38 +99,8 @@ const ArticleWrapper = styled.div`
   }
 `;
 
-// ブログのslugとして想定されるパスをすべて取得する
-// export async function getStaticPaths(): Promise<{}> {
-//   /* こんな感じのJSONが返る
-//     {
-//       contents: [
-//         {
-//           id: string;
-//         }
-//       ];
-//       totalCount: number;
-//       offset: number;
-//       limit: number;
-//     }
-//   */
-//   // node-fetchでサーバーサイドでの非同期通信
-//   const response = await fetch(
-//     'https://szmd.microcms.io/api/v1/blog?fields=id',
-//     {
-//       headers: {
-//         'X-API-KEY': process.env.X_API_KEY,
-//       },
-//     }
-//   );
-//   const blog = await response.json();
-//   const paths = blog.contents.map((article) => article.id);
-//   console.log('getStaticPathが渡してる値', paths);
-//   return { paths, fallback: false };
-// }
-
-// paramsからSSRでページを生成する
-// TODO: fetchでコケたときにエラーで死ぬ
-export async function getServerSideProps({ params }): Promise<{}> {
+// paramsからサーバーサイドでpropsを取得する
+export async function getServerSideProps({ params }): Promise<{} | null> {
   const response = await fetch(
     `https://szmd.microcms.io/api/v1/blog/${params.slug}`,
     {
@@ -135,12 +109,14 @@ export async function getServerSideProps({ params }): Promise<{}> {
       },
     }
   );
+  // 取得に失敗した場合はnullを返却してそのままレンダリングに進む('記事が見つかりません'を表示)
+  if (!response.ok) return { props: { article: null } };
   const article = await response.json();
   return { props: { article } };
 }
 
 interface Props {
-  article: {
+  article?: {
     id: string;
     createdAt: string;
     updatedAt: string;
@@ -165,7 +141,13 @@ const Slug: React.FC<Props> = ({ article }: Props) => (
         exit="fadeOut"
         transition={{ type: 'tween', duration: 0.2, delay: 0.1 }}
       >
-        {!article && <p>記事が見つかりません</p>}
+        {!article && (
+          <Error>
+            記事が見つかりません……
+            <br />
+            URLが間違っているか、記事が削除された可能性があります。
+          </Error>
+        )}
         {article && (
           <>
             <Title>{article.title}</Title>
