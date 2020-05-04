@@ -99,7 +99,7 @@ const ArticleWrapper = styled.div`
   }
 `;
 
-// paramsからSSRでページを生成する
+// paramsからサーバーサイドでpropsを取得する
 export async function getServerSideProps({ params }): Promise<{} | null> {
   const response = await fetch(
     `https://szmd.microcms.io/api/v1/blog/${params.slug}`,
@@ -109,7 +109,7 @@ export async function getServerSideProps({ params }): Promise<{} | null> {
       },
     }
   );
-  // 取得に失敗した場合はnullを返却してそのままSSRに進む('記事が見つかりません'を表示)
+  // 取得に失敗した場合はnullを返却してそのままレンダリングに進む('記事が見つかりません'を表示)
   if (!response.ok) return { props: { article: null } };
   const article = await response.json();
   return { props: { article } };

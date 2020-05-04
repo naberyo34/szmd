@@ -1,17 +1,38 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getWorks, openModal } from '../modules/actions';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import fetch from 'node-fetch';
+import { openModal } from '../modules/actions';
 import DynamicHead from '../components/dynamicHead';
 import ScrollFixed from '../components/scrollFixed';
 import Menu from '../components/menu';
 import Modal from '../components/modal';
 import Header from '../components/header';
 import Content from '../components/content';
-import Loading from '../components/loading';
 import CardWrapper from '../components/cardWrapper';
 import Card from '../components/card';
 import Footer from '../components/footer';
-import { State } from '../modules/reducers';
+
+// paramsからサーバーサイドでpropsを取得する
+export async function getServerSideProps(): Promise<{} | null> {
+  const response = await fetch(`https://szmd.microcms.io/api/v1/works`, {
+    headers: {
+      'X-API-KEY': process.env.X_API_KEY,
+    },
+  });
+  // 取得に失敗した場合はnullを返却してそのままレンダリングに進む(カードなしで表示)
+  if (!response.ok) return { props: { works: null } };
+  const works = await response.json();
+  return { props: { works } };
+}
+
+interface Props {
+  works?: {
+    contents: [];
+    totalCount: number;
+    offset: number;
+    limit: number;
+  };
+}
 
 interface Work {
   id: string;
@@ -24,17 +45,11 @@ interface Work {
   description: string;
 }
 
-const Works: React.FC = () => {
+const Works: React.FC<Props> = ({ works }: Props) => {
   const dispatch = useDispatch();
-  const works = useSelector((state: State) => state.works);
   const handleOpenModal = (payload): void => {
     dispatch(openModal(payload));
   };
-
-  useEffect(() => {
-    // Storeにworksが格納されていない場合は, 非同期通信でworksを取得する
-    if (!works.length) dispatch(getWorks.start());
-  }, []);
 
   return (
     <>
@@ -44,9 +59,8 @@ const Works: React.FC = () => {
       <Modal />
       <Header />
       <Content title="WORKS">
-        <Loading />
         <CardWrapper>
-          {works.map((work: Work, index) => (
+          {works.contents.map((work: Work, index) => (
             <Card
               key={work.id}
               index={index}
