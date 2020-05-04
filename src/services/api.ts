@@ -15,6 +15,10 @@ const DEFAULT_API_CONFIG: ApiConfig = {
   },
 };
 
+/**
+ * axiosでmicroCMSへの通信を行い、結果を返す
+ * @param target APIに付加する文字列
+ */
 const getDataFactory = (target: string) => {
   const config = {
     ...DEFAULT_API_CONFIG,
@@ -29,7 +33,7 @@ const getDataFactory = (target: string) => {
       const { data } = response;
       return data;
     } catch (err) {
-      console.log(err);
+      console.log('axios Error', err);
       throw err;
     }
   };
