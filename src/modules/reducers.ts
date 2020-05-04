@@ -1,10 +1,7 @@
-// 便宜的に1つのreducerですべて管理してみよう
-import { AxiosError } from 'axios';
 import types from './actionTypes';
 
 export interface State {
   innerHeight: number | null;
-  isLoading: boolean;
   isFixed: boolean;
   menu: {
     isOpen: boolean;
@@ -17,14 +14,10 @@ export interface State {
       description?: string;
     };
   };
-  works: [];
-  blog: [];
-  error?: AxiosError | null;
 }
 
 const initialState: State = {
   innerHeight: null,
-  isLoading: false,
   isFixed: false,
   menu: {
     isOpen: false,
@@ -33,8 +26,6 @@ const initialState: State = {
     isOpen: false,
     data: {},
   },
-  works: [],
-  blog: [],
 };
 
 const reducer = (state = initialState, action): State => {
@@ -60,6 +51,7 @@ const reducer = (state = initialState, action): State => {
         },
       };
     }
+    // メニューの開閉
     case types.TOGGLE_MENU: {
       if (state.menu.isOpen) {
         return {
@@ -77,13 +69,14 @@ const reducer = (state = initialState, action): State => {
         menu: {
           isOpen: true,
         },
-        // 同時に開かないようモーダルは閉じる(※基本的にモーダル表示中にメニューは開かないはずだが)
+        // 同時に開かないようモーダルは閉じる
         modal: {
           isOpen: false,
           data: {},
         },
       };
     }
+    // モーダルを開く 選択したモーダルのデータをpayloadから取得する
     case types.OPEN_MODAL: {
       return {
         ...state,
@@ -98,6 +91,7 @@ const reducer = (state = initialState, action): State => {
         },
       };
     }
+    // モーダルを閉じる dataに格納したデータは初期化する
     case types.CLOSE_MODAL: {
       return {
         ...state,
@@ -106,48 +100,6 @@ const reducer = (state = initialState, action): State => {
           isOpen: false,
           data: {},
         },
-      };
-    }
-    case types.GET_WORKS_START: {
-      return {
-        ...state,
-        works: [],
-        isLoading: true,
-      };
-    }
-    case types.GET_WORKS_SUCCEED: {
-      return {
-        ...state,
-        works: action.payload.contents,
-        isLoading: false,
-      };
-    }
-    case types.GET_WORKS_FAIL: {
-      return {
-        ...state,
-        isLoading: false,
-        error: action.payload.error,
-      };
-    }
-    case types.GET_BLOG_START: {
-      return {
-        ...state,
-        blog: [],
-        isLoading: true,
-      };
-    }
-    case types.GET_BLOG_SUCCEED: {
-      return {
-        ...state,
-        blog: action.payload.contents,
-        isLoading: false,
-      };
-    }
-    case types.GET_BLOG_FAIL: {
-      return {
-        ...state,
-        isLoading: false,
-        error: action.payload.error,
       };
     }
     default:
