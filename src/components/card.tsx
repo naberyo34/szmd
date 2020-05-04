@@ -50,6 +50,7 @@ const Info = styled.div`
 
 const Posted = styled.p`
   font-size: 1.2rem;
+  font-weight: bold;
 `;
 
 const Category = styled.p`
@@ -63,6 +64,7 @@ const Category = styled.p`
 const Title = styled.h1`
   margin-top: 1em;
   font-size: 1.6rem;
+  line-height: 1.5;
 `;
 
 interface Props {
