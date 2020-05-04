@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 // import Highlight from 'react-highlight.js';
-import { getBlog } from '../../modules/actions';
+import fetch from 'node-fetch';
 import DynamicHead from '../../components/dynamicHead';
 import ScrollFixed from '../../components/scrollFixed';
 import Menu from '../../components/menu';
 import Header from '../../components/header';
 import Content from '../../components/content';
 import Footer from '../../components/footer';
-import { State } from '../../modules/reducers';
-import { Article } from './index';
 import { color } from '../../services/style';
 import generateDisplayDate from '../../services/generateDisplayDate';
 
@@ -33,10 +29,24 @@ const Title = styled.h1`
   border-left: 8px solid ${color.primary};
 `;
 
-const Date = styled.p`
-  font-size: 1.6rem;
+const Info = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const Posted = styled.p`
+  font-size: 1.2rem;
   font-weight: bold;
-  text-align: right;
+`;
+
+const Category = styled.p`
+  position: relative;
+  display: inline-block;
+  padding: 2px 4px;
+  margin-left: 1em;
+  font-size: 1.2rem;
+  background: ${color.primary};
 `;
 
 const ArticleWrapper = styled.div`
@@ -85,56 +95,95 @@ const ArticleWrapper = styled.div`
   }
 `;
 
-const Slug: React.FC = () => {
-  const dispatch = useDispatch();
-  const blog = useSelector((state: State) => state.blog);
+// ブログのslugとして想定されるパスをすべて取得する
+// export async function getStaticPaths(): Promise<{}> {
+//   /* こんな感じのJSONが返る
+//     {
+//       contents: [
+//         {
+//           id: string;
+//         }
+//       ];
+//       totalCount: number;
+//       offset: number;
+//       limit: number;
+//     }
+//   */
+//   // node-fetchでサーバーサイドでの非同期通信
+//   const response = await fetch(
+//     'https://szmd.microcms.io/api/v1/blog?fields=id',
+//     {
+//       headers: {
+//         'X-API-KEY': process.env.X_API_KEY,
+//       },
+//     }
+//   );
+//   const blog = await response.json();
+//   const paths = blog.contents.map((article) => article.id);
+//   console.log('getStaticPathが渡してる値', paths);
+//   return { paths, fallback: false };
+// }
 
-  const router = useRouter();
-  const { slug } = router.query;
-  // routerから受け取ったslugと一致する記事を検索して返す
-  // TODO: 非効率なのでslugに合わせてリクエストを飛ばすような形にしたい
-  const articleData: Article = blog.find(
-    (article: Article) => article.id === slug
+// paramsからSSRでページを生成する
+// TODO: fetchでコケたときにエラーで死ぬ
+export async function getServerSideProps({ params }): Promise<{}> {
+  const response = await fetch(
+    `https://szmd.microcms.io/api/v1/blog/${params.slug}`,
+    {
+      headers: {
+        'X-API-KEY': process.env.X_API_KEY,
+      },
+    }
   );
+  const article = await response.json();
+  return { props: { article } };
+}
 
-  useEffect(() => {
-    // Storeにworksが格納されていない場合は, 非同期通信でworksを取得する
-    if (!blog.length) dispatch(getBlog.start());
-  }, []);
+interface Props {
+  article: {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    title: string;
+    posted: string;
+    category: string;
+    text: string;
+  };
+}
 
-  return (
-    <>
-      <DynamicHead
-        title={articleData ? articleData.title : '記事が見つかりません'}
-      />
-      <ScrollFixed />
-      <Menu />
-      <Header />
-      <Content>
-        <Wrapper
-          variants={wrapperVariants}
-          initial="initial"
-          animate="fadeIn"
-          exit="fadeOut"
-          transition={{ type: 'tween', duration: 0.2, delay: 0.1 }}
-        >
-          {!articleData && <p>記事が見つかりません</p>}
-          {articleData && (
-            <>
-              <Title>{articleData.title}</Title>
-              <Date>{generateDisplayDate(articleData.posted)}</Date>
-              <ArticleWrapper
-                dangerouslySetInnerHTML={{
-                  __html: articleData.text,
-                }}
-              />
-            </>
-          )}
-        </Wrapper>
-      </Content>
-      <Footer />
-    </>
-  );
-};
+const Slug: React.FC<Props> = ({ article }: Props) => (
+  <>
+    <DynamicHead title={article ? article.title : '記事が見つかりません'} />
+    <ScrollFixed />
+    <Menu />
+    <Header />
+    <Content>
+      <Wrapper
+        variants={wrapperVariants}
+        initial="initial"
+        animate="fadeIn"
+        exit="fadeOut"
+        transition={{ type: 'tween', duration: 0.2, delay: 0.1 }}
+      >
+        {!article && <p>記事が見つかりません</p>}
+        {article && (
+          <>
+            <Title>{article.title}</Title>
+            <Info>
+              <Posted>{generateDisplayDate(article.posted, true)}</Posted>
+              <Category>{article.category}</Category>
+            </Info>
+            <ArticleWrapper
+              dangerouslySetInnerHTML={{
+                __html: article.text,
+              }}
+            />
+          </>
+        )}
+      </Wrapper>
+    </Content>
+    <Footer />
+  </>
+);
 
 export default Slug;
