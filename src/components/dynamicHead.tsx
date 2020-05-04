@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 interface Props {
   title?: string;
@@ -8,6 +9,7 @@ interface Props {
 
 const DynamicHead: React.FC<Props> = (props) => {
   const { title, description } = props;
+  const router = useRouter();
 
   return (
     <Head>
@@ -20,7 +22,7 @@ const DynamicHead: React.FC<Props> = (props) => {
             : 'tama / Ryo Watanabeのポートフォリオページ'
         }
       />
-      <meta property="og:url" content="https://szmd.jp" />
+      <meta property="og:url" content={`https://szmd.jp${router.pathname}`} />
       <meta
         property="og:title"
         content={title ? `${title} | SZMD` : 'SZMD | tama portfolio page'}
@@ -41,13 +43,9 @@ const DynamicHead: React.FC<Props> = (props) => {
       <meta name="twitter:card" content="summary_large_image" />
       <link rel="icon" href="/favicon.ico" />
       <link rel="apple-touch-icon" href="/apple_icon.png" sizes="224x224" />
-      <link rel="canonical" href="https://szmd.jp" />
+      <link rel="canonical" href={`https://szmd.jp${router.pathname}`} />
       <link
         href="https://fonts.googleapis.com/css?family=Raleway:700i,900i&display=swap"
-        rel="stylesheet"
-      />
-      <link
-        href="https://highlightjs.org/static/demo/styles/zenburn.css"
         rel="stylesheet"
       />
     </Head>
