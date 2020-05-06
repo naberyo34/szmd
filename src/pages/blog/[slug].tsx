@@ -110,7 +110,7 @@ const LinkWrapper = styled.nav`
   margin-top: 128px;
   font-size: 1.6rem;
   font-weight: bold;
-  color: ${color.primary};
+  color: ${color.secondary};
 `;
 
 const LinkInner = styled.div`
@@ -176,7 +176,7 @@ const Slug: React.FC<Props> = ({ article, articleLink }: Props) => (
             {articleLink.prev && (
               <Link href={articleLink.prev.id}>
                 <LinkText href={articleLink.prev.id}>
-                  {articleLink.prev.title}
+                  « {articleLink.prev.title}
                 </LinkText>
               </Link>
             )}
@@ -185,7 +185,7 @@ const Slug: React.FC<Props> = ({ article, articleLink }: Props) => (
             {articleLink.next && (
               <Link href={articleLink.next.id}>
                 <LinkText href={articleLink.next.id}>
-                  {articleLink.next.title}
+                  {articleLink.next.title} »
                 </LinkText>
               </Link>
             )}
