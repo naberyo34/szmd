@@ -19,11 +19,12 @@ export const toggleMenu = (): Action => ({
   type: types.TOGGLE_MENU,
 });
 
-export const openModal = (payload: string): Action => ({
-  type: types.OPEN_MODAL,
+export const toggleModal = (payload?: string): Action => ({
+  type: types.TOGGLE_MODAL,
   payload,
 });
 
-export const closeModal = (): Action => ({
-  type: types.CLOSE_MODAL,
+export const sortCategory = (payload?: string): Action => ({
+  type: types.SORT_CATEGORY,
+  payload,
 });

@@ -1,16 +1,18 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import fetch from 'node-fetch';
-import { openModal } from '../modules/actions';
+import { toggleModal, sortCategory } from '../modules/actions';
 import DynamicHead from '../components/dynamicHead';
 import ScrollFixed from '../components/scrollFixed';
 import Menu from '../components/menu';
 import Modal from '../components/modal';
 import Header from '../components/header';
 import Content from '../components/content';
+import SortButton from '../components/sortButton';
 import CardWrapper from '../components/cardWrapper';
 import Card from '../components/card';
 import Footer from '../components/footer';
+import { State } from '../modules/reducers';
 
 // paramsからサーバーサイドでpropsを取得する
 export async function getServerSideProps(): Promise<{} | null> {
@@ -39,6 +41,7 @@ interface Work {
   createdAt: string;
   updatedAt: string;
   title: string;
+  category: string;
   image: {
     url: string;
   };
@@ -47,8 +50,13 @@ interface Work {
 
 const Works: React.FC<Props> = ({ works }: Props) => {
   const dispatch = useDispatch();
-  const handleOpenModal = (payload): void => {
-    dispatch(openModal(payload));
+  const currentCategory = useSelector((state: State) => state.category);
+  const categories = ['全て', 'イラスト', 'プログラミング', '音楽'];
+  const handleSortCategory = (target?: string): void => {
+    dispatch(sortCategory(target));
+  };
+  const handleToggleModal = (payload): void => {
+    dispatch(toggleModal(payload));
   };
 
   return (
@@ -59,21 +67,40 @@ const Works: React.FC<Props> = ({ works }: Props) => {
       <Modal />
       <Header />
       <Content title="WORKS">
-        <CardWrapper>
-          {works.contents.map((work: Work, index) => (
-            <Card
-              key={work.id}
+        <div>
+          {categories.map((category, index) => (
+            <SortButton
+              key={category}
               index={index}
-              onClick={(): void => {
-                handleOpenModal({
-                  title: work.title,
-                  image: work.image.url,
-                  description: work.description,
-                });
-              }}
-              image={work.image.url}
-            />
+              onClick={(): void => handleSortCategory(category)}
+              label={category}
+              active={currentCategory === category}
+            >
+              {category}
+            </SortButton>
           ))}
+        </div>
+        <CardWrapper>
+          {works.contents
+            .filter(
+              (work: Work) =>
+                // currentCategoryが'全て'のときは全てを返し、選択されているときは合致するものを返す
+                currentCategory === '全て' || currentCategory === work.category
+            )
+            .map((work: Work, index) => (
+              <Card
+                key={work.id}
+                index={index}
+                onClick={(): void => {
+                  handleToggleModal({
+                    title: work.title,
+                    image: work.image.url,
+                    description: work.description,
+                  });
+                }}
+                image={work.image.url}
+              />
+            ))}
         </CardWrapper>
       </Content>
       <Footer />

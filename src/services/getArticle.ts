@@ -21,9 +21,12 @@ export interface ArticleLink {
   };
 }
 
+// TODO: これでも動くけど取得失敗時にnullを返す仕様はあまりよくない気がする
+
 /**
  * IDに対応する記事をサーバーサイド非同期通信で取得
  * @param slug 記事のID
+ * @returns 当該記事のオブジェクト
  */
 export default async function getArticle(
   slug: string
@@ -35,13 +38,14 @@ export default async function getArticle(
   });
   // 記事取得に失敗した場合はnullを返す('記事が見つかりません'を表示)
   if (!response.ok) return null;
-  const article = await response.json();
+  const article: Article = await response.json();
   return article;
 }
 
 /**
- * IDに対応する記事の前後に新しい記事、古い記事がある場合はそのリンクを返す
+ * IDに対応する記事の前後に記事がある場合は、そのリンクを取得
  * @param slug 記事のID
+ * @returns 前後記事のタイトルとIDを格納したオブジェクト
  */
 export async function getArticleLink(
   slug: string
@@ -74,7 +78,7 @@ export async function getArticleLink(
       }
     : null;
 
-  const articleLink = {
+  const articleLink: ArticleLink = {
     next,
     prev,
   };

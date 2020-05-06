@@ -35,6 +35,11 @@ const Thumbnail = styled.img`
   }
 `;
 
+const LinkAnchor = styled.a`
+  color: inherit;
+  text-decoration: none;
+`;
+
 const LinkInner = styled.div`
   width: 100%;
   height: 100%;
@@ -92,19 +97,21 @@ const Card: React.FC<Props> = (props) => {
     >
       {image && (
         <LazyLoad height={200}>
-          <Thumbnail src={`${image}?w=468`} alt="クリックで詳細を表示" />
+          <Thumbnail src={`${image}?w=468`} alt={title} />
         </LazyLoad>
       )}
       {blogId && (
         <>
           <Link href="/blog/[slug]" as={`/blog/${blogId}`}>
-            <LinkInner>
-              <Info>
-                <Posted>{posted}</Posted>
-                <Category>{category}</Category>
-              </Info>
-              <Title>{title}</Title>
-            </LinkInner>
+            <LinkAnchor href={`/blog/${blogId}`}>
+              <LinkInner>
+                <Info>
+                  <Posted>{posted}</Posted>
+                  <Category>{category}</Category>
+                </Info>
+                <Title>{title}</Title>
+              </LinkInner>
+            </LinkAnchor>
           </Link>
         </>
       )}
