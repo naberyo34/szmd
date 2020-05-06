@@ -98,6 +98,7 @@ const Works: React.FC<Props> = ({ works }: Props) => {
                     description: work.description,
                   });
                 }}
+                title={work.title}
                 image={work.image.url}
               />
             ))}
