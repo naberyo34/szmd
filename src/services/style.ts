@@ -12,6 +12,7 @@ export const width = {
 
 export const color = {
   primary: '#fcc200',
+  secondary: '#e6b100',
   text: '#1a1a1a',
   white: '#ffff',
   gray: '#f5f7f8',
