@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
-import { closeModal } from '../modules/actions';
+import { toggleModal } from '../modules/actions';
 import { zIndex, width, color, transition } from '../services/style';
 import { State } from '../modules/reducers';
 
@@ -99,8 +99,8 @@ const Modal: React.FC = () => {
   const innerHeight = useSelector((state: State) => state.innerHeight);
   const isOpen = useSelector((state: State) => state.modal.isOpen);
   const data = useSelector((state: State) => state.modal.data);
-  const handleCloseModal = (): void => {
-    dispatch(closeModal());
+  const handleToggleModal = (): void => {
+    dispatch(toggleModal());
   };
 
   return (
@@ -126,7 +126,7 @@ const Modal: React.FC = () => {
                     __html: data.description,
                   }}
                 />
-                <Close type="button" onClick={handleCloseModal}>
+                <Close type="button" onClick={handleToggleModal}>
                   CLOSE
                 </Close>
               </div>

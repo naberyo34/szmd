@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import fetch from 'node-fetch';
-import { openModal } from '../modules/actions';
+import { toggleModal } from '../modules/actions';
 import DynamicHead from '../components/dynamicHead';
 import ScrollFixed from '../components/scrollFixed';
 import Menu from '../components/menu';
@@ -47,8 +47,8 @@ interface Work {
 
 const Works: React.FC<Props> = ({ works }: Props) => {
   const dispatch = useDispatch();
-  const handleOpenModal = (payload): void => {
-    dispatch(openModal(payload));
+  const handleToggleModal = (payload): void => {
+    dispatch(toggleModal(payload));
   };
 
   return (
@@ -65,7 +65,7 @@ const Works: React.FC<Props> = ({ works }: Props) => {
               key={work.id}
               index={index}
               onClick={(): void => {
-                handleOpenModal({
+                handleToggleModal({
                   title: work.title,
                   image: work.image.url,
                   description: work.description,

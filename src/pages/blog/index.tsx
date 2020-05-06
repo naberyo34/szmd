@@ -1,6 +1,7 @@
 import React from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import fetch from 'node-fetch';
+import { sortBlogCategory } from '../../modules/actions';
 import DynamicHead from '../../components/dynamicHead';
 import ScrollFixed from '../../components/scrollFixed';
 import Menu from '../../components/menu';
@@ -11,6 +12,7 @@ import CardWrapper from '../../components/cardWrapper';
 import Card from '../../components/card';
 import Footer from '../../components/footer';
 import generateDisplayDate from '../../services/generateDisplayDate';
+import { State } from '../../modules/reducers';
 
 // paramsからサーバーサイドでpropsを取得する
 export async function getServerSideProps(): Promise<{} | null> {
@@ -49,6 +51,12 @@ export interface Article {
 }
 
 const Blog: React.FC<Props> = ({ blog }: Props) => {
+  const dispatch = useDispatch();
+  const category = useSelector((state: State) => state.blog.category);
+  const handleSortCategory = (target?: string): void => {
+    dispatch(sortBlogCategory(target));
+  };
+
   return (
     <>
       <DynamicHead title="BLOG" />
@@ -57,17 +65,34 @@ const Blog: React.FC<Props> = ({ blog }: Props) => {
       <Modal />
       <Header />
       <Content title="BLOG">
+        <button type="button" onClick={(): void => handleSortCategory()}>
+          ソートを解除
+        </button>
+        <button type="button" onClick={(): void => handleSortCategory('日記')}>
+          日記
+        </button>
+        <button
+          type="button"
+          onClick={(): void => handleSortCategory('技術記事')}
+        >
+          技術記事
+        </button>
         <CardWrapper>
-          {blog.contents.map((article: Article, index) => (
-            <Card
-              key={article.id}
-              blogId={article.id}
-              index={index}
-              title={article.title}
-              posted={generateDisplayDate(article.posted)}
-              category={article.category}
-            />
-          ))}
+          {blog.contents
+            .filter((article: Article) =>
+              // categoryが存在する場合はフィルタリングを行い、しない場合は全出力する
+              category ? article.category === category : true
+            )
+            .map((article: Article, index) => (
+              <Card
+                key={article.id}
+                blogId={article.id}
+                index={index}
+                title={article.title}
+                posted={generateDisplayDate(article.posted)}
+                category={article.category}
+              />
+            ))}
         </CardWrapper>
       </Content>
       <Footer />

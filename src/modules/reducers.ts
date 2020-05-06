@@ -14,6 +14,9 @@ export interface State {
       description?: string;
     };
   };
+  blog: {
+    category?: string;
+  };
 }
 
 const initialState: State = {
@@ -25,6 +28,9 @@ const initialState: State = {
   modal: {
     isOpen: false,
     data: {},
+  },
+  blog: {
+    category: null,
   },
 };
 
@@ -48,6 +54,9 @@ const reducer = (state = initialState, action): State => {
         modal: {
           isOpen: false,
           data: {},
+        },
+        blog: {
+          category: null,
         },
       };
     }
@@ -76,8 +85,19 @@ const reducer = (state = initialState, action): State => {
         },
       };
     }
-    // モーダルを開く 選択したモーダルのデータをpayloadから取得する
-    case types.OPEN_MODAL: {
+    // モーダルの開閉 選択したモーダルの情報をpayloadで取得
+    case types.TOGGLE_MODAL: {
+      if (state.modal.isOpen) {
+        return {
+          ...state,
+          isFixed: false,
+          modal: {
+            isOpen: false,
+            data: {},
+          },
+        };
+      }
+
       return {
         ...state,
         isFixed: true,
@@ -91,14 +111,11 @@ const reducer = (state = initialState, action): State => {
         },
       };
     }
-    // モーダルを閉じる dataに格納したデータは初期化する
-    case types.CLOSE_MODAL: {
+    case types.SORT_BLOG_CATEGORY: {
       return {
         ...state,
-        isFixed: false,
-        modal: {
-          isOpen: false,
-          data: {},
+        blog: {
+          category: action.payload,
         },
       };
     }
