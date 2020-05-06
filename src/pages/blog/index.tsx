@@ -15,7 +15,7 @@ import generateDisplayDate from '../../services/generateDisplayDate';
 export async function getServerSideProps(): Promise<{} | null> {
   // データサイズが大きいので一旦記事本文は取得しない
   const response = await fetch(
-    `https://szmd.microcms.io/api/v1/blog?fields=id,title,posted,category`,
+    'https://szmd.microcms.io/api/v1/blog?fields=id,title,posted,category',
     {
       headers: {
         'X-API-KEY': process.env.X_API_KEY,

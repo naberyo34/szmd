@@ -1,8 +1,8 @@
 import React from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 // import Highlight from 'react-highlight.js';
-import fetch from 'node-fetch';
 import DynamicHead from '../../components/dynamicHead';
 import ScrollFixed from '../../components/scrollFixed';
 import Menu from '../../components/menu';
@@ -10,6 +10,11 @@ import Header from '../../components/header';
 import Content from '../../components/content';
 import Footer from '../../components/footer';
 import { color } from '../../services/style';
+import getArticle, {
+  getArticleLink,
+  Article,
+  ArticleLink,
+} from '../../services/getArticle';
 import generateDisplayDate from '../../services/generateDisplayDate';
 
 const wrapperVariants = {
@@ -26,7 +31,7 @@ const Error = styled.p`
 
 const Title = styled.h1`
   padding-left: 8px;
-  font-size: 3.6rem;
+  font-size: 3.2rem;
   font-weight: bold;
   line-height: 1.5;
   border-bottom: 2px solid ${color.primary};
@@ -66,7 +71,7 @@ const ArticleWrapper = styled.div`
   }
   h2 {
     padding-left: 8px;
-    font-size: 3.2rem;
+    font-size: 2.4rem;
     border-left: 8px solid ${color.primary};
   }
   h3 {
@@ -99,35 +104,39 @@ const ArticleWrapper = styled.div`
   }
 `;
 
+const LinkWrapper = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 128px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: ${color.primary};
+`;
+
+const LinkInner = styled.div`
+  max-width: calc(50% - 8px);
+`;
+
+const LinkText = styled.a`
+  line-height: 1.5;
+  color: inherit;
+`;
+
 // paramsからサーバーサイドでpropsを取得する
 export async function getServerSideProps({ params }): Promise<{} | null> {
-  const response = await fetch(
-    `https://szmd.microcms.io/api/v1/blog/${params.slug}`,
-    {
-      headers: {
-        'X-API-KEY': process.env.X_API_KEY,
-      },
-    }
-  );
-  // 取得に失敗した場合はnullを返却してそのままレンダリングに進む('記事が見つかりません'を表示)
-  if (!response.ok) return { props: { article: null } };
-  const article = await response.json();
-  return { props: { article } };
+  // 記事本体を取得
+  const article = await getArticle(params.slug);
+  const articleLink = await getArticleLink(params.slug);
+  // const prev = getPrevArticle(params.slug);
+  return { props: { article, articleLink } };
 }
 
 interface Props {
-  article?: {
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    title: string;
-    posted: string;
-    category: string;
-    text: string;
-  };
+  article?: Article;
+  articleLink?: ArticleLink;
 }
 
-const Slug: React.FC<Props> = ({ article }: Props) => (
+const Slug: React.FC<Props> = ({ article, articleLink }: Props) => (
   <>
     <DynamicHead title={article ? article.title : '記事が見つかりません'} />
     <ScrollFixed />
@@ -162,6 +171,26 @@ const Slug: React.FC<Props> = ({ article }: Props) => (
             />
           </>
         )}
+        <LinkWrapper>
+          <LinkInner>
+            {articleLink.prev && (
+              <Link href={articleLink.prev.id}>
+                <LinkText href={articleLink.prev.id}>
+                  {articleLink.prev.title}
+                </LinkText>
+              </Link>
+            )}
+          </LinkInner>
+          <LinkInner>
+            {articleLink.next && (
+              <Link href={articleLink.next.id}>
+                <LinkText href={articleLink.next.id}>
+                  {articleLink.next.title}
+                </LinkText>
+              </Link>
+            )}
+          </LinkInner>
+        </LinkWrapper>
       </Wrapper>
     </Content>
     <Footer />
