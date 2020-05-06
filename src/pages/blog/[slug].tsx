@@ -174,7 +174,7 @@ const Slug: React.FC<Props> = ({ article, articleLink }: Props) => (
         <LinkWrapper>
           <LinkInner>
             {articleLink.prev && (
-              <Link href={articleLink.prev.id}>
+              <Link href="[slug]" as={articleLink.prev.id}>
                 <LinkText href={articleLink.prev.id}>
                   « {articleLink.prev.title}
                 </LinkText>
@@ -183,7 +183,7 @@ const Slug: React.FC<Props> = ({ article, articleLink }: Props) => (
           </LinkInner>
           <LinkInner>
             {articleLink.next && (
-              <Link href={articleLink.next.id}>
+              <Link href="[slug]" as={articleLink.next.id}>
                 <LinkText href={articleLink.next.id}>
                   {articleLink.next.title} »
                 </LinkText>

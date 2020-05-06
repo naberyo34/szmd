@@ -1,4 +1,5 @@
 import React from 'react';
+// import { useSelector, useDispatch } from 'react-redux';
 import fetch from 'node-fetch';
 import DynamicHead from '../../components/dynamicHead';
 import ScrollFixed from '../../components/scrollFixed';
