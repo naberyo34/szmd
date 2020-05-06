@@ -1,13 +1,14 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import fetch from 'node-fetch';
-import { sortBlogCategory } from '../../modules/actions';
+import { sortCategory } from '../../modules/actions';
 import DynamicHead from '../../components/dynamicHead';
 import ScrollFixed from '../../components/scrollFixed';
 import Menu from '../../components/menu';
 import Modal from '../../components/modal';
 import Header from '../../components/header';
 import Content from '../../components/content';
+import SortButton from '../../components/sortButton';
 import CardWrapper from '../../components/cardWrapper';
 import Card from '../../components/card';
 import Footer from '../../components/footer';
@@ -52,9 +53,10 @@ export interface Article {
 
 const Blog: React.FC<Props> = ({ blog }: Props) => {
   const dispatch = useDispatch();
-  const category = useSelector((state: State) => state.blog.category);
+  const currentCategory = useSelector((state: State) => state.category);
+  const categories = ['全て', '技術記事', '日記'];
   const handleSortCategory = (target?: string): void => {
-    dispatch(sortBlogCategory(target));
+    dispatch(sortCategory(target));
   };
 
   return (
@@ -65,23 +67,26 @@ const Blog: React.FC<Props> = ({ blog }: Props) => {
       <Modal />
       <Header />
       <Content title="BLOG">
-        <button type="button" onClick={(): void => handleSortCategory()}>
-          ソートを解除
-        </button>
-        <button type="button" onClick={(): void => handleSortCategory('日記')}>
-          日記
-        </button>
-        <button
-          type="button"
-          onClick={(): void => handleSortCategory('技術記事')}
-        >
-          技術記事
-        </button>
+        <div>
+          {categories.map((category, index) => (
+            <SortButton
+              key={category}
+              index={index}
+              onClick={(): void => handleSortCategory(category)}
+              label={category}
+              active={currentCategory === category}
+            >
+              {category}
+            </SortButton>
+          ))}
+        </div>
         <CardWrapper>
           {blog.contents
-            .filter((article: Article) =>
-              // categoryが存在する場合はフィルタリングを行い、しない場合は全出力する
-              category ? article.category === category : true
+            .filter(
+              (article: Article) =>
+                // currentCategoryが'全て'のときは全てを返し、選択されているときは合致するものを返す
+                currentCategory === '全て' ||
+                currentCategory === article.category
             )
             .map((article: Article, index) => (
               <Card

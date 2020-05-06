@@ -24,7 +24,7 @@ export const toggleModal = (payload?: string): Action => ({
   payload,
 });
 
-export const sortBlogCategory = (payload?: string): Action => ({
-  type: types.SORT_BLOG_CATEGORY,
+export const sortCategory = (payload?: string): Action => ({
+  type: types.SORT_CATEGORY,
   payload,
 });

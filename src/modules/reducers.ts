@@ -14,9 +14,7 @@ export interface State {
       description?: string;
     };
   };
-  blog: {
-    category?: string;
-  };
+  category: string;
 }
 
 const initialState: State = {
@@ -29,9 +27,7 @@ const initialState: State = {
     isOpen: false,
     data: {},
   },
-  blog: {
-    category: null,
-  },
+  category: '全て',
 };
 
 const reducer = (state = initialState, action): State => {
@@ -43,7 +39,7 @@ const reducer = (state = initialState, action): State => {
         innerHeight: action.payload,
       };
     }
-    // ページ遷移時にメニュー開閉を初期化する
+    // ページ遷移時に状態を初期化する
     case types.PAGE_TRANSITION: {
       return {
         ...state,
@@ -55,9 +51,7 @@ const reducer = (state = initialState, action): State => {
           isOpen: false,
           data: {},
         },
-        blog: {
-          category: null,
-        },
+        category: '全て',
       };
     }
     // メニューの開閉
@@ -111,12 +105,10 @@ const reducer = (state = initialState, action): State => {
         },
       };
     }
-    case types.SORT_BLOG_CATEGORY: {
+    case types.SORT_CATEGORY: {
       return {
         ...state,
-        blog: {
-          category: action.payload,
-        },
+        category: action.payload || '全て',
       };
     }
     default:
