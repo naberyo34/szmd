@@ -16,7 +16,7 @@ import generateDisplayDate from '../../services/generateDisplayDate';
 import { State } from '../../modules/reducers';
 
 // paramsからサーバーサイドでpropsを取得する
-export async function getServerSideProps(): Promise<{} | null> {
+export async function getStaticProps(): Promise<{} | null> {
   // データサイズが大きいので一旦記事本文は取得しない
   const response = await fetch(
     'https://szmd.microcms.io/api/v1/blog?fields=id,title,posted,category',
@@ -81,23 +81,24 @@ const Blog: React.FC<Props> = ({ blog }: Props) => {
           ))}
         </div>
         <CardWrapper>
-          {blog.contents
-            .filter(
-              (article: Article) =>
-                // currentCategoryが'全て'のときは全てを返し、選択されているときは合致するものを返す
-                currentCategory === '全て' ||
-                currentCategory === article.category
-            )
-            .map((article: Article, index) => (
-              <Card
-                key={article.id}
-                blogId={article.id}
-                index={index}
-                title={article.title}
-                posted={generateDisplayDate(article.posted)}
-                category={article.category}
-              />
-            ))}
+          {blog &&
+            blog.contents
+              .filter(
+                (article: Article) =>
+                  // currentCategoryが'全て'のときは全てを返し、選択されているときは合致するものを返す
+                  currentCategory === '全て' ||
+                  currentCategory === article.category
+              )
+              .map((article: Article, index) => (
+                <Card
+                  key={article.id}
+                  blogId={article.id}
+                  index={index}
+                  title={article.title}
+                  posted={generateDisplayDate(article.posted)}
+                  category={article.category}
+                />
+              ))}
         </CardWrapper>
       </Content>
       <Footer />
