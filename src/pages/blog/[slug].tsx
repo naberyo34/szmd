@@ -10,11 +10,13 @@ import Header from '../../components/header';
 import Content from '../../components/content';
 import Footer from '../../components/footer';
 import { color } from '../../services/style';
-import getArticle, {
+import {
+  getArticlePaths,
+  getArticle,
   getArticleLink,
   Article,
   ArticleLink,
-} from '../../services/getArticle';
+} from '../../services/microcms';
 import generateDisplayDate from '../../services/generateDisplayDate';
 
 const wrapperVariants = {
@@ -122,10 +124,18 @@ const LinkText = styled.a`
   color: inherit;
 `;
 
+// 記事のSlug一覧を取得してgetStaticPropsに渡す
+export async function getStaticPaths(): Promise<{} | null> {
+  const url = await getArticlePaths();
+  // fallback: trueの場合、存在しないSlugが来た場合は'記事が見つかりません'のレンダリングを行う
+  return { paths: url, fallback: true };
+}
+
 // paramsからサーバーサイドでpropsを取得する
-export async function getServerSideProps({ params }): Promise<{} | null> {
-  // 記事本体を取得
+export async function getStaticProps({ params }): Promise<{} | null> {
+  // 記事本体の取得
   const article = await getArticle(params.slug);
+  // 記事の前後リンクの取得
   const articleLink = await getArticleLink(params.slug);
   // const prev = getPrevArticle(params.slug);
   return { props: { article, articleLink } };
@@ -171,26 +181,28 @@ const Slug: React.FC<Props> = ({ article, articleLink }: Props) => (
             />
           </>
         )}
-        <LinkWrapper>
-          <LinkInner>
-            {articleLink.prev && (
-              <Link href="[slug]" as={articleLink.prev.id}>
-                <LinkText href={articleLink.prev.id}>
-                  « {articleLink.prev.title}
-                </LinkText>
-              </Link>
-            )}
-          </LinkInner>
-          <LinkInner>
-            {articleLink.next && (
-              <Link href="[slug]" as={articleLink.next.id}>
-                <LinkText href={articleLink.next.id}>
-                  {articleLink.next.title} »
-                </LinkText>
-              </Link>
-            )}
-          </LinkInner>
-        </LinkWrapper>
+        {articleLink && (
+          <LinkWrapper>
+            <LinkInner>
+              {articleLink.prev && (
+                <Link href="[slug]" as={articleLink.prev.id}>
+                  <LinkText href={articleLink.prev.id}>
+                    « {articleLink.prev.title}
+                  </LinkText>
+                </Link>
+              )}
+            </LinkInner>
+            <LinkInner>
+              {articleLink.next && (
+                <Link href="[slug]" as={articleLink.next.id}>
+                  <LinkText href={articleLink.next.id}>
+                    {articleLink.next.title} »
+                  </LinkText>
+                </Link>
+              )}
+            </LinkInner>
+          </LinkWrapper>
+        )}
       </Wrapper>
     </Content>
     <Footer />
