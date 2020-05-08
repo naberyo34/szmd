@@ -26,6 +26,22 @@ const endPoint = 'https://szmd.microcms.io/api/v1/';
 // TODO: これでも動くけど取得失敗時にnullを返す仕様はあまりよくない気がする
 
 /**
+ * 記事の本文を除く一覧データをサーバーサイド非同期通信で取得
+ * @returns /blog 画面で表示するための記事一覧データ
+ */
+export async function getArticleList(): Promise<[] | null> {
+  const res = await fetch(`${endPoint}blog?fields=id,title,posted,category`, {
+    headers: {
+      'X-API-KEY': process.env.X_API_KEY,
+    },
+  });
+  // 取得に失敗した場合はnullを返却してそのままレンダリングに進む(カードなしで表示)
+  if (!res.ok) return null;
+  const blog = await res.json();
+  return blog;
+}
+
+/**
  * 記事のパス一覧をサーバーサイド非同期通信で取得
  * @returns getStaticPaths用のオブジェクト
  */

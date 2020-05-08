@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import fetch from 'node-fetch';
 import { sortCategory } from '../../modules/actions';
 import DynamicHead from '../../components/dynamicHead';
 import ScrollFixed from '../../components/scrollFixed';
@@ -13,22 +12,12 @@ import CardWrapper from '../../components/cardWrapper';
 import Card from '../../components/card';
 import Footer from '../../components/footer';
 import generateDisplayDate from '../../services/generateDisplayDate';
+import { getArticleList } from '../../services/microcms';
 import { State } from '../../modules/reducers';
 
 // paramsからサーバーサイドでpropsを取得する
 export async function getStaticProps(): Promise<{} | null> {
-  // データサイズが大きいので一旦記事本文は取得しない
-  const response = await fetch(
-    'https://szmd.microcms.io/api/v1/blog?fields=id,title,posted,category',
-    {
-      headers: {
-        'X-API-KEY': process.env.X_API_KEY,
-      },
-    }
-  );
-  // 取得に失敗した場合はnullを返却してそのままレンダリングに進む(カードなしで表示)
-  if (!response.ok) return { props: { blog: null } };
-  const blog = await response.json();
+  const blog = await getArticleList();
   return { props: { blog } };
 }
 
