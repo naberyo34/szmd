@@ -39,6 +39,7 @@ const Inner = styled.div`
   height: 100%;
   @media (max-width: ${width.ipad}) {
     display: block;
+    padding-bottom: 64px;
     overflow-y: scroll;
   }
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { color, transition } from '../services/style';
+import { width, color, transition } from '../services/style';
 
 interface Props {
   index: number;
@@ -28,6 +28,10 @@ const Button = styled(motion.button)`
 
   &:not(:first-child) {
     margin-left: 8px;
+  }
+
+  @media (max-width: ${width.ipad}) {
+    font-size: 1.2rem;
   }
 `;
 
