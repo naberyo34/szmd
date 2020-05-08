@@ -15,7 +15,7 @@ import Footer from '../components/footer';
 import { State } from '../modules/reducers';
 
 // paramsからサーバーサイドでpropsを取得する
-export async function getServerSideProps(): Promise<{} | null> {
+export async function getStaticProps(): Promise<{} | null> {
   const response = await fetch(`https://szmd.microcms.io/api/v1/works`, {
     headers: {
       'X-API-KEY': process.env.X_API_KEY,
@@ -81,27 +81,29 @@ const Works: React.FC<Props> = ({ works }: Props) => {
           ))}
         </div>
         <CardWrapper>
-          {works.contents
-            .filter(
-              (work: Work) =>
-                // currentCategoryが'全て'のときは全てを返し、選択されているときは合致するものを返す
-                currentCategory === '全て' || currentCategory === work.category
-            )
-            .map((work: Work, index) => (
-              <Card
-                key={work.id}
-                index={index}
-                onClick={(): void => {
-                  handleToggleModal({
-                    title: work.title,
-                    image: work.image.url,
-                    description: work.description,
-                  });
-                }}
-                title={work.title}
-                image={work.image.url}
-              />
-            ))}
+          {works &&
+            works.contents
+              .filter(
+                (work: Work) =>
+                  // currentCategoryが'全て'のときは全てを返し、選択されているときは合致するものを返す
+                  currentCategory === '全て' ||
+                  currentCategory === work.category
+              )
+              .map((work: Work, index) => (
+                <Card
+                  key={work.id}
+                  index={index}
+                  onClick={(): void => {
+                    handleToggleModal({
+                      title: work.title,
+                      image: work.image.url,
+                      description: work.description,
+                    });
+                  }}
+                  title={work.title}
+                  image={work.image.url}
+                />
+              ))}
         </CardWrapper>
       </Content>
       <Footer />
