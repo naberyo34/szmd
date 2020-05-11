@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { toggleMenu } from '../modules/actions';
 import { width, color, transition } from '../services/style';
@@ -20,7 +21,7 @@ const Inner = styled.div`
   color: ${color.white};
 `;
 
-const Title = styled.h1`
+const Title = styled(motion.h1)`
   font-family: 'Raleway', sans-serif;
   font-size: 2.4rem;
   font-style: italic;
@@ -32,7 +33,7 @@ const Title = styled.h1`
   }
 `;
 
-const Menu = styled.button`
+const Menu = styled(motion.button)`
   font-family: 'Raleway', sans-serif;
   font-size: 1.6rem;
   font-style: italic;
@@ -59,12 +60,22 @@ const Header: React.FC = () => {
   return (
     <Wrapper>
       <Inner>
-        <Title>
+        <Title
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 0.8 }}
+          transition={{ type: 'tween', duration: 0.2 }}
+        >
           <Link href="/">
             <LinkText href="/">SZMD</LinkText>
           </Link>
         </Title>
-        <Menu type="button" onClick={handleToggleMenu}>
+        <Menu
+          type="button"
+          onClick={handleToggleMenu}
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 0.8 }}
+          transition={{ type: 'tween', duration: 0.2 }}
+        >
           MENU
         </Menu>
       </Inner>
