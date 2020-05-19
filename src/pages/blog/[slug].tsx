@@ -93,6 +93,10 @@ const ArticleWrapper = styled.div`
   li:not(:first-child) {
     margin-top: 2em;
   }
+  img {
+    max-width: 100%;
+    margin: 2em 0;
+  }
 
   /* TODO: シンタックスハイライトの付け方で迷っているため急造 */
   pre {
