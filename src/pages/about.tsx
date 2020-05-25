@@ -7,7 +7,7 @@ import Menu from '../components/menu';
 import Header from '../components/header';
 import Content from '../components/content';
 import Footer from '../components/footer';
-import { width, color } from '../services/style';
+import { width, color, transition } from '../services/style';
 
 const wrapperVariants = {
   initial: { opacity: 0 },
@@ -43,6 +43,28 @@ const Description = styled.p`
   }
 `;
 
+const LinkWrapper = styled.ul`
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+`;
+
+const LinkItem = styled.li`
+  &:not(:first-child) {
+    margin-left: 8px;
+  }
+`;
+
+const LinkText = styled.a`
+  color: inherit;
+  text-decoration: none;
+  transition: opacity ${transition.fast};
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
 const About: React.FC = () => (
   <>
     <DynamicHead title="ABOUT" />
@@ -66,6 +88,17 @@ const About: React.FC = () => (
           <br />
           音楽とカレーが好きです。
         </Description>
+        <LinkWrapper>
+          <LinkItem>
+            <LinkText
+              href="https://twitter.com/momochitama"
+              rel="noreferrer"
+              target="_blank"
+            >
+              <img src="/twitter.png" alt="Twitter" width="40" />
+            </LinkText>
+          </LinkItem>
+        </LinkWrapper>
       </Wrapper>
     </Content>
     <Footer />
