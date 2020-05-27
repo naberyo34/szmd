@@ -32,7 +32,7 @@ const endPoint = 'https://szmd.microcms.io/api/v1/';
 export async function getArticleList(): Promise<[] | null> {
   const res = await fetch(`${endPoint}blog?fields=id,title,posted,category`, {
     headers: {
-      'X-API-KEY': process.env.X_API_KEY,
+      'X-API-KEY': process.env.X_API_KEY || '',
     },
   });
   // 取得に失敗した場合はnullを返却してそのままレンダリングに進む(カードなしで表示)
@@ -48,7 +48,7 @@ export async function getArticleList(): Promise<[] | null> {
 export async function getArticlePaths(): Promise<[] | null> {
   const res = await fetch(`${endPoint}blog?fields=id`, {
     headers: {
-      'X-API-KEY': process.env.X_API_KEY,
+      'X-API-KEY': process.env.X_API_KEY || '',
     },
   });
   // 取得に失敗した場合はnullを返す
@@ -56,7 +56,7 @@ export async function getArticlePaths(): Promise<[] | null> {
   const rawData = await res.json();
 
   // getStaticPathsで使える形に整形してから返す
-  const paths = rawData.contents.map((content) => {
+  const paths = rawData.contents.map((content: { id: string }) => {
     const obj = {
       params: {
         slug: content.id,
@@ -75,7 +75,7 @@ export async function getArticlePaths(): Promise<[] | null> {
 export async function getArticle(slug: string): Promise<Article | null> {
   const res = await fetch(`${endPoint}blog/${slug}`, {
     headers: {
-      'X-API-KEY': process.env.X_API_KEY,
+      'X-API-KEY': process.env.X_API_KEY || '',
     },
   });
   // 取得に失敗した場合はnullを返す
@@ -94,27 +94,29 @@ export async function getArticleLink(
 ): Promise<ArticleLink | null> {
   const res = await fetch(`${endPoint}blog?fields=id,title`, {
     headers: {
-      'X-API-KEY': process.env.X_API_KEY,
+      'X-API-KEY': process.env.X_API_KEY || '',
     },
   });
   const rawData = await res.json();
   const blog = rawData.contents;
   // 対象記事のインデックスを取得
-  const currentIndex = blog.findIndex((article) => article.id === slug);
+  const currentIndex = blog.findIndex(
+    (article: Article) => article.id === slug
+  );
   // 対象記事よりも古い記事がある場合はIDを取得
   const next = blog[currentIndex + 1]
     ? {
         id: blog[currentIndex + 1].id,
         title: blog[currentIndex + 1].title,
       }
-    : null;
+    : undefined;
   // 対象記事よりも新しい記事がある場合はIDを取得
   const prev = blog[currentIndex - 1]
     ? {
         id: blog[currentIndex - 1].id,
         title: blog[currentIndex - 1].title,
       }
-    : null;
+    : undefined;
 
   const articleLink: ArticleLink = {
     next,

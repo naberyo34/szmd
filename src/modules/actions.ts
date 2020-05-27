@@ -5,6 +5,11 @@ interface Action {
   payload?: any;
   error?: boolean;
 }
+export interface ToggleModalPayload {
+  title: string;
+  image: string;
+  description: string;
+}
 
 export const pageTransition = (): Action => ({
   type: types.PAGE_TRANSITION,
@@ -19,7 +24,7 @@ export const toggleMenu = (): Action => ({
   type: types.TOGGLE_MENU,
 });
 
-export const toggleModal = (payload?: string): Action => ({
+export const toggleModal = (payload?: ToggleModalPayload): Action => ({
   type: types.TOGGLE_MODAL,
   payload,
 });

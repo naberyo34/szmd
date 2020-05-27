@@ -1,7 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import fetch from 'node-fetch';
-import { toggleModal, sortCategory } from '../modules/actions';
+import {
+  toggleModal,
+  sortCategory,
+  ToggleModalPayload,
+} from '../modules/actions';
 import DynamicHead from '../components/dynamicHead';
 import ScrollFixed from '../components/scrollFixed';
 import Menu from '../components/menu';
@@ -18,7 +22,7 @@ import { State } from '../modules/reducers';
 export async function getStaticProps(): Promise<{} | null> {
   const response = await fetch(`https://szmd.microcms.io/api/v1/works`, {
     headers: {
-      'X-API-KEY': process.env.X_API_KEY,
+      'X-API-KEY': process.env.X_API_KEY || '',
     },
   });
   // 取得に失敗した場合はnullを返却してそのままレンダリングに進む(カードなしで表示)
@@ -55,7 +59,7 @@ const Works: React.FC<Props> = ({ works }: Props) => {
   const handleSortCategory = (target?: string): void => {
     dispatch(sortCategory(target));
   };
-  const handleToggleModal = (payload): void => {
+  const handleToggleModal = (payload: ToggleModalPayload): void => {
     dispatch(toggleModal(payload));
   };
 

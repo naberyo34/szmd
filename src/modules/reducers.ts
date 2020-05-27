@@ -1,7 +1,7 @@
 import types from './actionTypes';
 
 export interface State {
-  innerHeight: number | null;
+  innerHeight?: number;
   isFixed: boolean;
   menu: {
     isOpen: boolean;
@@ -9,8 +9,8 @@ export interface State {
   modal: {
     isOpen: boolean;
     data: {
-      image?: string;
       title?: string;
+      image?: string;
       description?: string;
     };
   };
@@ -18,7 +18,6 @@ export interface State {
 }
 
 const initialState: State = {
-  innerHeight: null,
   isFixed: false,
   menu: {
     isOpen: false,
