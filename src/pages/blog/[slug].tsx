@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 // import Highlight from 'react-highlight.js';
@@ -9,7 +10,7 @@ import Menu from '../../components/menu';
 import Header from '../../components/header';
 import Content from '../../components/content';
 import Footer from '../../components/footer';
-import { color } from '../../services/style';
+import { color, transition } from '../../services/style';
 import {
   getArticlePaths,
   getArticle,
@@ -44,6 +45,20 @@ const Info = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  &:not(:first-of-type) {
+    margin-top: 1em;
+  }
+`;
+
+const Twitter = styled.a`
+  display: flex;
+  justify-content: flex-end;
+  transition: opacity ${transition.fast};
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const Posted = styled.p`
@@ -150,67 +165,80 @@ interface Props {
   articleLink?: ArticleLink;
 }
 
-const Slug: React.FC<Props> = ({ article, articleLink }: Props) => (
-  <>
-    <DynamicHead title={article ? article.title : '記事が見つかりません'} />
-    <ScrollFixed />
-    <Menu />
-    <Header />
-    <Content>
-      <Wrapper
-        variants={wrapperVariants}
-        initial="initial"
-        animate="fadeIn"
-        exit="fadeOut"
-        transition={{ type: 'tween', duration: 0.2, delay: 0.1 }}
-      >
-        {!article && (
-          <Error>
-            記事が見つかりません……
-            <br />
-            URLが間違っているか、記事が削除された可能性があります。
-          </Error>
-        )}
-        {article && (
-          <>
-            <Title>{article.title}</Title>
-            <Info>
-              <Posted>{generateDisplayDate(article.posted, true)}</Posted>
-              <Category>{article.category}</Category>
-            </Info>
-            <ArticleWrapper
-              dangerouslySetInnerHTML={{
-                __html: article.text,
-              }}
-            />
-          </>
-        )}
-        {articleLink && (
-          <LinkWrapper>
-            <LinkInner>
-              {articleLink.prev && (
-                <Link href="[slug]" as={articleLink.prev.id}>
-                  <LinkText href={articleLink.prev.id}>
-                    « {articleLink.prev.title}
-                  </LinkText>
-                </Link>
-              )}
-            </LinkInner>
-            <LinkInner>
-              {articleLink.next && (
-                <Link href="[slug]" as={articleLink.next.id}>
-                  <LinkText href={articleLink.next.id}>
-                    {articleLink.next.title} »
-                  </LinkText>
-                </Link>
-              )}
-            </LinkInner>
-          </LinkWrapper>
-        )}
-      </Wrapper>
-    </Content>
-    <Footer />
-  </>
-);
+const Slug: React.FC<Props> = ({ article, articleLink }: Props) => {
+  const router = useRouter();
+
+  return (
+    <>
+      <DynamicHead title={article ? article.title : '記事が見つかりません'} />
+      <ScrollFixed />
+      <Menu />
+      <Header />
+      <Content>
+        <Wrapper
+          variants={wrapperVariants}
+          initial="initial"
+          animate="fadeIn"
+          exit="fadeOut"
+          transition={{ type: 'tween', duration: 0.2, delay: 0.1 }}
+        >
+          {!article && (
+            <Error>
+              記事が見つかりません……
+              <br />
+              URLが間違っているか、記事が削除された可能性があります。
+            </Error>
+          )}
+          {article && (
+            <>
+              <Title>{article.title}</Title>
+              <Info>
+                <Posted>{generateDisplayDate(article.posted, true)}</Posted>
+                <Category>{article.category}</Category>
+              </Info>
+              <Info>
+                <Twitter
+                  href={`https://twitter.com/intent/tweet?text=${article.title}%20%7C%20SZMD&url=https://szmd.jp${router.asPath}`}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img src="/twitter.png" alt="Twitter" width="32" />
+                </Twitter>
+              </Info>
+              <ArticleWrapper
+                dangerouslySetInnerHTML={{
+                  __html: article.text,
+                }}
+              />
+            </>
+          )}
+          {articleLink && (
+            <LinkWrapper>
+              <LinkInner>
+                {articleLink.prev && (
+                  <Link href="[slug]" as={articleLink.prev.id}>
+                    <LinkText href={articleLink.prev.id}>
+                      « {articleLink.prev.title}
+                    </LinkText>
+                  </Link>
+                )}
+              </LinkInner>
+              <LinkInner>
+                {articleLink.next && (
+                  <Link href="[slug]" as={articleLink.next.id}>
+                    <LinkText href={articleLink.next.id}>
+                      {articleLink.next.title} »
+                    </LinkText>
+                  </Link>
+                )}
+              </LinkInner>
+            </LinkWrapper>
+          )}
+        </Wrapper>
+      </Content>
+      <Footer />
+    </>
+  );
+};
 
 export default Slug;

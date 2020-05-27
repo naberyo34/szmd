@@ -60,22 +60,12 @@ const Header: React.FC = () => {
   return (
     <Wrapper>
       <Inner>
-        <Title
-          whileHover={{ scale: 1.2 }}
-          whileTap={{ scale: 0.8 }}
-          transition={{ type: 'tween', duration: 0.2 }}
-        >
+        <Title>
           <Link href="/">
             <LinkText href="/">SZMD</LinkText>
           </Link>
         </Title>
-        <Menu
-          type="button"
-          onClick={handleToggleMenu}
-          whileHover={{ scale: 1.2 }}
-          whileTap={{ scale: 0.8 }}
-          transition={{ type: 'tween', duration: 0.2 }}
-        >
+        <Menu type="button" onClick={handleToggleMenu}>
           MENU
         </Menu>
       </Inner>
