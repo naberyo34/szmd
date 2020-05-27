@@ -95,7 +95,7 @@ const About: React.FC = () => (
               rel="noreferrer"
               target="_blank"
             >
-              <img src="/twitter.png" alt="Twitter" width="40" height="40" />
+              <img src="/twitter.png" alt="Twitter" width="40" />
             </LinkText>
           </LinkItem>
         </LinkWrapper>

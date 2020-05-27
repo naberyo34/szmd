@@ -52,8 +52,6 @@ const Info = styled.div`
 `;
 
 const Twitter = styled.a`
-  display: flex;
-  justify-content: flex-end;
   transition: opacity ${transition.fast};
 
   &:hover {
@@ -202,12 +200,7 @@ const Slug: React.FC<Props> = ({ article, articleLink }: Props) => {
                   target="_blank"
                   rel="noopener"
                 >
-                  <img
-                    src="/twitter.png"
-                    alt="Twitter"
-                    width="32"
-                    height="32"
-                  />
+                  <img src="/twitter.png" alt="Twitter" width="32" />
                 </Twitter>
               </Info>
               <ArticleWrapper
