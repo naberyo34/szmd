@@ -1,5 +1,11 @@
 import React from 'react';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+} from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 // TODO: 仕方なかった
@@ -11,7 +17,7 @@ export default class MyDocument extends Document<Props> {
   /* TODO: 正直あまりわかってない styled-componentsをSSRで使うための処理
     https://styled-components.com/docs/advanced#server-side-rendering
   */
-  static getInitialProps({ renderPage }) {
+  static getInitialProps({ renderPage }: DocumentContext) {
     const sheet = new ServerStyleSheet();
     // ページコンポーネントからスタイルを取得
     const page = renderPage((App) => (props) =>

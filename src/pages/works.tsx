@@ -1,4 +1,5 @@
 import React from 'react';
+import { NextPage } from 'next';
 import { useDispatch, useSelector } from 'react-redux';
 import fetch from 'node-fetch';
 import {
@@ -52,7 +53,7 @@ interface Work {
   description: string;
 }
 
-const Works: React.FC<Props> = ({ works }: Props) => {
+const Works: NextPage<Props> = ({ works }: Props) => {
   const dispatch = useDispatch();
   const currentCategory = useSelector((state: State) => state.category);
   const categories = ['全て', 'イラスト', 'プログラミング', '音楽'];

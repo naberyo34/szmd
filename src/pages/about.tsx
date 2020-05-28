@@ -1,4 +1,5 @@
 import React from 'react';
+import { NextPage } from 'next';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import DynamicHead from '../components/dynamicHead';
@@ -65,7 +66,7 @@ const LinkText = styled.a`
   }
 `;
 
-const About: React.FC = () => (
+const About: NextPage = () => (
   <>
     <DynamicHead title="ABOUT" />
     <ScrollFixed />

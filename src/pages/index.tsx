@@ -1,4 +1,5 @@
 import React from 'react';
+import { NextPage } from 'next';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -101,7 +102,7 @@ const LinkText = styled.a`
   text-decoration: none;
 `;
 
-const Index: React.FC = () => {
+const Index: NextPage = () => {
   const innerHeight = useSelector((state: State) => state.innerHeight);
 
   return (

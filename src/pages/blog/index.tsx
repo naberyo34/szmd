@@ -1,4 +1,5 @@
 import React from 'react';
+import { NextPage } from 'next';
 import { useSelector, useDispatch } from 'react-redux';
 import { sortCategory } from '../../modules/actions';
 import DynamicHead from '../../components/dynamicHead';
@@ -40,7 +41,7 @@ export interface Article {
   text: string;
 }
 
-const Blog: React.FC<Props> = ({ blog }: Props) => {
+const Blog: NextPage<Props> = ({ blog }: Props) => {
   const dispatch = useDispatch();
   const currentCategory = useSelector((state: State) => state.category);
   const categories = ['全て', '技術記事', '日記'];

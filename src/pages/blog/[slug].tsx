@@ -1,4 +1,5 @@
 import React from 'react';
+import { GetStaticProps, GetStaticPaths, NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
@@ -142,28 +143,30 @@ const LinkText = styled.a`
 `;
 
 // 記事のSlug一覧を取得してgetStaticPropsに渡す
-export async function getStaticPaths(): Promise<{} | null> {
+export const getStaticPaths: GetStaticPaths = async () => {
   const url = await getArticlePaths();
   // fallback: trueの場合、存在しないSlugが来た場合は'記事が見つかりません'のレンダリングを行う
+  // TODO: getArticlePathsの戻り値の型がよろしくないのでうまいこと直せ。
   return { paths: url, fallback: true };
-}
+};
 
 // paramsからサーバーサイドでpropsを取得する
-export async function getStaticProps({ params }): Promise<{} | null> {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   // 記事本体の取得
+  // TODO: ParsedUrlQueryがどういうものかを理解する
   const article = await getArticle(params.slug);
   // 記事の前後リンクの取得
   const articleLink = await getArticleLink(params.slug);
   // const prev = getPrevArticle(params.slug);
   return { props: { article, articleLink } };
-}
+};
 
 interface Props {
   article?: Article;
   articleLink?: ArticleLink;
 }
 
-const Slug: React.FC<Props> = ({ article, articleLink }: Props) => {
+const Slug: NextPage<Props> = ({ article, articleLink }: Props) => {
   const router = useRouter();
 
   return (

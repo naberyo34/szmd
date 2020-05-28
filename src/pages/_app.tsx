@@ -1,4 +1,5 @@
 import React from 'react';
+import { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import 'minireset.css';
@@ -33,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
 const store = configureStore();
 const makeStore = () => store;
 
-const App = ({ Component, pageProps, router }) => (
+const App = ({ Component, pageProps, router }: AppProps) => (
   <Provider store={store}>
     <GlobalStyle />
     <PageTransition />
