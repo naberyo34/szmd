@@ -1,5 +1,5 @@
 # SZMD
-- Ryo Watanabe / tama portfolio page
+![og](https://user-images.githubusercontent.com/39970521/83838334-d9f36880-a733-11ea-9454-9c816f9e105d.jpg)
 ## 概要
 Next.js + microCMSを用いたポートフォリオページです。
 趣味のイラストや音楽、デザイン、プログラミングなどの成果物をまとめていきます。
