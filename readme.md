@@ -7,11 +7,10 @@ Next.js + microCMSを用いたポートフォリオページです。
 ## 開発
 - `yarn dev` local server起動
 ### 利用技術
-- TypeScript (少しずつ導入中)
+- TypeScript
 - Next.js
 - React (Hooks API)
 - Redux / React-Redux
-- Redux-Saga
 - axios
 - styled-components
 - microCMS
