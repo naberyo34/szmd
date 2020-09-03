@@ -1,4 +1,5 @@
 import React from 'react';
+import { Store } from 'redux';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import 'minireset.css';
@@ -31,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
 
 // ReduxをNextと連携するための設定
 const store = configureStore();
-const makeStore = () => store;
+const makeStore = (): Store => store;
 
 const App = ({ Component, pageProps, router }) => (
   <Provider store={store}>
