@@ -80,6 +80,15 @@ const Title = styled.h3`
 const Description = styled.p`
   margin-top: 1em;
   font-size: 1.6rem;
+
+  a {
+    color: inherit;
+  }
+
+  li::before {
+    padding-right: 1em;
+    content: '-';
+  }
 `;
 
 const Close = styled.button`
