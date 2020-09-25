@@ -96,15 +96,16 @@ const ArticleWrapper = styled.div`
     font-size: 1.6rem;
   }
   ul {
-    padding-left: 16px;
+    padding: 16px;
     margin-top: 2em;
     overflow-x: auto;
     font-size: 1.6rem;
     line-height: 1.5;
-    list-style: square;
+    list-style: inside square;
+    background: ${color.gray};
   }
   li:not(:first-child) {
-    margin-top: 2em;
+    margin-top: 0.5em;
   }
   img {
     max-width: 100%;
@@ -118,6 +119,12 @@ const ArticleWrapper = styled.div`
     overflow-x: auto;
     font-size: 16px; /* preはremが効かないためpx指定 */
     line-height: 1.5;
+    color: #dcdcdc;
+    background: #3f3f3f;
+  }
+
+  code {
+    padding: 0 0.5em;
     color: #dcdcdc;
     background: #3f3f3f;
   }
