@@ -114,7 +114,8 @@ const ArticleWrapper = styled.div`
 
   /* TODO: シンタックスハイライトの付け方で迷っているため急造 */
   code {
-    padding: 0 0.5em;
+    padding: 0.1em 0.5em;
+    margin: 0 0.5em;
     font-size: 1.6rem;
     color: #efefef;
     background: #3f3f3f;
@@ -129,6 +130,7 @@ const ArticleWrapper = styled.div`
 
     code {
       padding: 0;
+      margin: 0;
     }
   }
 `;
