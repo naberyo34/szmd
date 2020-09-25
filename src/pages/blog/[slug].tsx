@@ -113,20 +113,23 @@ const ArticleWrapper = styled.div`
   }
 
   /* TODO: シンタックスハイライトの付け方で迷っているため急造 */
-  pre {
-    padding: 1em;
-    margin-top: 1em;
-    overflow-x: auto;
-    font-size: 16px; /* preはremが効かないためpx指定 */
-    line-height: 1.5;
-    color: #dcdcdc;
+  code {
+    padding: 0 0.5em;
+    font-size: 1.6rem;
+    color: #efefef;
     background: #3f3f3f;
   }
 
-  code {
-    padding: 0 0.5em;
-    color: #dcdcdc;
+  pre {
+    padding: 2em;
+    margin-top: 1em;
+    overflow-x: auto;
+    line-height: 1.5;
     background: #3f3f3f;
+
+    code {
+      padding: 0;
+    }
   }
 `;
 
