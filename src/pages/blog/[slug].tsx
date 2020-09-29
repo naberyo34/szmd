@@ -112,6 +112,10 @@ const ArticleWrapper = styled.div`
     margin: 2em 0;
   }
 
+  a {
+    color: ${color.secondary};
+  }
+
   /* TODO: シンタックスハイライトの付け方で迷っているため急造 */
   code {
     padding: 0.1em 0.5em;
