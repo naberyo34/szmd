@@ -78,7 +78,7 @@ export async function getArticlePaths(): Promise<[] | null> {
  * @returns 当該記事のオブジェクト
  */
 export async function getArticle(targetSlug: string): Promise<Article | null> {
-  const url = `${endPoint}blog?filter=slug[equal]${targetSlug}`;
+  const url = `${endPoint}blog?filters=slug[equals]${targetSlug}`;
 
   const res = await fetch(url, {
     headers: {
@@ -91,10 +91,7 @@ export async function getArticle(targetSlug: string): Promise<Article | null> {
 
   // 整形して返す
   const rawData = await res.json();
-
-  console.log(rawData);
-
-  const article: Article = rawData.contents;
+  const article: Article = rawData.contents[0];
 
   return article;
 }
