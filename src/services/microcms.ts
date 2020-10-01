@@ -30,13 +30,16 @@ const endPoint = 'https://szmd.microcms.io/api/v1/';
  * @returns /blog 画面で表示するための記事一覧データ
  */
 export async function getArticleList(): Promise<[] | null> {
-  const res = await fetch(`${endPoint}blog?fields=id,title,posted,category`, {
+  const url = `${endPoint}blog?fields=id,slug,title,posted,category`;
+  const res = await fetch(url, {
     headers: {
       'X-API-KEY': process.env.X_API_KEY,
     },
   });
-  // 取得に失敗した場合はnullを返却してそのままレンダリングに進む(カードなしで表示)
+  // 取得に失敗した場合はnullを返してそのままレンダリングに進む(カードなしで表示)
   if (!res.ok) return null;
+
+  // JSONに整形して返す
   const blog = await res.json();
   return blog;
 }
@@ -46,73 +49,86 @@ export async function getArticleList(): Promise<[] | null> {
  * @returns getStaticPaths用のオブジェクト
  */
 export async function getArticlePaths(): Promise<[] | null> {
-  const res = await fetch(`${endPoint}blog?fields=id`, {
+  const url = `${endPoint}blog?fields=slug`;
+  const res = await fetch(url, {
     headers: {
       'X-API-KEY': process.env.X_API_KEY,
     },
   });
   // 取得に失敗した場合はnullを返す
   if (!res.ok) return null;
-  const rawData = await res.json();
 
   // getStaticPathsで使える形に整形してから返す
+  const rawData = await res.json();
   const paths = rawData.contents.map((content) => {
     const obj = {
       params: {
-        slug: content.id,
+        slug: content.slug,
       },
     };
     return obj;
   });
+
   return paths;
 }
 
 /**
- * IDに対応する記事をサーバーサイド非同期通信で取得
- * @param slug 記事のID
+ * slugに対応する記事をサーバーサイド非同期通信で取得
+ * @param targetSlug 記事のID
  * @returns 当該記事のオブジェクト
  */
-export async function getArticle(slug: string): Promise<Article | null> {
-  const res = await fetch(`${endPoint}blog/${slug}`, {
+export async function getArticle(targetSlug: string): Promise<Article | null> {
+  const url = `${endPoint}blog?filter=slug[equal]${targetSlug}`;
+
+  const res = await fetch(url, {
     headers: {
       'X-API-KEY': process.env.X_API_KEY,
     },
   });
+
   // 取得に失敗した場合はnullを返す
   if (!res.ok) return null;
-  const article: Article = await res.json();
+
+  // 整形して返す
+  const rawData = await res.json();
+
+  console.log(rawData);
+
+  const article: Article = rawData.contents;
+
   return article;
 }
 
 /**
- * IDに対応する記事の前後に記事がある場合は、そのリンクを取得
- * @param slug 記事のID
+ * slugに対応する記事の前後に記事がある場合は、そのリンクを取得
+ * @param targetSlug 対象記事のID
  * @returns 前後記事のタイトルとIDを格納したオブジェクト
  */
 export async function getArticleLink(
-  slug: string
+  targetSlug: string
 ): Promise<ArticleLink | null> {
-  const res = await fetch(`${endPoint}blog?fields=id,title`, {
+  const res = await fetch(`${endPoint}blog?fields=slug,title`, {
     headers: {
       'X-API-KEY': process.env.X_API_KEY,
     },
   });
   const rawData = await res.json();
-  const blog = rawData.contents;
+  const list = rawData.contents;
+
   // 対象記事のインデックスを取得
-  const currentIndex = blog.findIndex((article) => article.id === slug);
+  const currentIndex = list.findIndex((article) => article.slug === targetSlug);
   // 対象記事よりも古い記事がある場合はIDを取得
-  const next = blog[currentIndex + 1]
+  const next = list[currentIndex + 1]
     ? {
-        id: blog[currentIndex + 1].id,
-        title: blog[currentIndex + 1].title,
+        id: list[currentIndex + 1].slug,
+        title: list[currentIndex + 1].title,
       }
     : null;
   // 対象記事よりも新しい記事がある場合はIDを取得
-  const prev = blog[currentIndex - 1]
+  const prev = list[currentIndex - 1]
     ? {
-        id: blog[currentIndex - 1].id,
-        title: blog[currentIndex - 1].title,
+        id: list[currentIndex - 1].slug,
+        title: list[currentIndex - 1].title,
       }
     : null;
 

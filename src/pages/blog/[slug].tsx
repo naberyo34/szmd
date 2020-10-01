@@ -170,7 +170,7 @@ export async function getStaticProps({ params }): Promise<{} | null> {
   const article = await getArticle(params.slug);
   // 記事の前後リンクの取得
   const articleLink = await getArticleLink(params.slug);
-  // const prev = getPrevArticle(params.slug);
+
   return { props: { article, articleLink } };
 }
 

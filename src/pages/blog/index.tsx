@@ -32,6 +32,7 @@ interface Props {
 
 export interface Article {
   id: string;
+  slug: string;
   createdAt: string;
   updatedAt: string;
   title: string;
@@ -81,7 +82,7 @@ const Blog: React.FC<Props> = ({ blog }: Props) => {
               .map((article: Article, index) => (
                 <Card
                   key={article.id}
-                  blogId={article.id}
+                  blogId={article.slug}
                   index={index}
                   title={article.title}
                   posted={generateDisplayDate(article.posted)}
