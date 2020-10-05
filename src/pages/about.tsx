@@ -79,7 +79,12 @@ const About: React.FC = () => (
         exit="fadeOut"
         transition={{ type: 'tween', duration: 0.2, delay: 0.1 }}
       >
-        <Icon src="/about_icon.png" alt="tamaのアイコン" width="200" />
+        <Icon
+          src="/about_icon.png"
+          alt="tamaのアイコン"
+          width="200"
+          height="200"
+        />
         <Name>tama</Name>
         <Description>
           a.k.a. Ryo Watanabe
@@ -95,7 +100,7 @@ const About: React.FC = () => (
               rel="noreferrer"
               target="_blank"
             >
-              <img src="/twitter.png" alt="Twitter" width="40" />
+              <img src="/twitter.png" alt="Twitter" width="40" height="40" />
             </LinkText>
           </LinkItem>
         </LinkWrapper>
