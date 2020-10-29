@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-// import Highlight from 'react-highlight.js';
 import DynamicHead from '../../components/dynamicHead';
 import ScrollFixed from '../../components/scrollFixed';
 import Menu from '../../components/menu';
@@ -126,8 +125,8 @@ const ArticleWrapper = styled.div`
   }
 
   pre {
-    padding: 2em;
-    margin-top: 1em;
+    padding: 1.6rem;
+    margin-top: 3.2rem;
     overflow-x: auto;
     line-height: 1.5;
     background: #3f3f3f;
