@@ -25,7 +25,10 @@ const wrapperVariants = {
   fadeOut: { opacity: 0 },
 };
 
-const Wrapper = styled(motion.article)``;
+const Wrapper = styled(motion.article)`
+  max-width: 800px;
+  margin: 0 auto;
+`;
 
 const Error = styled.p`
   font-size: 1.6rem;
