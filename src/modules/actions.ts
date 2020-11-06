@@ -24,6 +24,14 @@ export const toggleModal = (payload?: string): Action => ({
   payload,
 });
 
+export const showSmoothScroll = (): Action => ({
+  type: types.SHOW_SMOOTH_SCROLL,
+});
+
+export const hideSmoothScroll = (): Action => ({
+  type: types.HIDE_SMOOTH_SCROLL,
+});
+
 export const sortCategory = (payload?: string): Action => ({
   type: types.SORT_CATEGORY,
   payload,

@@ -1,6 +1,7 @@
 export const zIndex = {
-  modal: 10,
-  menu: 100,
+  smoothScroll: 10,
+  modal: 100,
+  menu: 1000,
 };
 
 // iphone5サイズは分岐ではなく下限値として使っているので注意
@@ -16,6 +17,7 @@ export const color = {
   text: '#1a1a1a',
   white: '#ffff',
   gray: '#f5f7f8',
+  translucentBlack: 'rgba(0, 0, 0, 0.4)',
 };
 
 export const transition = {
