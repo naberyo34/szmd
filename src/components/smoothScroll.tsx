@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import styled from 'styled-components';
+import scrollPolyfill from 'smoothscroll-polyfill';
 import { showSmoothScroll, hideSmoothScroll } from '../modules/actions';
 import { zIndex, width, color } from '../services/style';
 import { State } from '../modules/reducers';
@@ -50,6 +51,7 @@ const SmoothScroll: React.FC = () => {
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>): void => {
     e.preventDefault();
+    scrollPolyfill.polyfill();
 
     window.scrollTo({
       top: 0,
