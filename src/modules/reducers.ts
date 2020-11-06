@@ -14,6 +14,9 @@ export interface State {
       description?: string;
     };
   };
+  smoothScroll: {
+    isShow: boolean;
+  };
   category: string;
 }
 
@@ -26,6 +29,9 @@ const initialState: State = {
   modal: {
     isOpen: false,
     data: {},
+  },
+  smoothScroll: {
+    isShow: false,
   },
   category: '全て',
 };
@@ -102,6 +108,23 @@ const reducer = (state = initialState, action): State => {
         modal: {
           isOpen: true,
           data: action.payload,
+        },
+      };
+    }
+    // スムーススクロールボタンの表示
+    case types.SHOW_SMOOTH_SCROLL: {
+      return {
+        ...state,
+        smoothScroll: {
+          isShow: true,
+        },
+      };
+    }
+    case types.HIDE_SMOOTH_SCROLL: {
+      return {
+        ...state,
+        smoothScroll: {
+          isShow: false,
         },
       };
     }

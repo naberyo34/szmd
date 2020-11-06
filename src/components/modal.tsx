@@ -29,7 +29,7 @@ const Wrapper = styled(motion.div)`
     props.innerHeight ? `${props.innerHeight}px` : '100vh'};
   padding: 16px;
   color: ${color.white};
-  background: rgba(0, 0, 0, 0.6);
+  background: ${color.translucentBlack};
 `;
 
 const Inner = styled.div`

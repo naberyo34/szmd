@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import DynamicHead from '../../components/dynamicHead';
 import ScrollFixed from '../../components/scrollFixed';
+import SmoothScroll from '../../components/smoothScroll';
 import Menu from '../../components/menu';
 import Header from '../../components/header';
 import Content from '../../components/content';
@@ -188,6 +189,7 @@ const Slug: React.FC<Props> = ({ article, articleLink }: Props) => {
     <>
       <DynamicHead title={article ? article.title : '記事が見つかりません'} />
       <ScrollFixed />
+      <SmoothScroll />
       <Menu />
       <Header />
       <Content>
