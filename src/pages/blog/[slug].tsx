@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import ReactHtmlParser from 'html-react-parser';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+
 import DynamicHead from '../../components/dynamicHead';
 import ScrollFixed from '../../components/scrollFixed';
 import SmoothScroll from '../../components/smoothScroll';
@@ -182,6 +185,28 @@ interface Props {
   articleLink?: ArticleLink;
 }
 
+/**
+ * 本文をハイライトできる形に整形してJSXとして返す
+ * @param raw APIから受け取った生データ
+ */
+const highlightArticle = (raw: string): JSX.Element[] => {
+  const rawJSX = ReactHtmlParser(raw) as JSX.Element[];
+  const resultJSX: JSX.Element[] = [];
+
+  rawJSX.forEach((element) => {
+    if (element.type !== 'pre') resultJSX.push(element);
+    else {
+      console.log('置換するぞ');
+      const highlightElement = (
+        <SyntaxHighlighter language="javascript">{element}</SyntaxHighlighter>
+      );
+      resultJSX.push(highlightElement);
+    }
+  });
+
+  return resultJSX;
+};
+
 const Slug: React.FC<Props> = ({ article, articleLink }: Props) => {
   const router = useRouter();
 
@@ -228,11 +253,8 @@ const Slug: React.FC<Props> = ({ article, articleLink }: Props) => {
                   />
                 </Twitter>
               </Info>
-              <ArticleWrapper
-                dangerouslySetInnerHTML={{
-                  __html: article.text,
-                }}
-              />
+              <ArticleWrapper />
+              {console.log(highlightArticle(article.text))}
             </>
           )}
           {articleLink && (
