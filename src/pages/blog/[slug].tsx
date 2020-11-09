@@ -1,10 +1,12 @@
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import ReactHtmlParser from 'html-react-parser';
 import SyntaxHighlighter from 'react-syntax-highlighter';
+import zenburn from 'react-syntax-highlighter/dist/cjs/styles/hljs/zenburn';
 
 import DynamicHead from '../../components/dynamicHead';
 import ScrollFixed from '../../components/scrollFixed';
@@ -102,12 +104,12 @@ const ArticleWrapper = styled.div`
     font-size: 1.6rem;
   }
   ul {
-    padding: 16px;
+    padding: 2em 2em 2em 3em;
     margin-top: 2em;
     overflow-x: auto;
     font-size: 1.6rem;
-    line-height: 1.5;
-    list-style: inside square;
+    line-height: 1.8;
+    list-style: square;
     background: ${color.gray};
   }
   li:not(:first-child) {
@@ -122,25 +124,30 @@ const ArticleWrapper = styled.div`
     color: ${color.secondary};
   }
 
-  /* TODO: シンタックスハイライトの付け方で迷っているため急造 */
   code {
-    padding: 0.1em 0.5em;
-    margin: 0 0.5em;
-    font-size: 1.6rem;
-    color: #efefef;
+    padding: 0.2em;
+    margin: 0 0.2em;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier,
+      monospace;
+    font-size: 1.4rem;
+
+    /* zenburn styleに統一 */
+    color: #dcdcdc;
     background: #3f3f3f;
   }
 
   pre {
-    padding: 1.6rem;
-    margin-top: 3.2rem;
-    overflow-x: auto;
-    line-height: 1.5;
-    background: #3f3f3f;
+    padding: 2em !important;
+    margin-top: 32px;
+    font-size: 1.6rem;
+    line-height: 1.8;
 
     code {
       padding: 0;
       margin: 0;
+      font-size: inherit;
+      color: inherit;
+      background: inherit;
     }
   }
 `;
@@ -159,7 +166,7 @@ const LinkInner = styled.div`
 `;
 
 const LinkText = styled.a`
-  line-height: 1.5;
+  line-height: 1.8;
   color: inherit;
 `;
 
@@ -186,20 +193,37 @@ interface Props {
 }
 
 /**
- * 本文をハイライトできる形に整形してJSXとして返す
+ * 本文のコード部分をハイライトしてJSXとして返す
  * @param raw APIから受け取った生データ
  */
 const highlightArticle = (raw: string): JSX.Element[] => {
+  // 生データをJSXにパースする
   const rawJSX = ReactHtmlParser(raw) as JSX.Element[];
   const resultJSX: JSX.Element[] = [];
 
-  rawJSX.forEach((element) => {
+  // preタグがある箇所だけSyntaxHighlighterのJSXに置換する
+  rawJSX.forEach((element, index) => {
     if (element.type !== 'pre') resultJSX.push(element);
     else {
-      console.log('置換するぞ');
+      // 整形
+      const code = ReactDOMServer.renderToStaticMarkup(element)
+        // 不要なpre / codeタグの削除
+        .replace(/<\/?(pre|code)>/g, '')
+        // エスケープ文字をもとに戻す (追加必要な可能性あり)
+        .replace(/&#x27;/g, `'`)
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>');
       const highlightElement = (
-        <SyntaxHighlighter language="javascript">{element}</SyntaxHighlighter>
+        <SyntaxHighlighter
+          language="javascript"
+          style={zenburn}
+          // eslint-disable-next-line
+          key={index}
+        >
+          {code}
+        </SyntaxHighlighter>
       );
+
       resultJSX.push(highlightElement);
     }
   });
@@ -253,8 +277,7 @@ const Slug: React.FC<Props> = ({ article, articleLink }: Props) => {
                   />
                 </Twitter>
               </Info>
-              <ArticleWrapper />
-              {console.log(highlightArticle(article.text))}
+              <ArticleWrapper>{highlightArticle(article.text)}</ArticleWrapper>
             </>
           )}
           {articleLink && (
@@ -263,7 +286,7 @@ const Slug: React.FC<Props> = ({ article, articleLink }: Props) => {
                 {articleLink.prev && (
                   <Link href="[slug]" as={articleLink.prev.id}>
                     <LinkText href={articleLink.prev.id}>
-                      « {articleLink.prev.title}
+                      {articleLink.prev.title}
                     </LinkText>
                   </Link>
                 )}
@@ -272,7 +295,7 @@ const Slug: React.FC<Props> = ({ article, articleLink }: Props) => {
                 {articleLink.next && (
                   <Link href="[slug]" as={articleLink.next.id}>
                     <LinkText href={articleLink.next.id}>
-                      {articleLink.next.title} »
+                      {articleLink.next.title}
                     </LinkText>
                   </Link>
                 )}

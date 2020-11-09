@@ -85,9 +85,8 @@ const Description = styled.p`
     color: inherit;
   }
 
-  li::before {
-    padding-right: 1em;
-    content: '-';
+  ul {
+    list-style: inside square;
   }
 `;
 
