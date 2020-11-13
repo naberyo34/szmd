@@ -15,6 +15,9 @@ const Wrapper = styled.section`
   min-width: ${width.iphone5};
   margin-top: 168px;
   background: ${color.white};
+  @media (max-width: ${width.ipad}) {
+    margin-top: 84px;
+  }
 `;
 
 const Inner = styled.div`
@@ -40,6 +43,9 @@ const Heading = styled(motion.h2)`
 
 const Children = styled.div`
   padding: 128px 16px;
+  @media (max-width: ${width.ipad}) {
+    padding: 64px 16px;
+  }
 `;
 
 interface Props {
