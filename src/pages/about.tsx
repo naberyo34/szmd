@@ -5,7 +5,7 @@ import DynamicHead from '../components/dynamicHead';
 import Header from '../components/header';
 import Content from '../components/content';
 import Footer from '../components/footer';
-import { width, color, transition } from '../services/style';
+import { width, color } from '../services/style';
 
 const wrapperVariants = {
   initial: { opacity: 0 },
@@ -21,13 +21,7 @@ const Wrapper = styled(motion.div)`
   background: ${color.gray};
 `;
 
-const Icon = styled.img`
-  position: relative;
-  top: -100px;
-`;
-
 const Name = styled.h3`
-  margin-top: -100px;
   font-family: 'Raleway', sans-serif;
   font-size: 4.8rem;
   font-style: italic;
@@ -38,28 +32,6 @@ const Description = styled.p`
   font-size: 1.6rem;
   @media (max-width: ${width.ipad}) {
     text-align: left;
-  }
-`;
-
-const LinkWrapper = styled.ul`
-  display: flex;
-  justify-content: center;
-  margin-top: 32px;
-`;
-
-const LinkItem = styled.li`
-  &:not(:first-child) {
-    margin-left: 8px;
-  }
-`;
-
-const LinkText = styled.a`
-  color: inherit;
-  text-decoration: none;
-  transition: opacity ${transition.fast};
-
-  &:hover {
-    opacity: 0.8;
   }
 `;
 
@@ -76,12 +48,6 @@ const About: React.FC = () => (
         exit="fadeOut"
         transition={{ type: 'tween', duration: 0.2, delay: 0.1 }}
       >
-        <Icon
-          src="/about_icon.png"
-          alt="tamaのアイコン"
-          width="200"
-          height="200"
-        />
         <Name>tama</Name>
         <Description>
           a.k.a. Ryo Watanabe
@@ -90,17 +56,6 @@ const About: React.FC = () => (
           <br />
           音楽とカレーが好きです。
         </Description>
-        <LinkWrapper>
-          <LinkItem>
-            <LinkText
-              href="https://twitter.com/momochitama"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <img src="/twitter.png" alt="Twitter" width="40" height="40" />
-            </LinkText>
-          </LinkItem>
-        </LinkWrapper>
       </Wrapper>
     </Content>
     <Footer />

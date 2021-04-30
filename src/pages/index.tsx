@@ -25,8 +25,8 @@ const Wrapper = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: ${(props: WrapperProps): string =>
-    props.innerHeight ? `${props.innerHeight}px` : '100vh'};
+  height: ${(props: wrapperprops): string =>
+    props.innerheight ? `${props.innerHeight}px` : '100vh'};
 `;
 
 const Inner = styled(motion.section)`
@@ -99,51 +99,44 @@ const LinkText = styled.a`
   text-decoration: none;
 `;
 
-const Index: React.FC = () => {
-  return (
-    <>
-      <DynamicHead />
-      <Wrapper
-        variants={wrapperVariants}
+const Index: React.FC = () => (
+  <>
+    <DynamicHead />
+    <Wrapper
+      variants={wrapperVariants}
+      initial="initial"
+      animate="fadeIn"
+      exit="fadeOut"
+      transition={{ type: 'tween', duration: 0.2 }}
+    >
+      <Inner
+        variants={innerVariants}
         initial="initial"
         animate="fadeIn"
         exit="fadeOut"
         transition={{ type: 'tween', duration: 0.2 }}
       >
-        <Inner
-          variants={innerVariants}
-          initial="initial"
-          animate="fadeIn"
-          exit="fadeOut"
-          transition={{ type: 'tween', duration: 0.2 }}
-        >
-          <Title>SZMD</Title>
-          <Address>szmd.jp</Address>
-        </Inner>
-        <Footer>
-          <Nav>
-            <Menu>
-              <MenuItem>
-                <Link href="/about">
-                  <LinkText href="/about">ABOUT</LinkText>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/works">
-                  <LinkText href="/works">WORKS</LinkText>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/blog">
-                  <LinkText href="/blog">BLOG</LinkText>
-                </Link>
-              </MenuItem>
-            </Menu>
-          </Nav>
-        </Footer>
-      </Wrapper>
-    </>
-  );
-};
+        <Title>SZMD</Title>
+        <Address>szmd.jp</Address>
+      </Inner>
+      <Footer>
+        <Nav>
+          <Menu>
+            <MenuItem>
+              <Link href="/about">
+                <LinkText href="/about">ABOUT</LinkText>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link href="/works">
+                <LinkText href="/works">WORKS</LinkText>
+              </Link>
+            </MenuItem>
+          </Menu>
+        </Nav>
+      </Footer>
+    </Wrapper>
+  </>
+);
 
 export default Index;

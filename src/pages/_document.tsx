@@ -16,7 +16,7 @@ export default class MyDocument extends Document<Props> {
     // ページコンポーネントからスタイルを取得
     const page = renderPage((App) => (props) =>
       /* eslint-disable-next-line react/jsx-props-no-spreading */
-      sheet.collectStyles(<App {...props} />)
+      sheet.collectStyles(<App {...props} />),
     );
     // スタイルタグを返す
     const styleElement = sheet.getStyleElement();

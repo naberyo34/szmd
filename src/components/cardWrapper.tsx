@@ -14,6 +14,7 @@ const Wrapper = styled.div`
 
 const CardWrapper: React.FC = (props) => {
   const { children } = props;
+
   return <Wrapper>{children}</Wrapper>;
 };
 

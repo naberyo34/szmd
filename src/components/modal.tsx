@@ -22,8 +22,8 @@ const Wrapper = styled(motion.div)`
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: ${(props: WrapperProps): string =>
-    props.innerHeight ? `${props.innerHeight}px` : '100vh'};
+  height: ${(props: wrapperprops): string =>
+    props.innerheight ? `${props.innerHeight}px` : '100vh'};
   padding: 16px;
   color: ${color.white};
   background: ${color.translucentBlack};
@@ -100,8 +100,7 @@ const Close = styled.button`
   }
 `;
 
-const Modal: React.FC = () => {
-  return (
+const Modal: React.FC = () => (
     <AnimatePresence>
       <Wrapper
         variants={wrapperVariants}
@@ -131,6 +130,5 @@ const Modal: React.FC = () => {
       </Wrapper>
     </AnimatePresence>
   );
-};
 
 export default Modal;

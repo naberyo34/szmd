@@ -31,37 +31,22 @@ const Title = styled(motion.h1)`
   }
 `;
 
-const Menu = styled(motion.button)`
-  font-family: 'Raleway', sans-serif;
-  font-size: 1.6rem;
-  font-style: italic;
-  color: ${color.white};
-  cursor: pointer;
-  transition: color ${transition.fast};
-  &:hover {
-    color: ${color.text};
-  }
-`;
-
 // Linkとaは入れ子にするのが良いらしい. 色々あってLinkには直接スタイルが当たらない
 const LinkText = styled.a`
   color: inherit;
   text-decoration: none;
 `;
 
-const Header: React.FC = () => {
-  return (
-    <Wrapper>
-      <Inner>
-        <Title>
-          <Link href="/">
-            <LinkText href="/">SZMD</LinkText>
-          </Link>
-        </Title>
-        <Menu type="button">MENU</Menu>
-      </Inner>
-    </Wrapper>
-  );
-};
+const Header: React.FC = () => (
+  <Wrapper>
+    <Inner>
+      <Title>
+        <Link href="/">
+          <LinkText href="/">SZMD</LinkText>
+        </Link>
+      </Title>
+    </Inner>
+  </Wrapper>
+);
 
 export default Header;

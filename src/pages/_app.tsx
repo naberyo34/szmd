@@ -6,7 +6,7 @@ import { color } from '../services/style';
 
 const GlobalStyle = createGlobalStyle`
   html {
-    font-family: "ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN","メイリオ",Meiryo,sans-serif;
+    font-family: 'ヒラギノ角ゴ ProN W3','Hiragino Kaku Gothic ProN','メイリオ',Meiryo,sans-serif;
     font-size: 62.5%;
     line-height: 1;
     color: ${color.text};

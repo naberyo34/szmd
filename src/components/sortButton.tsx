@@ -22,7 +22,7 @@ const buttonVariants = {
 
 const Button = styled(motion.button)`
   font-size: 1.6rem;
-  background-color: ${(props: ButtonProps): string =>
+  background-color: ${(props: buttonprops): string =>
     props.active ? color.primary : color.gray};
   transition: background-color ${transition.fast};
 
@@ -42,6 +42,7 @@ const SortButton: React.FC<Props> = ({
   active,
 }: Props) => {
   const delay = 0.1 + index * 0.05;
+
   return (
     <Button
       type="button"

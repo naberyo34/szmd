@@ -17,6 +17,7 @@ export async function getStaticProps(): Promise<{} | null> {
   // 取得に失敗した場合はnullを返却してそのままレンダリングに進む(カードなしで表示)
   if (!response.ok) return { props: { works: null } };
   const works = await response.json();
+
   return { props: { works } };
 }
 
@@ -41,15 +42,14 @@ interface Work {
   description: string;
 }
 
-const Works: React.FC<Props> = ({ works }: Props) => {
-  return (
-    <>
-      <DynamicHead title="WORKS" />
-      {/* <Menu /> */}
-      {/* <Modal /> */}
-      <Header />
-      <Content title="WORKS">
-        {/* <div>
+const Works: React.FC<Props> = ({ works }: Props) => (
+  <>
+    <DynamicHead title="WORKS" />
+    {/* <Menu /> */}
+    {/* <Modal /> */}
+    <Header />
+    <Content title="WORKS">
+      {/* <div>
           {categories.map((category, index) => (
             <SortButton
               key={category}
@@ -62,21 +62,20 @@ const Works: React.FC<Props> = ({ works }: Props) => {
             </SortButton>
           ))}
         </div> */}
-        <CardWrapper>
-          {works &&
-            works.contents.map((work: Work, index) => (
-              <Card
-                key={work.id}
-                index={index}
-                title={work.title}
-                image={work.image.url}
-              />
-            ))}
-        </CardWrapper>
-      </Content>
-      <Footer />
-    </>
-  );
-};
+      <CardWrapper>
+        {works &&
+          works.contents.map((work: Work, index) => (
+            <Card
+              key={work.id}
+              index={index}
+              title={work.title}
+              image={work.image.url}
+            />
+          ))}
+      </CardWrapper>
+    </Content>
+    <Footer />
+  </>
+);
 
 export default Works;
