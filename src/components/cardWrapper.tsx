@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { width } from '../services/style';
+import { width } from '../services/commonStyles';
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,6 +14,7 @@ const Wrapper = styled.div`
 
 const CardWrapper: React.FC = (props) => {
   const { children } = props;
+
   return <Wrapper>{children}</Wrapper>;
 };
 

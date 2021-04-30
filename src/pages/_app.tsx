@@ -1,49 +1,38 @@
 import React from 'react';
-import { Store } from 'redux';
-import { Provider } from 'react-redux';
-import withRedux from 'next-redux-wrapper';
+import type { AppProps } from 'next/app';
 import 'minireset.css';
 import { createGlobalStyle } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
-import configureStore from '../store/configureStore';
-import PageTransition from '../components/pageTransition';
-import GetInnerHeight from '../components/getInnerHeight';
-import { color } from '../services/style';
+import { color } from '../services/commonStyles';
 
 const GlobalStyle = createGlobalStyle`
   html {
-    font-family: "ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN","メイリオ",Meiryo,sans-serif;
-    font-size: 62.5%;
-    line-height: 1;
+    font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
     color: ${color.text};
     background: ${color.primary};
+  }
+
+  * {
+    line-height: 1;
   }
 
   p {
     line-height: 1.8;
   }
-
-  button {
-    background: none;
-    appearance: none;
-    border: 0;
-  }
 `;
 
-// ReduxをNextと連携するための設定
-const store = configureStore();
-const makeStore = (): Store => store;
-
-const App = ({ Component, pageProps, router }) => (
-  <Provider store={store}>
+const App: React.FC<AppProps> = ({
+  Component,
+  pageProps,
+  router,
+}: AppProps) => (
+  <>
     <GlobalStyle />
-    <PageTransition />
-    <GetInnerHeight />
     <AnimatePresence exitBeforeEnter>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <Component {...pageProps} key={router.route} />
     </AnimatePresence>
-  </Provider>
+  </>
 );
 
-export default withRedux(makeStore)(App);
+export default App;

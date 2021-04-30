@@ -1,11 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import DynamicHead from '../components/dynamicHead';
-import { width, transition } from '../services/style';
-import { State } from '../modules/reducers';
+import { width, transition } from '../services/commonStyles';
 
 const wrapperVariants = {
   initial: { opacity: 0 },
@@ -19,16 +17,11 @@ const innerVariants = {
   fadeOut: { scale: 0.5, opacity: 0 },
 };
 
-interface WrapperProps {
-  innerHeight?: number;
-}
-
 const Wrapper = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: ${(props: WrapperProps): string =>
-    props.innerHeight ? `${props.innerHeight}px` : '100vh'};
+  height: 100vh;
 `;
 
 const Inner = styled(motion.section)`
@@ -39,15 +32,15 @@ const Title = styled.h1`
   position: relative;
   left: -0.05em;
   font-family: 'Raleway', sans-serif;
-  font-size: 20rem;
+  font-size: 200px;
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;
   @media (max-width: ${width.ipad}) {
-    font-size: 32vw;
+    font-size: calc(100 / 767 * 200 * 1vw);
   }
   @media (max-width: ${width.iphone5}) {
-    font-size: 10rem;
+    font-size: 100px;
   }
 `;
 
@@ -55,14 +48,14 @@ const Address = styled.h2`
   position: relative;
   top: -1em;
   font-family: 'Raleway', sans-serif;
-  font-size: 2.4rem;
+  font-size: 24px;
   font-style: italic;
   font-weight: 700;
   @media (max-width: ${width.ipad}) {
-    font-size: 4vw;
+    font-size: calc(100 / 767 * 24 * 1vw);
   }
   @media (max-width: ${width.iphone5}) {
-    font-size: 1.25rem;
+    font-size: 12.5px;
   }
 `;
 
@@ -84,7 +77,7 @@ const Menu = styled.ul`
 
 const MenuItem = styled.li`
   font-family: 'Raleway', sans-serif;
-  font-size: 2rem;
+  font-size: 20px;
   font-style: italic;
   font-weight: 700;
   transition: opacity ${transition.fast};
@@ -101,54 +94,44 @@ const LinkText = styled.a`
   text-decoration: none;
 `;
 
-const Index: React.FC = () => {
-  const innerHeight = useSelector((state: State) => state.innerHeight);
-
-  return (
-    <>
-      <DynamicHead />
-      <Wrapper
-        innerHeight={innerHeight}
-        variants={wrapperVariants}
+const Index: React.FC = () => (
+  <>
+    <DynamicHead />
+    <Wrapper
+      variants={wrapperVariants}
+      initial="initial"
+      animate="fadeIn"
+      exit="fadeOut"
+      transition={{ type: 'tween', duration: 0.2 }}
+    >
+      <Inner
+        variants={innerVariants}
         initial="initial"
         animate="fadeIn"
         exit="fadeOut"
         transition={{ type: 'tween', duration: 0.2 }}
       >
-        <Inner
-          variants={innerVariants}
-          initial="initial"
-          animate="fadeIn"
-          exit="fadeOut"
-          transition={{ type: 'tween', duration: 0.2 }}
-        >
-          <Title>SZMD</Title>
-          <Address>szmd.jp</Address>
-        </Inner>
-        <Footer>
-          <Nav>
-            <Menu>
-              <MenuItem>
-                <Link href="/about">
-                  <LinkText href="/about">ABOUT</LinkText>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/works">
-                  <LinkText href="/works">WORKS</LinkText>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/blog">
-                  <LinkText href="/blog">BLOG</LinkText>
-                </Link>
-              </MenuItem>
-            </Menu>
-          </Nav>
-        </Footer>
-      </Wrapper>
-    </>
-  );
-};
+        <Title>SZMD</Title>
+        <Address>szmd.jp</Address>
+      </Inner>
+      <Footer>
+        <Nav>
+          <Menu>
+            <MenuItem>
+              <Link href="/about">
+                <LinkText href="/about">ABOUT</LinkText>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link href="/works">
+                <LinkText href="/works">WORKS</LinkText>
+              </Link>
+            </MenuItem>
+          </Menu>
+        </Nav>
+      </Footer>
+    </Wrapper>
+  </>
+);
 
 export default Index;

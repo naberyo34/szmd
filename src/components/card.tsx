@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import LazyLoad from 'react-lazyload';
-import { width, color, transition } from '../services/style';
+import { width, color, transition } from '../services/commonStyles';
 
 const wrapperVariants = {
   initial: { scale: 0.5, opacity: 0 },
@@ -54,7 +54,7 @@ const Info = styled.div`
 `;
 
 const Posted = styled.p`
-  font-size: 1.2rem;
+  font-size: 12px;
   font-weight: bold;
 `;
 
@@ -62,13 +62,13 @@ const Category = styled.p`
   position: relative;
   display: inline-block;
   padding: 2px 4px;
-  font-size: 1.2rem;
+  font-size: 12px;
   background: ${color.primary};
 `;
 
 const Title = styled.h1`
   margin-top: 1em;
-  font-size: 1.6rem;
+  font-size: 16px;
   line-height: 1.5;
 `;
 
