@@ -1,10 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
-import { toggleModal } from '../modules/actions';
 import { zIndex, width, color, transition } from '../services/style';
-import { State } from '../modules/reducers';
 
 const wrapperVariants = {
   initial: { opacity: 0 },
@@ -104,45 +101,34 @@ const Close = styled.button`
 `;
 
 const Modal: React.FC = () => {
-  const dispatch = useDispatch();
-  const innerHeight = useSelector((state: State) => state.innerHeight);
-  const isOpen = useSelector((state: State) => state.modal.isOpen);
-  const data = useSelector((state: State) => state.modal.data);
-  const handleToggleModal = (): void => {
-    dispatch(toggleModal());
-  };
-
   return (
     <AnimatePresence>
-      {isOpen && (
-        <Wrapper
-          innerHeight={innerHeight}
-          variants={wrapperVariants}
-          initial="initial"
-          animate="fadeIn"
-          exit="fadeOut"
-          transition={{ type: 'tween', duration: 0.2 }}
-        >
-          <Inner>
-            <Image>
-              <img src={data.image} alt={data.title} />
-            </Image>
-            <Text>
-              <div>
-                <Title>{data.title}</Title>
-                <Description
-                  dangerouslySetInnerHTML={{
-                    __html: data.description,
-                  }}
-                />
-                <Close type="button" onClick={handleToggleModal}>
-                  CLOSE
-                </Close>
-              </div>
-            </Text>
-          </Inner>
-        </Wrapper>
-      )}
+      <Wrapper
+        variants={wrapperVariants}
+        initial="initial"
+        animate="fadeIn"
+        exit="fadeOut"
+        transition={{ type: 'tween', duration: 0.2 }}
+      >
+        <Inner>
+          <Image>
+            <img src={data.image} alt={data.title} />
+          </Image>
+          <Text>
+            <div>
+              <Title>{data.title}</Title>
+              <Description
+                dangerouslySetInnerHTML={{
+                  __html: data.description,
+                }}
+              />
+              <Close type="button" onClick={handleToggleModal}>
+                CLOSE
+              </Close>
+            </div>
+          </Text>
+        </Inner>
+      </Wrapper>
     </AnimatePresence>
   );
 };

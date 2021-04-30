@@ -1,11 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import DynamicHead from '../components/dynamicHead';
 import { width, transition } from '../services/style';
-import { State } from '../modules/reducers';
 
 const wrapperVariants = {
   initial: { opacity: 0 },
@@ -102,13 +100,10 @@ const LinkText = styled.a`
 `;
 
 const Index: React.FC = () => {
-  const innerHeight = useSelector((state: State) => state.innerHeight);
-
   return (
     <>
       <DynamicHead />
       <Wrapper
-        innerHeight={innerHeight}
         variants={wrapperVariants}
         initial="initial"
         animate="fadeIn"

@@ -1,11 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
-import { toggleMenu } from '../modules/actions';
 import { color, zIndex, transition } from '../services/style';
-import { State } from '../modules/reducers';
 
 const maskVariants = {
   initial: { opacity: 0 },
@@ -84,59 +81,47 @@ const Close = styled.button`
 `;
 
 const Menu: React.FC = () => {
-  const dispatch = useDispatch();
-  const innerHeight = useSelector((state: State) => state.innerHeight);
-  const isOpen = useSelector((state: State) => state.menu.isOpen);
-  const handleToggleMenu = (): void => {
-    dispatch(toggleMenu());
-  };
-
   return (
     <AnimatePresence>
-      {isOpen && (
-        <Mask
-          innerHeight={innerHeight}
-          variants={maskVariants}
+      <Mask
+        variants={maskVariants}
+        initial="initial"
+        animate="fadeIn"
+        exit="fadeOut"
+        transition={{ type: 'tween', duration: 0.2 }}
+      >
+        <Wrapper
+          variants={wrapperVariants}
           initial="initial"
           animate="fadeIn"
           exit="fadeOut"
           transition={{ type: 'tween', duration: 0.2 }}
         >
-          <Wrapper
-            variants={wrapperVariants}
-            initial="initial"
-            animate="fadeIn"
-            exit="fadeOut"
-            transition={{ type: 'tween', duration: 0.2 }}
-          >
-            <MenuList>
-              <MenuItem>
-                <Link href="/">
-                  <LinkText href="/">TOP</LinkText>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/about">
-                  <LinkText href="/about">ABOUT</LinkText>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/works">
-                  <LinkText href="/works">WORKS</LinkText>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link href="/blog">
-                  <LinkText href="/blog">BLOG</LinkText>
-                </Link>
-              </MenuItem>
-            </MenuList>
-            <Close type="button" onClick={handleToggleMenu}>
-              CLOSE
-            </Close>
-          </Wrapper>
-        </Mask>
-      )}
+          <MenuList>
+            <MenuItem>
+              <Link href="/">
+                <LinkText href="/">TOP</LinkText>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link href="/about">
+                <LinkText href="/about">ABOUT</LinkText>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link href="/works">
+                <LinkText href="/works">WORKS</LinkText>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link href="/blog">
+                <LinkText href="/blog">BLOG</LinkText>
+              </Link>
+            </MenuItem>
+          </MenuList>
+          <Close type="button">CLOSE</Close>
+        </Wrapper>
+      </Mask>
     </AnimatePresence>
   );
 };

@@ -2,8 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { useDispatch } from 'react-redux';
-import { toggleMenu } from '../modules/actions';
 import { width, color, transition } from '../services/style';
 
 const Wrapper = styled.header`
@@ -52,11 +50,6 @@ const LinkText = styled.a`
 `;
 
 const Header: React.FC = () => {
-  const dispatch = useDispatch();
-  const handleToggleMenu = (): void => {
-    dispatch(toggleMenu());
-  };
-
   return (
     <Wrapper>
       <Inner>
@@ -65,9 +58,7 @@ const Header: React.FC = () => {
             <LinkText href="/">SZMD</LinkText>
           </Link>
         </Title>
-        <Menu type="button" onClick={handleToggleMenu}>
-          MENU
-        </Menu>
+        <Menu type="button">MENU</Menu>
       </Inner>
     </Wrapper>
   );

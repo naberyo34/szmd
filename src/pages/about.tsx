@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import DynamicHead from '../components/dynamicHead';
-import ScrollFixed from '../components/scrollFixed';
-import Menu from '../components/menu';
 import Header from '../components/header';
 import Content from '../components/content';
 import Footer from '../components/footer';
@@ -68,8 +66,7 @@ const LinkText = styled.a`
 const About: React.FC = () => (
   <>
     <DynamicHead title="ABOUT" />
-    <ScrollFixed />
-    <Menu />
+    {/* <Menu /> */}
     <Header />
     <Content title="ABOUT">
       <Wrapper

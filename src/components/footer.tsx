@@ -62,11 +62,6 @@ const Footer: React.FC = () => (
             <LinkText href="/works">WORKS</LinkText>
           </Link>
         </MenuItem>
-        <MenuItem>
-          <Link href="/blog">
-            <LinkText href="/blog">BLOG</LinkText>
-          </Link>
-        </MenuItem>
       </Menu>
     </Nav>
     <Copyright>Copyright (C) SZMD All rights reserved.</Copyright>
