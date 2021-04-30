@@ -1,4 +1,5 @@
 import React from 'react';
+import type { AppProps } from 'next/app';
 import 'minireset.css';
 import { createGlobalStyle } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
@@ -6,25 +7,25 @@ import { color } from '../services/commonStyles';
 
 const GlobalStyle = createGlobalStyle`
   html {
-    font-family: 'ヒラギノ角ゴ ProN W3','Hiragino Kaku Gothic ProN','メイリオ',Meiryo,sans-serif;
-    font-size: 62.5%;
-    line-height: 1;
+    font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
     color: ${color.text};
     background: ${color.primary};
+  }
+
+  * {
+    line-height: 1;
   }
 
   p {
     line-height: 1.8;
   }
-
-  button {
-    background: none;
-    appearance: none;
-    border: 0;
-  }
 `;
 
-const App = ({ Component, pageProps, router }) => (
+const App: React.FC<AppProps> = ({
+  Component,
+  pageProps,
+  router,
+}: AppProps) => (
   <>
     <GlobalStyle />
     <AnimatePresence exitBeforeEnter>

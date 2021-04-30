@@ -29,15 +29,15 @@ const Heading = styled(motion.h2)`
   padding: 0 16px;
   margin-top: -0.5em;
   font-family: 'Raleway', sans-serif;
-  font-size: 20rem;
+  font-size: 200px;
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;
   @media (max-width: ${width.ipad}) {
-    font-size: 24vw;
+    font-size: calc(100 / 767 * 200 * 1vw);
   }
   @media (max-width: ${width.iphone5}) {
-    font-size: 8rem;
+    font-size: 100px;
   }
 `;
 

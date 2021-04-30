@@ -21,7 +21,7 @@ const Inner = styled.div`
 
 const Title = styled(motion.h1)`
   font-family: 'Raleway', sans-serif;
-  font-size: 2.4rem;
+  font-size: 24px;
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;

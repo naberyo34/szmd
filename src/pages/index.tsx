@@ -17,16 +17,11 @@ const innerVariants = {
   fadeOut: { scale: 0.5, opacity: 0 },
 };
 
-interface WrapperProps {
-  innerHeight?: number;
-}
-
 const Wrapper = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: ${(props: wrapperprops): string =>
-    props.innerheight ? `${props.innerHeight}px` : '100vh'};
+  height: 100vh;
 `;
 
 const Inner = styled(motion.section)`
@@ -37,15 +32,15 @@ const Title = styled.h1`
   position: relative;
   left: -0.05em;
   font-family: 'Raleway', sans-serif;
-  font-size: 20rem;
+  font-size: 200px;
   font-style: italic;
   font-weight: 900;
   letter-spacing: -0.15em;
   @media (max-width: ${width.ipad}) {
-    font-size: 32vw;
+    font-size: calc(100 / 767 * 200 * 1vw);
   }
   @media (max-width: ${width.iphone5}) {
-    font-size: 10rem;
+    font-size: 100px;
   }
 `;
 
@@ -53,14 +48,14 @@ const Address = styled.h2`
   position: relative;
   top: -1em;
   font-family: 'Raleway', sans-serif;
-  font-size: 2.4rem;
+  font-size: 24px;
   font-style: italic;
   font-weight: 700;
   @media (max-width: ${width.ipad}) {
-    font-size: 4vw;
+    font-size: calc(100 / 767 * 24 * 1vw);
   }
   @media (max-width: ${width.iphone5}) {
-    font-size: 1.25rem;
+    font-size: 12.5px;
   }
 `;
 
@@ -82,7 +77,7 @@ const Menu = styled.ul`
 
 const MenuItem = styled.li`
   font-family: 'Raleway', sans-serif;
-  font-size: 2rem;
+  font-size: 20px;
   font-style: italic;
   font-weight: 700;
   transition: opacity ${transition.fast};
