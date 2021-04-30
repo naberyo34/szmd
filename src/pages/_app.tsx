@@ -1,9 +1,10 @@
 import React from 'react';
-import type { AppProps } from 'next/app';
+import { AppProps } from 'next/app';
 import 'minireset.css';
 import { createGlobalStyle } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
-import { color } from '../services/commonStyles';
+import BaseHead from '@/components/BaseHead';
+import { color } from '@/services/commonStyles';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -27,6 +28,7 @@ const App: React.FC<AppProps> = ({
   router,
 }: AppProps) => (
   <>
+    <BaseHead />
     <GlobalStyle />
     <AnimatePresence exitBeforeEnter>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}

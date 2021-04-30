@@ -1,12 +1,10 @@
 import React from 'react';
-import DynamicHead from '../components/dynamicHead';
-import Header from '../components/header';
+import Content from '@/templates/Content';
 
 const About: React.FC = () => (
-  <>
-    <DynamicHead title="ABOUT" />
-    <Header />
-  </>
+  <Content>
+    <p>about</p>
+  </Content>
 );
 
 export default About;

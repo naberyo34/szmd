@@ -4,9 +4,7 @@ export const zIndex = {
 
 // iphone5サイズは分岐ではなく下限値として使っているので注意
 export const width = {
-  iphone5: '320px',
-  ipad: '768px',
-  pc: '769px',
+  ipad: 768,
 };
 
 export const color = {
@@ -17,6 +15,18 @@ export const color = {
   translucentBlack: 'rgba(0, 0, 0, 0.4)',
 };
 
+export const opacity = {
+  high: 0.8,
+};
+
 export const transition = {
   fast: '0.2s',
 };
+
+// メディアクエリ
+export const mq = (breakPoint = width.ipad): string =>
+  `@media (max-width: ${breakPoint}px)`;
+
+// リキッドレイアウトのための値を算出する
+export const liquid = (size: number, breakPoint = width.ipad): string =>
+  `${(100 / breakPoint) * size}vw`;
