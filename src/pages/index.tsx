@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import DynamicHead from '../components/dynamicHead';
-import { width, transition } from '../services/style';
+import { width, transition } from '../services/commonStyles';
 
 const wrapperVariants = {
   initial: { opacity: 0 },

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { width, color, transition } from '../services/style';
+import { width, color, transition } from '../services/commonStyles';
 
 interface Props {
   index: number;

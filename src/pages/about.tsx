@@ -5,7 +5,7 @@ import DynamicHead from '../components/dynamicHead';
 import Header from '../components/header';
 import Content from '../components/content';
 import Footer from '../components/footer';
-import { width, color } from '../services/style';
+import { width, color } from '../services/commonStyles';
 
 const wrapperVariants = {
   initial: { opacity: 0 },

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import LazyLoad from 'react-lazyload';
-import { width, color, transition } from '../services/style';
+import { width, color, transition } from '../services/commonStyles';
 
 const wrapperVariants = {
   initial: { scale: 0.5, opacity: 0 },

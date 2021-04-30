@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { width, color } from '../services/style';
+import { width, color } from '../services/commonStyles';
 
 const headingVariants = {
   initial: { y: -32, opacity: 0 },

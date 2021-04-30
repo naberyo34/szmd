@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
-import { zIndex, width, color, transition } from '../services/style';
+import { zIndex, width, color, transition } from '../services/commonStyles';
 
 const wrapperVariants = {
   initial: { opacity: 0 },

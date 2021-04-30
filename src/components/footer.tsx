@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { width, color, transition } from '../services/style';
+import { width, color, transition } from '../services/commonStyles';
 
 const Wrapper = styled.footer`
   min-width: ${width.iphone5};

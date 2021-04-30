@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { width, color, transition } from '../services/style';
+import { width, color, transition } from '../services/commonStyles';
 
 const Wrapper = styled.header`
   display: flex;

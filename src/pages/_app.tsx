@@ -2,7 +2,7 @@ import React from 'react';
 import 'minireset.css';
 import { createGlobalStyle } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
-import { color } from '../services/style';
+import { color } from '../services/commonStyles';
 
 const GlobalStyle = createGlobalStyle`
   html {
