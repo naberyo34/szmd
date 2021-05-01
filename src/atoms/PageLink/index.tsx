@@ -12,8 +12,10 @@ type Props = {
 const StyledText = styled(motion.a)<Pick<Props, 'primary'>>`
   font-family: 'Raleway', sans-serif;
   font-size: 20px;
+  font-style: italic;
+  font-weight: 700;
   color: ${({ primary }) => (primary ? color.primary : color.text)};
-  transition: ${transition.fast};
+  transition: ${`${transition.fast}s`};
 
   &:hover {
     cursor: pointer;

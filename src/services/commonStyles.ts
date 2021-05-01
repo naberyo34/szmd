@@ -2,7 +2,6 @@ export const zIndex = {
   modal: 10,
 };
 
-// iphone5サイズは分岐ではなく下限値として使っているので注意
 export const width = {
   ipad: 768,
 };
@@ -20,7 +19,8 @@ export const opacity = {
 };
 
 export const transition = {
-  fast: '0.2s',
+  fast: 0.2,
+  medium: 0.4,
 };
 
 // メディアクエリ
@@ -30,3 +30,9 @@ export const mq = (breakPoint = width.ipad): string =>
 // リキッドレイアウトのための値を算出する
 export const liquid = (size: number, breakPoint = width.ipad): string =>
   `${(100 / breakPoint) * size}vw`;
+
+// Framer Motion用のvariant
+export const emergeVariant = {
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
+};
